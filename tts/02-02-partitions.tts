@@ -1,0 +1,7 @@
+Partitions — the unit of parallelism.
+
+An RDD is split into partitions — chunks of data that can be processed independently. Each partition is processed by exactly one task, on one executor core. So the number of partitions equals the degree of parallelism for that RDD.
+
+If you have more partitions than cores, some tasks queue, but the cluster stays busy. If you have fewer partitions than cores, some cores sit idle.
+
+After a shuffle, the number of output partitions defaults to a config called spark dot sql dot shuffle dot partitions, which is two hundred unless you change it. For RDDs created with parallelize, the default partition count is whatever spark context dot default parallelism returns — usually the total number of cores available.

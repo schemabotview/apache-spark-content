@@ -1,0 +1,11 @@
+Narrow versus wide transformations.
+
+This is the single most important distinction for reasoning about Spark performance.
+
+A narrow transformation is one where each output partition depends on exactly one input partition. No data crosses the network. Map, filter, flat map, map partitions, union — all narrow. They pipeline together inside a single stage.
+
+A wide transformation is one where each output partition depends on many input partitions. Data must be shuffled across the network. Reduce by key, group by key, join, distinct, repartition — all wide. Each wide transformation creates a new stage boundary.
+
+Wide transformations are expensive. That is the rule of thumb you carry forward into the rest of the curriculum.
+
+You can see this in code by asking Spark to print the lineage with the to debug string method. On a narrow chain — map, then filter — you see one stage and no shuffle. On a wide chain — map, then reduce by key — a new entry called shuffled RDD appears in the output. That marks the shuffle boundary.

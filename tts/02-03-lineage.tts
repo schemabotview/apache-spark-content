@@ -1,0 +1,7 @@
+Lineage — how Spark recovers from failure.
+
+Spark does not replicate RDD data the way the hadoop file system does. Instead, it remembers the recipe — the sequence of transformations that produced each RDD. This recipe is the lineage graph.
+
+If a partition is lost — an executor crashes, a machine dies — Spark replays just the relevant slice of the lineage to rebuild that one partition. That is cheap if the lineage is short, and expensive if it is long.
+
+This is also why caching matters. Without a cache call, every action re-runs the full lineage from the source. If you reuse an RDD twice, you recompute it twice.

@@ -1,0 +1,9 @@
+RDD versus dataframe — when to actually reach for each.
+
+These are two views of the same engine, with very different ergonomics.
+
+The RDD ay-pee-eye is functional and row-by-row. There is no optimizer; your code is the plan. There is no code generation; Python lambdas serialize across to the executors with java virtual machine round-trips. There is no schema. RDDs are slower for structured data, and they are best for unstructured data, custom serialization, and per-partition input output patterns.
+
+The dataframe ay-pee-eye is declarative and column-based. Catalyst rewrites your plan. Tungsten generates java virtual machine bytecode for the hot paths. The schema is required. Dataframes are faster for structured data, and best for almost everything else.
+
+The honest guideline for the rest of this curriculum, and for the bank capstone in the project folder: prefer dataframes. Drop to RDDs only when you need something the dataframe ay-pee-eye genuinely cannot express — a custom map-partitions pattern, a non-tabular input, or a closure that does not fit spark sql.

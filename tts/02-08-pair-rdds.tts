@@ -1,0 +1,9 @@
+Pair RDDs — the key-value view.
+
+A pair RDD is just an RDD where each element is a tuple of key and value. Pair RDDs unlock a family of grouping and aggregation operations that mirror sql's group by.
+
+The core methods: reduce by key combines values per key using a function, with a map-side combine before shuffling. Group by key collects all values per key into an iterable, shuffling every value. Map values applies a function to the values while keeping the keys — this one is narrow. Sort by key sorts by key, with a shuffle. And join is an inner join on key. To build a pair RDD, you map your records into key-value tuples — pick the field you want to group on as the key.
+
+A word on reduce by key versus group by key, since the exam loves it. Both can compute a per-key aggregate, but they are not equivalent. Reduce by key combines values locally on each executor first, then ships only the partial results across the wire. Group by key ships every value for every key across the network before aggregating, which is far more shuffle traffic — and on skewed data it can blow up the executor that owns the heavy key. The rule: when your goal is an aggregate and a by-key form exists, prefer reduce by key.
+
+In code, picture this. Filter to approved transactions. Map each one to a tuple of merchant category and the constant one. Reduce by key with addition. Then sort by key. The result is a sorted list of category and count, one entry per merchant category.

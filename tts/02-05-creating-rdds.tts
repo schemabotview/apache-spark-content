@@ -1,0 +1,11 @@
+Creating RDDs.
+
+An RDD comes from one of four places. A driver-side collection. A file or external store. Another RDD via a transformation. Or a dataframe. The first two and the last cover almost all explicit creation in practice.
+
+The first way is parallelize. Pass it a Python list — one already sitting in the driver — and Spark distributes that list across the executors as an RDD. Useful for tests and tiny demos. A close cousin is range, which gives you an RDD of longs from a start and an end, skipping the step of materializing the list on the driver.
+
+The next way is text file. Pass it a path — a single file or a directory — and Spark reads each line as one element of the RDD. For directories of many small files, whole text files makes each element a pair of file path and full file content, instead of one element per line.
+
+Finally, every dataframe has an underlying RDD of row objects, which you reach with dataframe dot rdd when you need low-level control. And every transformation — map, filter, flat map, and so on — also produces a new RDD. In real pipelines, most RDDs come into being that way, not from an explicit creation call.
+
+In code, picture a small list of card transactions. Each transaction is a tuple — transaction id, card id, customer id, merchant category, amount, and status. Twelve transactions, parallelized into four partitions. Asking the RDD for its partition count returns four, and asking for its count returns twelve. Both calls are actions, so both trigger execution.

@@ -1,0 +1,7 @@
+Spark context — the entry point for RDDs.
+
+In notebook one we used spark session. RDDs predate spark session and have a different entry point — spark context, which everyone abbreviates as s-c. Spark session owns one, and you grab it with spark dot spark context.
+
+Here is the mental model. Spark is the high-level door — that is where dataframes and sql live. S-c is the low-level door — that is where RDDs, broadcast variables, and accumulators live. Same java virtual machine, same cluster, just two ay-pee-eyes.
+
+To set up, build a spark session the same way as in notebook one, then grab the spark context off the session and print its default parallelism. The number you see is how many cores Spark has decided to use for parallel work — typically the total core count of your laptop in local mode.

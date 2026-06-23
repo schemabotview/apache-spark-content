@@ -1,0 +1,11 @@
+Persistence — cache, persist, and storage level.
+
+The default behavior is that every action re-executes the entire lineage from the source. Call count and then collect on the same RDD, and you have computed it twice.
+
+The cache method materializes the RDD on the first action and reuses it afterward. Persist gives you the same idea but lets you pick the storage policy.
+
+Here are the storage levels you should know. Memory only keeps the RDD in executor ram — this is the default for cache on RDDs, and if a partition does not fit, it is recomputed on miss. Memory and disk keeps data in ram if it fits and spills to disk otherwise — this is the default for cache on dataframes. Disk only always goes to disk: cheap on memory, slow to read. The serialized variants store the data as serialized bytes, using less ram but more see-pee-you to deserialize. And the replicated-twice variants keep each partition on two executors, surviving a single executor failure without recomputation.
+
+Use unpersist when you are done. Caches are not free; they hold executor memory.
+
+To see the effect, time a small experiment. Take an expensive pipeline — parallelize five million numbers, square each one, keep only the squares divisible by seven. Run count twice without caching, and you pay the full pipeline cost twice. Now run the same pipeline with cache called on it, run count twice, and the second call hits memory and finishes almost instantly.

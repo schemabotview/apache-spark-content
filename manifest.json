@@ -43,18 +43,18 @@
       "notebook": "notebooks/02-rdd-api.ipynb",
       "defaultScene": "spark-rdd-api",
       "sections": [
-        { "heading": "What an RDD actually is",                                          "scene": "spark-rdd-api",          "spine": true,  "role": "hook" },
-        { "heading": "Partitions — the unit of parallelism",                             "scene": "rdd-partitions",         "spine": true  },
-        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "rdd-lineage",            "spine": true  },
-        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-execution",        "spine": false },
-        { "heading": "Creating RDDs",                                                    "scene": "spark-rdd-api",          "spine": false },
-        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-rdd-api",          "spine": true  },
-        { "heading": "Narrow vs wide transformations",                                   "scene": "rdd-narrow-wide",        "spine": true  },
-        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-rdd-api",          "spine": true  },
-        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-cache-persist",    "spine": false },
-        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "rdd-partitions",         "spine": false },
-        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-rdd-api",          "spine": false },
-        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "apache-spark-api-stack", "spine": true  }
+        { "heading": "What an RDD actually is",                                          "scene": "spark-rdd-api",          "spine": true,  "role": "hook", "audio": "audio/02-01-what-an-rdd-is.wav" },
+        { "heading": "Partitions — the unit of parallelism",                             "scene": "rdd-partitions",         "spine": true,  "audio": "audio/02-02-partitions.wav" },
+        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "rdd-lineage",            "spine": true,  "audio": "audio/02-03-lineage.wav" },
+        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-execution",        "spine": false, "audio": "audio/02-04-sparkcontext.wav" },
+        { "heading": "Creating RDDs",                                                    "scene": "spark-rdd-api",          "spine": false, "audio": "audio/02-05-creating-rdds.wav" },
+        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-rdd-api",          "spine": true,  "audio": "audio/02-06-transformations-and-actions.wav" },
+        { "heading": "Narrow vs wide transformations",                                   "scene": "rdd-narrow-wide",        "spine": true,  "audio": "audio/02-07-narrow-vs-wide.wav" },
+        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-rdd-api",          "spine": true,  "audio": "audio/02-08-pair-rdds.wav" },
+        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-cache-persist",    "spine": false, "audio": "audio/02-09-persistence.wav" },
+        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "rdd-partitions",         "spine": false, "audio": "audio/02-10-partition-level-operations.wav" },
+        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-rdd-api",          "spine": false, "audio": "audio/02-11-shared-variables.wav" },
+        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "apache-spark-api-stack", "spine": true,  "audio": "audio/02-12-rdd-vs-dataframe.wav" }
       ]
     }
   ]

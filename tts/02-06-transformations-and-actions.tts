@@ -1,0 +1,9 @@
+Transformations and actions — the RDD edition.
+
+Same lazy model as dataframes, split into two categories.
+
+Transformations build the recipe, and they are lazy. The common ones: map, which is one in, one out — apply a function to each element. Flat map — one in, zero or more out, then flatten. Filter — keep elements where the predicate is truthy. Distinct — drop duplicates, with a shuffle. Union — concatenate two RDDs. And the partition control methods, repartition and coalesce.
+
+Actions trigger execution. Count returns the number of elements. Take n returns the first n elements, and first returns just the first one. Collect pulls all elements into the driver as a Python list — be careful with that on large RDDs. Reduce aggregates pairwise using a function. Count by value returns a dictionary mapping each unique element to its count. For each runs a function on every element on the executors, for side effects only. And save as text file writes one file per partition.
+
+To make the laziness concrete: keep only approved transactions, then project each one down to a tuple of merchant category and amount. That is two transformations chained together — filter, then map. Up to that point, no work happens; Spark has just recorded the recipe. Then you call take three, which is an action, and Spark finally runs the chain and returns the first three results.

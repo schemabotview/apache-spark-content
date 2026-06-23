@@ -1,0 +1,9 @@
+Shared variables — broadcast and accumulators.
+
+Spark gives you two ways to share values across executors that are not regular RDD elements.
+
+Broadcast variables ship a read-only value to every executor exactly once, and then every task on that executor reuses it. Without broadcast, the value would be serialized into every task closure — wasteful for anything bigger than a few kilobytes. Use broadcasts for small lookup tables: a merchant-category to spend-tier map, an exchange-rate dictionary, a banned-merchant set.
+
+Accumulators are write-only from the executors and read-only from the driver — they are counters. Use them for diagnostics, like counting bad records, suspicious transactions, or parse failures, without breaking the lazy model. They are eventually consistent: only updates from successfully completed tasks are guaranteed. A task that fails and re-runs may double-count, so use accumulators for telemetry, never for correctness.
+
+To make this concrete, broadcast a small dictionary that maps each merchant category to a spend tier — essential, lifestyle, or discretionary. Then create an accumulator initialized to zero, used to count high-value transactions over ten thousand. Run a map over the transactions RDD that tags each row with its tier from the broadcast dictionary and bumps the accumulator when the amount is high. After the action runs, you read the accumulator's value on the driver — it tells you how many high-value transactions appeared.

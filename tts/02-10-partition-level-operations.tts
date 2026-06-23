@@ -1,0 +1,11 @@
+Partition-level operations.
+
+Three RDD methods operate at the partition level rather than the record level.
+
+Map partitions takes a function that receives an iterator over one partition's records and returns an iterator. Use it when per-record setup is wasteful — opening a database connection, loading a model, or calling an external ay-pee-eye in batches. With map partitions, you do that setup once per partition instead of once per row.
+
+Repartition does a full shuffle to exactly the number of partitions you ask for. Use it to increase parallelism or to rebalance skewed data. Coalesce, by contrast, merges down to fewer partitions without a full shuffle. It is only safe when reducing the partition count — cheap, but it cannot rebalance.
+
+The rule of thumb: when shrinking, use coalesce; when growing or rebalancing, use repartition.
+
+In code, picture three quick checks on the same transactions RDD. First, ask each partition how many records it holds, using map partitions. Second, check the partition count after a repartition to eight — the answer is eight. Third, check the partition count after a coalesce to two — the answer is two.

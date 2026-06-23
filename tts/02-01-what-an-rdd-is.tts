@@ -1,0 +1,9 @@
+What an RDD actually is.
+
+An RDD — short for resilient distributed dataset — is the original Spark data abstraction. Every dataframe you write today eventually compiles down to RDD operations under the hood, so understanding RDDs explains why Spark behaves the way it does. Lazy evaluation, fault tolerance through lineage, partition-level parallelism — they all originate at the RDD layer.
+
+A useful mental shortcut is that an RDD is a lazy pure function applied over an immutable distributed dataset, with no metadata about its elements. Resilience comes from the pure function plus the lineage, not from any replication of the dataset itself.
+
+Read the three letters of the name. Resilient means fault-tolerant — lost partitions are recomputed from the recipe, what we call lineage, not retrieved from a replica. Distributed means partitioned across executor memory on multiple machines. And dataset means a collection of records, where a record can be any object — a string, a tuple, a custom class. Unlike a dataframe, an RDD has no schema and no column names.
+
+Four more properties are worth memorizing. First, immutable — you never mutate an RDD; every transformation produces a new one. Second, lazy — transformations are recorded, and nothing actually runs until an action. Third, schema-free — there are no columns, just elements, and you handle structure yourself in code. Fourth, typed — in Scala every RDD carries its element type at compile time, while in Python types are not declared at the language level but are still real at runtime.

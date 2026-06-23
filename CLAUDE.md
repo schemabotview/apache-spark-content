@@ -54,16 +54,50 @@ scripts/        # colab_generate_audio.ipynb — tts/*.tts -> audio/*.wav on a C
 
 ## Narration (per-section TTS)
 
-- One `.tts` script **per section**, plain spoken prose per the TTS guidelines in
-  `~/Projects/apache-spark/CLAUDE.md` (no markdown/code; spell out symbols — `API`→
-  "ay-pee-eye", `JVM`→"java virtual machine", `3.5.3`→"three point five point three",
-  etc.; blank lines = TTS pauses). Use `~/Projects/apache-spark/tts/01-…tts` as the
-  style reference. Anchor narration to what's on screen — the notebook `## ` section,
-  not the older finer-grained outline.
+One `.tts` script **per section**, plain spoken prose — what a teacher would say at a
+whiteboard. Anchor narration to what's on screen: the notebook `## ` section, not the
+older finer-grained outline. Use `~/Projects/apache-spark/tts/01-…tts` (or this repo's
+own `tts/01-…tts`) as the style reference.
+
+### TTS guidelines
+
+`.tts` files are read aloud by ChatterboxTTS (typically on a T4 GPU via
+`scripts/colab_generate_audio.ipynb`). They must be plain spoken prose.
+
+- **Plain prose only** — no markdown, no `#` headings, no bullets, no backticks, no
+  asterisks. Write section titles as a plain sentence ending with a full stop (e.g.
+  `Lazy evaluation.`).
+- **No raw code** — describe what code does conceptually or in pseudo-code form. Never
+  paste code blocks. Method chains like `df.filter(...).select(...)` become "filter,
+  then select."
+- **Spell out symbols and shorthand:**
+  - Operators: `//` → "floor division", `%` → "modulo", `->` → "returns", `=>` →
+    "maps to", `===` → "strict equality", `.` (in `spark.version`) → "dot"
+  - Acronyms: RAM → "ram", CPU → "see-pee-you", API → "ay-pee-eye", JVM → "java
+    virtual machine", GC → "garbage collector", DAG → "directed acyclic graph" (spell
+    out on first use), OLTP → "online transaction processing"
+  - Hex / addresses: `0xFF` → "hex F-F", `0x0000` → "memory address zero"
+  - Complexity: O(1) → "constant time", O(n) → "linear time", O(n log n) → "n log n time"
+  - Versions: `3.5.3` → "three point five point three"
+  - Variable names: underscores become spaces and common abbreviations get expanded —
+    `list_a` → "list A", `left_ptr` → "left pointer", `idx` → "index", `len` →
+    "length", `df` → "dataframe", `credit_score` → "credit score"
+- **Natural spoken flow** — write as a teacher explains at a whiteboard. Use
+  transitional phrases: "notice that", "the key insight here is", "to put it another
+  way", "picture this".
+- **Skip visual-only content** — never narrate diagrams, tables, or `.show()` outputs.
+  Describe what the listener should picture instead.
+- **Pace with paragraph breaks** — each paragraph = one idea. A blank line between
+  paragraphs gives the TTS engine a natural pause. Aim for 2–4 sentences per paragraph.
+
+### Naming & generation
+
 - **Naming:** `tts/<NN>-<SS>-<slug>.tts` → `audio/<NN>-<SS>-<slug>.wav`, where `NN`
   is the module number and `SS` the section order (e.g. `01-02-the-cluster`). The
   stem is shared by the `.tts`, the `.wav`, and the manifest `audio` field. `SS`
-  keeps the Colab glob (`tts/*.tts`, sorted) in section order.
+  keeps the Colab glob (`tts/*.tts`, sorted) in section order. (This per-section
+  naming differs from the source curriculum, where one `.tts` matches the notebook
+  stem — here narration is split per `## ` section to align with the app's pages.)
 - **Generate** with `scripts/colab_generate_audio.ipynb` (ChatterboxTTS, Colab T4):
   one `.wav` per `.tts`, committed + pushed from the Colab VM. See README.
 
