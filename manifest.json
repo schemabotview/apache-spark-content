@@ -2,16 +2,9 @@
   "concept": "Apache Spark",
   "design": "DESIGN.md",
   "scenes": [
-    { "id": "spark-cluster",   "title": "The Spark cluster",         "status": "built" },
-    { "id": "spark-execution", "title": "Spark Execution Model",     "status": "built" },
-    { "id": "aqe",             "title": "Adaptive Query Execution",  "status": "todo" },
-    { "id": "spark-connect",   "title": "Spark Connect split driver","status": "todo" },
-    { "id": "spark-rdd-api",         "title": "RDD API — create / transform / act",  "status": "built" },
-    { "id": "spark-cache-persist",   "title": "Cache & persist — StorageLevel",      "status": "built" },
-    { "id": "apache-spark-api-stack","title": "RDD vs DataFrame vs SQL stack",       "status": "built" },
-    { "id": "rdd-partitions",        "title": "RDD partitions — unit of parallelism","status": "todo" },
-    { "id": "rdd-lineage",           "title": "RDD lineage — fault recovery",        "status": "todo" },
-    { "id": "rdd-narrow-wide",       "title": "Narrow vs wide transformations",      "status": "todo" }
+    { "id": "spark-execution",       "title": "Spark Execution Model",              "status": "built" },
+    { "id": "spark-rdd-api",         "title": "RDD API — create / transform / act", "status": "built" },
+    { "id": "apache-spark-api-stack","title": "RDD vs DataFrame vs SQL stack",      "status": "built" }
   ],
   "presentations": [
     {
