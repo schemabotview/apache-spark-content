@@ -25,9 +25,9 @@
         { "heading": ".explain() modes — seeing inside Catalyst",       "scene": "spark-execution", "spine": false, "highlight": ["physical"], "audio": "audio/01-10-explain-modes.wav" },
         { "heading": "Adaptive Query Execution (AQE)",                  "scene": "spark-execution", "spine": true,  "highlight": ["optimized", "dag"], "audio": "audio/01-11-adaptive-query-execution.wav" },
         { "heading": "The split-driver architecture",                   "scene": "spark-execution", "spine": false, "highlight": ["driver", "cluster"], "audio": "audio/01-12-split-driver-architecture.wav" },
-        { "heading": "Starting a server and connecting from a client",  "scene": "spark-execution", "spine": false, "audio": "audio/01-13-starting-a-server.wav" },
-        { "heading": "Detecting which mode you're in",                  "scene": "spark-execution", "spine": false, "audio": "audio/01-14-detecting-which-mode.wav" },
-        { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-execution", "spine": false, "audio": "audio/01-15-connect-compatibility.wav" }
+        { "heading": "Starting a server and connecting from a client",  "scene": "spark-execution", "spine": false, "highlight": ["driver", "cluster"], "audio": "audio/01-13-starting-a-server.wav" },
+        { "heading": "Detecting which mode you're in",                  "scene": "spark-execution", "spine": false, "highlight": ["cluster"], "audio": "audio/01-14-detecting-which-mode.wav" },
+        { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-execution", "spine": false, "highlight": ["driver"], "audio": "audio/01-15-connect-compatibility.wav" }
       ]
     },
     {
