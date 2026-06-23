@@ -18,23 +18,23 @@
       "id": "01-foundations",
       "title": "Foundations & Execution Model",
       "notebook": "notebooks/01-spark-foundations-execution-model.ipynb",
-      "defaultScene": "spark-cluster",
+      "defaultScene": "spark-execution",
       "sections": [
-        { "heading": "What Spark is — and the problem it solves",        "scene": "spark-cluster",   "spine": true, "role": "hook", "audio": "audio/01-01-what-spark-is.wav" },
-        { "heading": "The cluster — driver, executors, cluster manager", "scene": "spark-cluster",   "spine": true,  "audio": "audio/01-02-the-cluster.wav" },
+        { "heading": "What Spark is — and the problem it solves",        "scene": "spark-execution", "spine": true, "role": "hook", "audio": "audio/01-01-what-spark-is.wav" },
+        { "heading": "The cluster — driver, executors, cluster manager", "scene": "spark-execution", "spine": true,  "audio": "audio/01-02-the-cluster.wav" },
         { "heading": "From your code to distributed work",              "scene": "spark-execution", "spine": true,  "audio": "audio/01-03-code-to-distributed-work.wav" },
         { "heading": "Deployment modes — and when not to use Spark",     "scene": "spark-execution", "spine": true,  "audio": "audio/01-04-deployment-modes.wav" },
-        { "heading": "Setup — your first SparkSession",                 "scene": "spark-cluster",   "spine": false, "audio": "audio/01-05-setup-sparksession.wav" },
+        { "heading": "Setup — your first SparkSession",                 "scene": "spark-execution", "spine": false, "audio": "audio/01-05-setup-sparksession.wav" },
         { "heading": "Lazy evaluation — first taste",                   "scene": "spark-execution", "spine": true,  "audio": "audio/01-06-lazy-evaluation-first-taste.wav" },
         { "heading": "Lazy evaluation, in depth",                       "scene": "spark-execution", "spine": true,  "audio": "audio/01-07-lazy-evaluation-in-depth.wav" },
         { "heading": "The four Catalyst plans",                         "scene": "spark-execution", "spine": true,  "audio": "audio/01-08-catalyst-plans.wav" },
         { "heading": "Tungsten — making the JVM go fast",               "scene": "spark-execution", "spine": false, "audio": "audio/01-09-tungsten.wav" },
         { "heading": ".explain() modes — seeing inside Catalyst",       "scene": "spark-execution", "spine": false, "audio": "audio/01-10-explain-modes.wav" },
         { "heading": "Adaptive Query Execution (AQE)",                  "scene": "spark-execution", "spine": true,  "audio": "audio/01-11-adaptive-query-execution.wav" },
-        { "heading": "The split-driver architecture",                   "scene": "spark-cluster",   "spine": false, "audio": "audio/01-12-split-driver-architecture.wav" },
-        { "heading": "Starting a server and connecting from a client",  "scene": "spark-cluster",   "spine": false, "audio": "audio/01-13-starting-a-server.wav" },
-        { "heading": "Detecting which mode you're in",                  "scene": "spark-cluster",   "spine": false, "audio": "audio/01-14-detecting-which-mode.wav" },
-        { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-cluster",   "spine": false, "audio": "audio/01-15-connect-compatibility.wav" }
+        { "heading": "The split-driver architecture",                   "scene": "spark-execution", "spine": false, "audio": "audio/01-12-split-driver-architecture.wav" },
+        { "heading": "Starting a server and connecting from a client",  "scene": "spark-execution", "spine": false, "audio": "audio/01-13-starting-a-server.wav" },
+        { "heading": "Detecting which mode you're in",                  "scene": "spark-execution", "spine": false, "audio": "audio/01-14-detecting-which-mode.wav" },
+        { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-execution", "spine": false, "audio": "audio/01-15-connect-compatibility.wav" }
       ]
     },
     {
@@ -43,18 +43,18 @@
       "notebook": "notebooks/02-rdd-api.ipynb",
       "defaultScene": "spark-rdd-api",
       "sections": [
-        { "heading": "What an RDD actually is",                                          "scene": "spark-rdd-api",          "spine": true,  "role": "hook", "audio": "audio/02-01-what-an-rdd-is.wav" },
-        { "heading": "Partitions — the unit of parallelism",                             "scene": "rdd-partitions",         "spine": true,  "audio": "audio/02-02-partitions.wav" },
-        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "rdd-lineage",            "spine": true,  "audio": "audio/02-03-lineage.wav" },
-        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-execution",        "spine": false, "audio": "audio/02-04-sparkcontext.wav" },
-        { "heading": "Creating RDDs",                                                    "scene": "spark-rdd-api",          "spine": false, "audio": "audio/02-05-creating-rdds.wav" },
-        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-rdd-api",          "spine": true,  "audio": "audio/02-06-transformations-and-actions.wav" },
-        { "heading": "Narrow vs wide transformations",                                   "scene": "rdd-narrow-wide",        "spine": true,  "audio": "audio/02-07-narrow-vs-wide.wav" },
-        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-rdd-api",          "spine": true,  "audio": "audio/02-08-pair-rdds.wav" },
-        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-cache-persist",    "spine": false, "audio": "audio/02-09-persistence.wav" },
-        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "rdd-partitions",         "spine": false, "audio": "audio/02-10-partition-level-operations.wav" },
-        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-rdd-api",          "spine": false, "audio": "audio/02-11-shared-variables.wav" },
-        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "apache-spark-api-stack", "spine": true,  "audio": "audio/02-12-rdd-vs-dataframe.wav" }
+        { "heading": "What an RDD actually is",                                          "scene": "spark-rdd-api", "spine": true,  "role": "hook", "audio": "audio/02-01-what-an-rdd-is.wav" },
+        { "heading": "Partitions — the unit of parallelism",                             "scene": "spark-rdd-api", "spine": true,  "audio": "audio/02-02-partitions.wav" },
+        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "spark-rdd-api", "spine": true,  "audio": "audio/02-03-lineage.wav" },
+        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-rdd-api", "spine": false, "audio": "audio/02-04-sparkcontext.wav" },
+        { "heading": "Creating RDDs",                                                    "scene": "spark-rdd-api", "spine": false, "audio": "audio/02-05-creating-rdds.wav" },
+        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-rdd-api", "spine": true,  "audio": "audio/02-06-transformations-and-actions.wav" },
+        { "heading": "Narrow vs wide transformations",                                   "scene": "spark-rdd-api", "spine": true,  "audio": "audio/02-07-narrow-vs-wide.wav" },
+        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-rdd-api", "spine": true,  "audio": "audio/02-08-pair-rdds.wav" },
+        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-rdd-api", "spine": false, "audio": "audio/02-09-persistence.wav" },
+        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "spark-rdd-api", "spine": false, "audio": "audio/02-10-partition-level-operations.wav" },
+        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-rdd-api", "spine": false, "audio": "audio/02-11-shared-variables.wav" },
+        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "spark-rdd-api", "spine": true,  "audio": "audio/02-12-rdd-vs-dataframe.wav" }
       ]
     }
   ]
