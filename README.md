@@ -12,7 +12,7 @@ apache-spark-content/
   DESIGN.md         # the visual house style (calm filled blocks, palette, reel chrome)
   MODULES.md        # the curated module/section outline + spine/depth tiering
   notebooks/        # the 9 teaching .ipynb (the prose + code source of truth)
-  scenes/           # SceneSpec JSON per scene (target home; see Status)
+  scenes/           # reserved — scenes live in the graphl-ux app (src/scenes), not here
   tts/              # per-section narration scripts (plain spoken prose)
   audio/            # generated .wav narration
 ```
@@ -27,7 +27,9 @@ apache-spark-content/
   `spine` flag (drives feed-mode flow), an optional `role` (e.g. `hook`), and
   (later) an `audio` stem. Sections are matched to the overlay by normalized heading.
 - A **scene** is a reusable `SceneSpec` (portrait 800×1200) referenced by id from
-  many sections. Authored with the engine's pattern helpers; styled per `DESIGN.md`.
+  many sections. Scenes are authored and bundled in the **graphl-ux app**
+  (`src/scenes`, with the engine's pattern helpers) — they are **not** served from
+  this repo. Styled per `DESIGN.md`.
 
 ## Source
 
@@ -40,9 +42,11 @@ See `MODULES.md` for the module list, section outline, and the spine/depth tieri
 sections, each mapped to a scene (`spark-cluster` or `spark-execution`) with spine
 flags. One narration clip exists (`audio/spark-execution.wav`).
 
-Interim, vs the target contract:
-- **Scenes live in app code** (`src/scenes/*.ts`), not yet as `scenes/*.json` here.
+**Serving.** graphl-ux fetches this repo at runtime over raw GitHub
+(`https://raw.githubusercontent.com/schemabotview/apache-spark-content/main/…`,
+configurable via the app's `VITE_CONTENT_BASE_URL`). No app build bundles this
+content; the app ships only the render engine + scenes.
+
+Still interim:
 - **Audio is per-scene**, not per-section; `tts/` scripts not yet generated.
-- The app currently **imports** the notebook + audio directly (bundled); the runtime
-  content client that fetches from this repo is not built yet.
 - Modules 02–09 are present as notebooks but not yet wired in the manifest.
