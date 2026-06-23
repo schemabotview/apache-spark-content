@@ -31,7 +31,7 @@ executable is `scripts/colab_generate_audio.ipynb`, a Colab tool that turns the
 ## Layout
 
 ```
-manifest.json   # wires module 01: notebook ref + per-section overlay (scene/spine/role/audio)
+manifest.json   # wires module 01: notebook ref + per-section overlay (scene/spine/role/audio/highlight)
 DESIGN.md       # FIXED visual house style — palette, calm filled blocks, spotlight
 MODULES.md      # the curated 9-module / per-section outline + spine/depth tiering
 notebooks/      # the teaching .ipynb (prose + code source of truth) — 01..10
@@ -49,8 +49,12 @@ scripts/        # colab_generate_audio.ipynb — tts/*.tts -> audio/*.wav on a C
   `sections[]`.
 - Each section overlay: `heading` (must match a notebook `## ` heading, normalized),
   `scene` (a scene id), `spine` (bool — drives feed-mode linear narration), an
-  optional `role` (e.g. `"hook"`), and an optional `audio` (a repo-relative path,
-  e.g. `"audio/01-02-the-cluster.wav"`) for that section's narration clip.
+  optional `role` (e.g. `"hook"`), an optional `audio` (a repo-relative path,
+  e.g. `"audio/01-02-the-cluster.wav"`) for that section's narration clip, and an
+  optional `highlight` (string[] of scene **node ids**) — those nodes light AMBER for
+  the section and the rest dim back; omit it to show the scene full-strength (e.g. the
+  module hook). Spotlighting a container also lights its children. Module 01 is fully
+  highlighted; the node ids live in the scene's TS (graphl-ux `src/scenes`).
 
 ## Narration (per-section TTS)
 
