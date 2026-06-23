@@ -14,8 +14,7 @@
       "notebook": "notebooks/01-spark-foundations-execution-model.ipynb",
       "defaultScene": "spark-cluster",
       "sections": [
-        { "heading": "What's covered",                                  "scene": "spark-cluster",   "spine": false, "role": "hook" },
-        { "heading": "What Spark is — and the problem it solves",        "scene": "spark-cluster",   "spine": true },
+        { "heading": "What Spark is — and the problem it solves",        "scene": "spark-cluster",   "spine": true, "role": "hook" },
         { "heading": "The cluster — driver, executors, cluster manager", "scene": "spark-cluster",   "spine": true },
         { "heading": "From your code to distributed work",              "scene": "spark-execution", "spine": true },
         { "heading": "Deployment modes — and when not to use Spark",     "scene": "spark-execution", "spine": true },
