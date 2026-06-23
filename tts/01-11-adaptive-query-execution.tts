@@ -1,0 +1,13 @@
+Adaptive query execution.
+
+Before Spark three point zero, Catalyst made all decisions upfront using estimated statistics. Adaptive query execution re-optimizes the plan at runtime, after each shuffle, using real partition statistics.
+
+There are three things adaptive query execution actually does.
+
+First, dynamic coalescing. After a shuffle produces, say, two hundred partitions but most are tiny, it merges them into a smaller number of right-sized partitions. Fewer task-startup overheads.
+
+Second, dynamic join strategy switch. A sort-merge join can be promoted to a broadcast join at runtime if one side turns out small enough.
+
+Third, skew join handling. It splits oversized partitions so one slow task does not block the entire stage. We come back to skew in detail in the performance notebook.
+
+Adaptive query execution is enabled by default since Spark three point two. The notebook runs the same group-by aggregation with it on and off, then prints the output partition count for each. With adaptive on, the partition count is small — coalesced from the default two hundred. With it off, the count sits at two hundred.

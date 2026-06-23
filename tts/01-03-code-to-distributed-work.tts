@@ -1,0 +1,13 @@
+From your code to distributed work.
+
+When you write a chain like filter, then group-by, then count, here is what happens behind the scenes.
+
+The driver builds a logical plan from your dataframe chain. The Catalyst optimizer rewrites it — pushing filters down, reordering joins, dropping unused columns. The plan becomes a physical plan, then a directed acyclic graph of stages. Each stage splits into tasks — one task per partition. Tasks ship to executors and run in parallel across their see-pee-you cores.
+
+Three vocabulary words to lock in now, because they show up on the exam.
+
+A job is what one action triggers. One count call equals one job.
+
+A stage is a slice of work between shuffles. A new shuffle starts a new stage.
+
+A task is the smallest unit of work. One partition, processed by one executor core.

@@ -1,0 +1,17 @@
+Lazy evaluation, in depth.
+
+You have seen the rule from the outside — transformations are lazy, actions trigger work. Now we peel back the layers. There are four to walk through, top to bottom.
+
+Catalyst, the rule-based optimizer that rewrites your plan in four phases before any executor sees it.
+
+Tungsten, the runtime layer that makes the optimized plan fast on the java virtual machine, through off-heap memory and whole-stage code generation.
+
+Explain, your window into all of the above.
+
+And adaptive query execution, runtime re-optimization that adjusts the plan after shuffles, using real statistics instead of estimates.
+
+The thread tying these together is one sentence. Catalyst can only optimize what it can see, and it can only see the whole pipeline because nothing has run yet. Lazy evaluation is the precondition. Catalyst, Tungsten, and adaptive query execution are what Spark does with that visibility.
+
+The piece worth remembering: transformations are lazy and return another dataframe; actions are eager, trigger execution, and return a value, a file, or printed output. Common transformations are select, filter, with-column, group-by, join, and order-by. Common actions are show, count, collect, take, first, and write.
+
+Because Spark is lazy, four things happen. Filters get pushed early — a filter you declared at the end of the chain may execute right next to the data scan. Unused columns get pruned before reading. Multiple narrow transformations get fused into one tight loop using whole-stage code generation. And if you never call an action, no work runs at all.

@@ -1,0 +1,7 @@
+Detecting which mode you're in.
+
+Builders look identical at the call site but they resolve to two different SparkSession classes. The classic one lives in the module pyspark dot sql dot session. The Connect one lives in pyspark dot sql dot connect dot session. Same method names, different capabilities.
+
+This is a real exam trap. You can also walk into it accidentally if the spark remote environment variable is set, because get-or-create will silently hand you a Connect session even when you wrote a builder chain that looks classic.
+
+To check which one you have, look at the module that the type of your spark session belongs to. If the string connect appears in the module name, you are in Connect mode.

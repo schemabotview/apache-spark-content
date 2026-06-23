@@ -1,0 +1,11 @@
+Tungsten — making the java virtual machine go fast.
+
+Catalyst gives you the right plan. Tungsten makes that plan run fast on the java virtual machine. There are two ideas.
+
+First, off-heap memory management. Spark allocates structured binary buffers off the java virtual machine heap, bypassing the garbage collector. The result is less garbage collector pause time and cache-friendlier memory layouts.
+
+Second, whole-stage code generation. For each stage, Catalyst generates a single tightly-fused java virtual machine method that processes a row through every operator at once — filter, then project, then aggregate, all in one loop. One method per stage, instead of one method call per operator per row.
+
+This is why dataframes beat r-d-d's on structured data. R-d-d's have no schema, so Tungsten cannot lay them out efficiently or generate per-stage code. With dataframes, the schema is a contract Tungsten can compile against.
+
+You will see the proof in the next section. The physical plan for a dataframe query is wrapped in a whole stage code generation block.

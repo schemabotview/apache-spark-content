@@ -1,0 +1,15 @@
+Explain modes — seeing inside Catalyst.
+
+The explain method has five modes you can pass.
+
+Simple, the default, shows just the physical plan.
+
+Extended shows all four plans — parsed, analyzed, optimized, and physical.
+
+Codegen shows the generated java virtual machine code per stage.
+
+Cost shows the optimized plan with row-count estimates per node.
+
+Formatted shows the physical plan plus a separate operator-details section.
+
+Same query, multiple lenses. The notebook runs a small group-by aggregation against the five-customer dataframe through three of the modes — simple, extended, and formatted — so you can compare what each one shows.

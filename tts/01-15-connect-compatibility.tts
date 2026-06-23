@@ -1,0 +1,9 @@
+What works and what doesn't in Connect mode.
+
+The dataframe and sql ay-pee-eyes are the supported surface. That is deliberate, because those describe a plan that can be serialized. Anything that depends on direct java virtual machine access from the client cannot work.
+
+Things that work include all dataframe and dataset operations, the spark dot sql call, the read and write methods, the entire built-in functions library, pandas user defined functions, regular Python user defined functions, structured streaming since three point five, and the pandas ay-pee-eye on Spark since three point five. Most catalog listings work too.
+
+Things that do not work include direct access to spark context, the entire r-d-d ay-pee-eye, internal Py-four-J handles like spark underscore j-v-m and spark underscore j-s-c, and adding jars from the client at runtime. Jars must already be on the server classpath.
+
+The takeaway for the exam: if a question mentions spark context, r-d-d, or injecting jars from the client, that code is incompatible with Spark Connect. If it sticks to dataframe, sql, and built-in or registered user defined functions, it works.

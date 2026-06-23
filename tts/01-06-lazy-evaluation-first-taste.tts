@@ -1,0 +1,17 @@
+Lazy evaluation — first taste.
+
+Spark operations split into two kinds.
+
+Transformations — like filter, select, group-by, and join — build the recipe. Nothing actually runs.
+
+Actions — like count, show, collect, and write — trigger execution against the recipe.
+
+Why does this matter? By the time you call an action, Spark sees the entire chain of transformations and can plan the most efficient execution. If transformations ran eagerly, each step would commit before the next, and the optimizer would have nothing to optimize.
+
+To make this concrete, picture five bank customers in a small in-memory dataframe — customer id, full name, city, and credit score. You chain a filter, keeping only customers with credit score seven hundred or higher, then a select narrowing down to three columns. At this point, nothing has executed. Spark has just recorded the recipe.
+
+You can ask Spark to print the plan it built, using the explain method. The plan will already show that Catalyst pushed the filter close to the data scan — a free optimization Spark made on your behalf.
+
+Then you call show. Show is an action. That is the moment Spark actually runs the job and brings rows back to the driver to print.
+
+One more pass to confirm a multi-step query works end to end. Register the same five customers as a temporary sql view, then run a query that groups by city, counts the customers, computes the average credit score, and orders the result from highest to lowest. The point: the same engine that runs the dataframe ay-pee-eye also runs sql, and they compile down to the exact same execution plan.

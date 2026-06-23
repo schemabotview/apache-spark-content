@@ -14,21 +14,21 @@
       "notebook": "notebooks/01-spark-foundations-execution-model.ipynb",
       "defaultScene": "spark-cluster",
       "sections": [
-        { "heading": "What Spark is — and the problem it solves",        "scene": "spark-cluster",   "spine": true, "role": "hook" },
-        { "heading": "The cluster — driver, executors, cluster manager", "scene": "spark-cluster",   "spine": true },
-        { "heading": "From your code to distributed work",              "scene": "spark-execution", "spine": true },
-        { "heading": "Deployment modes — and when not to use Spark",     "scene": "spark-execution", "spine": true },
-        { "heading": "Setup — your first SparkSession",                 "scene": "spark-cluster",   "spine": false },
-        { "heading": "Lazy evaluation — first taste",                   "scene": "spark-execution", "spine": true },
-        { "heading": "Lazy evaluation, in depth",                       "scene": "spark-execution", "spine": true },
-        { "heading": "The four Catalyst plans",                         "scene": "spark-execution", "spine": true },
-        { "heading": "Tungsten — making the JVM go fast",               "scene": "spark-execution", "spine": false },
-        { "heading": ".explain() modes — seeing inside Catalyst",       "scene": "spark-execution", "spine": false },
-        { "heading": "Adaptive Query Execution (AQE)",                  "scene": "spark-execution", "spine": true },
-        { "heading": "The split-driver architecture",                   "scene": "spark-cluster",   "spine": false },
-        { "heading": "Starting a server and connecting from a client",  "scene": "spark-cluster",   "spine": false },
-        { "heading": "Detecting which mode you're in",                  "scene": "spark-cluster",   "spine": false },
-        { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-cluster",   "spine": false }
+        { "heading": "What Spark is — and the problem it solves",        "scene": "spark-cluster",   "spine": true, "role": "hook", "audio": "audio/01-01-what-spark-is.wav" },
+        { "heading": "The cluster — driver, executors, cluster manager", "scene": "spark-cluster",   "spine": true,  "audio": "audio/01-02-the-cluster.wav" },
+        { "heading": "From your code to distributed work",              "scene": "spark-execution", "spine": true,  "audio": "audio/01-03-code-to-distributed-work.wav" },
+        { "heading": "Deployment modes — and when not to use Spark",     "scene": "spark-execution", "spine": true,  "audio": "audio/01-04-deployment-modes.wav" },
+        { "heading": "Setup — your first SparkSession",                 "scene": "spark-cluster",   "spine": false, "audio": "audio/01-05-setup-sparksession.wav" },
+        { "heading": "Lazy evaluation — first taste",                   "scene": "spark-execution", "spine": true,  "audio": "audio/01-06-lazy-evaluation-first-taste.wav" },
+        { "heading": "Lazy evaluation, in depth",                       "scene": "spark-execution", "spine": true,  "audio": "audio/01-07-lazy-evaluation-in-depth.wav" },
+        { "heading": "The four Catalyst plans",                         "scene": "spark-execution", "spine": true,  "audio": "audio/01-08-catalyst-plans.wav" },
+        { "heading": "Tungsten — making the JVM go fast",               "scene": "spark-execution", "spine": false, "audio": "audio/01-09-tungsten.wav" },
+        { "heading": ".explain() modes — seeing inside Catalyst",       "scene": "spark-execution", "spine": false, "audio": "audio/01-10-explain-modes.wav" },
+        { "heading": "Adaptive Query Execution (AQE)",                  "scene": "spark-execution", "spine": true,  "audio": "audio/01-11-adaptive-query-execution.wav" },
+        { "heading": "The split-driver architecture",                   "scene": "spark-cluster",   "spine": false, "audio": "audio/01-12-split-driver-architecture.wav" },
+        { "heading": "Starting a server and connecting from a client",  "scene": "spark-cluster",   "spine": false, "audio": "audio/01-13-starting-a-server.wav" },
+        { "heading": "Detecting which mode you're in",                  "scene": "spark-cluster",   "spine": false, "audio": "audio/01-14-detecting-which-mode.wav" },
+        { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-cluster",   "spine": false, "audio": "audio/01-15-connect-compatibility.wav" }
       ]
     }
   ]

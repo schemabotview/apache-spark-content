@@ -1,0 +1,11 @@
+What Spark is, and the problem it solves.
+
+Imagine a CSV with two hundred gigabytes of bank transactions and a laptop with sixteen gigabytes of ram. Pandas crashes the moment you try to load it. You could split the file into chunks and loop through them, but you now own a small distributed system. Which chunks finished, which failed, and how do you do a group-by that spans the whole file?
+
+Spark exists because this pattern keeps appearing past a few hundred gigabytes. Data too big for one machine, work that needs to be coordinated across many. Instead of writing your own chunking and coordination layer, Spark gives you one engine that handles it, behind a familiar table-shaped ay-pee-eye.
+
+So what is it, actually. Apache Spark is a distributed compute engine. You write code as if you have one giant table. Spark slices the data into pieces called partitions, assigns each piece to a machine — telling it which file and byte range to read — runs your code on each in parallel, and brings the result back.
+
+Here is the mental shift from pandas. Pandas runs your code in one process, on one machine, against memory it owns directly. Spark runs a plan you describe, across many processes, on many machines. You never move data between machines by hand. Spark does that for you.
+
+One more idea before we go further: memory-first execution. The big leap over the previous generation, hadoop mapreduce, comes down to a single design choice. Keep intermediate results in executor ram instead of writing them to disk between every step. A multi-step pipeline used to do a full disk round-trip per step. In Spark, data stays in memory until something forces it out. That one decision is most of Spark's speed advantage — caching, broadcast joins, and the rest are details on top of it.

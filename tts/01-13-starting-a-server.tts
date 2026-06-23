@@ -1,0 +1,7 @@
+Starting a server and connecting from a client.
+
+On a machine with Spark installed, you run a start script called start dash connect dash server, passing in the spark connect package. The server starts listening on port one-five-zero-zero-two by default.
+
+From the client side, you build a SparkSession the usual way, but you call remote with a URL in the form s-c colon slash slash host colon port. The same can also be set through an environment variable called spark remote, which the get-or-create call picks up automatically.
+
+Authentication, t-l-s, and session tokens are passed as parameters appended to the URL itself.

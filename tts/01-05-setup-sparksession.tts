@@ -1,0 +1,7 @@
+Setup — your first SparkSession.
+
+To run the notebook locally, you need java seventeen or higher installed. Then pip install pyspark version three point five point three.
+
+The pattern is the same every time. Build a SparkSession builder, give it an app name, point it at local mode, and call get-or-create. The returned object is your handle to everything Spark — reading data, registering views, running queries.
+
+One key note on get-or-create. It is sticky. If a SparkSession already exists in your kernel — from a previous cell, a previous notebook, or anywhere else — the builder returns that existing session and silently ignores any new configuration you set on the new builder. To pick up new config in a running notebook, you have to call spark dot stop first, then build again.

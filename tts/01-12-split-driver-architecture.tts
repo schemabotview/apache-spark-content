@@ -1,0 +1,15 @@
+The split-driver architecture.
+
+Everything so far assumed the classic model. Your Python process is the driver, talking to a java virtual machine running inside the same process. Spark Connect breaks that link. The driver becomes a long-lived server, and your client is a thin library that ships plans over the wire. The dataframe ay-pee-eye does not change — what changes is where the java virtual machine lives, who owns it, and what kinds of code can run on the client.
+
+Let's look closer. In classic mode, your Python process is the driver. PySpark talks to a java virtual machine in the same process through a bridge called Py-four-J. That java virtual machine holds the spark context and coordinates the executors. Your script and the Spark driver share a lifetime — when the script exits, the driver dies.
+
+Spark Connect breaks that link. The Spark driver runs as a long-lived server. Your client is a thin library that builds an unresolved logical plan, sends it over g-r-p-c, and receives results back as Arrow batches. The cluster keeps running between client connections.
+
+Think of it like jay-d-b-c. The database server is one process, your application is another, and they speak a protocol. Spark Connect does the same for Spark.
+
+The key thing to notice is that the client side has no java virtual machine. That is the whole point. Your client can be a tiny Python script, a Jupyter notebook, an integrated development environment, or a Go program. None of them need to bundle Spark.
+
+Why does Spark Connect exist? The classic model has friction in four places that Connect fixes. One, client and driver share one java virtual machine, leading to version mismatches and dependency conflicts; Connect makes the client a thin library, so the server controls all java virtual machine dependencies. Two, it is hard to use Spark from non-jay-v-m languages; with Connect, any language with a g-r-p-c stub can be a client. Three, long-lived development sessions are awkward in the classic model, because a notebook restart kills the driver; in Connect, the server lives independently and clients connect and disconnect freely. Four, upgrading Spark requires every client to match the cluster; with Connect, client and server can be on different Spark versions, within protocol compatibility limits.
+
+Spark Connect became generally available in Spark three point five. Databricks Connect, the proprietary client used by integrated development environments against Databricks workspaces, is built on top of it.

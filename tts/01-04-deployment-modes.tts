@@ -1,0 +1,27 @@
+Deployment modes — and when not to use Spark.
+
+How do the driver and executors actually get placed onto machines?
+
+Local mode means everything runs in one java virtual machine on your laptop. This is the mode the notebook uses. Writing local in square brackets with an asterisk means use all available cores.
+
+Standalone is Spark's built-in cluster manager. Simple, no external dependency.
+
+Yarn runs on hadoop clusters. You will see this in legacy on-premise stacks.
+
+Kubernetes runs the driver and executors as pods. This is the modern cloud-native default.
+
+Databricks is a managed Spark platform. The cluster manager is hidden behind the platform itself.
+
+For learning, local mode is plenty. For the exam, you should at minimum recognize each name and what it runs on.
+
+Now, a word on when Spark is the wrong tool.
+
+First, when your data fits comfortably in pandas. Below roughly ten gigabytes on a modern laptop, pandas is faster, simpler, and has no cluster overhead.
+
+Second, when you need single-row, sub-millisecond lookups. Spark is throughput-optimized, not latency-optimized. For that workload, reach for postgres, dynamodb, or redis.
+
+Third, when you need online transaction processing semantics — transactions across many concurrent writers. Spark is for analytical workloads, read-heavy and write-batched. It is not a transactional database.
+
+Fourth, when you only need a scheduled script. A cron job plus a Python script can be the right answer. Reach for Spark when scale or fault tolerance actually demand it.
+
+The honest rule: Spark earns its complexity when single-machine tools stop working.
