@@ -127,16 +127,20 @@ Notebooks are copied as-is from the runnable curriculum at
 
 ## Current status
 
-- **Module 01 (Foundations & Execution Model)** is wired in `manifest.json`: 15
-  sections, each mapped to `spark-cluster` or `spark-execution` with spine flags
-  and a per-section `audio` stem.
-- Scenes `spark-cluster` and `spark-execution` are built (in graphl-ux); `aqe` and
-  `spark-connect` are `todo`.
-- **Narration:** all 15 `tts/01-NN-*.tts` scripts are written (per-section). Their
-  `.wav`s still need a Colab generation pass (`scripts/colab_generate_audio.ipynb`);
-  until then the app falls back to the legacy per-scene `audio/spark-execution.wav`.
-- **Modules 02–09** exist as notebooks but are **not yet wired** in the manifest
-  (no `tts/`/`audio/` for them yet).
+- **One dense scene per module** (an app-side decision): module 01 = `spark-execution`,
+  module 02 = `spark-rdd-api`. Every section in a module points at that one scene, so
+  the app pages across slides without swapping the diagram. The `scenes[]` catalog now
+  lists just `spark-execution`, `spark-rdd-api`, `apache-spark-api-stack` (the five
+  earlier per-section scenes and the unbuilt `aqe`/`spark-connect` were dropped).
+- **Module 01 (Foundations & Execution Model)** wired: 15 sections, all `spark-execution`,
+  with spine flags and a per-section `audio` stem.
+- **Module 02 (RDD API)** wired: 12 sections, all `spark-rdd-api`, with spine flags and
+  per-section `audio` stems.
+- **Narration:** module 01's 15 `tts/01-NN-*.tts` scripts are written (per-section).
+  The `.wav`s still need a Colab generation pass (`scripts/colab_generate_audio.ipynb`).
+  Module 02's `tts/`/`audio/` are not authored yet. A section with a missing `.wav`
+  404s in the app (its auto-advance stops there) rather than narrating.
+- **Modules 03–09** exist as notebooks but are **not yet wired** in the manifest.
 - Module 10 (exam questions) and the hands-on project are **parked for phase 2**.
 
 ## When adding/wiring a module
