@@ -5,7 +5,13 @@
     { "id": "spark-cluster",   "title": "The Spark cluster",         "status": "built" },
     { "id": "spark-execution", "title": "Spark Execution Model",     "status": "built" },
     { "id": "aqe",             "title": "Adaptive Query Execution",  "status": "todo" },
-    { "id": "spark-connect",   "title": "Spark Connect split driver","status": "todo" }
+    { "id": "spark-connect",   "title": "Spark Connect split driver","status": "todo" },
+    { "id": "spark-rdd-api",         "title": "RDD API — create / transform / act",  "status": "built" },
+    { "id": "spark-cache-persist",   "title": "Cache & persist — StorageLevel",      "status": "built" },
+    { "id": "apache-spark-api-stack","title": "RDD vs DataFrame vs SQL stack",       "status": "built" },
+    { "id": "rdd-partitions",        "title": "RDD partitions — unit of parallelism","status": "todo" },
+    { "id": "rdd-lineage",           "title": "RDD lineage — fault recovery",        "status": "todo" },
+    { "id": "rdd-narrow-wide",       "title": "Narrow vs wide transformations",      "status": "todo" }
   ],
   "presentations": [
     {
@@ -29,6 +35,26 @@
         { "heading": "Starting a server and connecting from a client",  "scene": "spark-cluster",   "spine": false, "audio": "audio/01-13-starting-a-server.wav" },
         { "heading": "Detecting which mode you're in",                  "scene": "spark-cluster",   "spine": false, "audio": "audio/01-14-detecting-which-mode.wav" },
         { "heading": "What works and what doesn't in Connect mode",     "scene": "spark-cluster",   "spine": false, "audio": "audio/01-15-connect-compatibility.wav" }
+      ]
+    },
+    {
+      "id": "02-rdd-api",
+      "title": "RDD API",
+      "notebook": "notebooks/02-rdd-api.ipynb",
+      "defaultScene": "spark-rdd-api",
+      "sections": [
+        { "heading": "What an RDD actually is",                                          "scene": "spark-rdd-api",          "spine": true,  "role": "hook" },
+        { "heading": "Partitions — the unit of parallelism",                             "scene": "rdd-partitions",         "spine": true  },
+        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "rdd-lineage",            "spine": true  },
+        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-execution",        "spine": false },
+        { "heading": "Creating RDDs",                                                    "scene": "spark-rdd-api",          "spine": false },
+        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-rdd-api",          "spine": true  },
+        { "heading": "Narrow vs wide transformations",                                   "scene": "rdd-narrow-wide",        "spine": true  },
+        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-rdd-api",          "spine": true  },
+        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-cache-persist",    "spine": false },
+        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "rdd-partitions",         "spine": false },
+        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-rdd-api",          "spine": false },
+        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "apache-spark-api-stack", "spine": true  }
       ]
     }
   ]
