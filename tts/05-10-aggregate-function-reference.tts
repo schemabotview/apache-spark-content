@@ -1,0 +1,11 @@
+The aggregate function reference.
+
+Once you are inside an aggregate, Spark gives you a rich catalog of functions, and a few details are worth carrying with you.
+
+Start with counting. Count of a column counts only the non-null values, while count of star counts every row. That distinction matters when a column has nulls. Sum, average, minimum, and maximum are the everyday measures — and remember sum, min, and max collide with Python built-ins, so import them aliased.
+
+Distinct counting has two flavors. Count-distinct gives an exact answer, but it requires a full shuffle and is expensive on large data. When an approximate answer is acceptable, approximate-count-distinct uses an algorithm called hyper-log-log and is dramatically cheaper. On billions of rows, that trade is often well worth it.
+
+There are two functions that gather values rather than reduce them. Collect-list pulls all the values in a group into an array, keeping duplicates, and collect-set does the same but keeps only the unique values.
+
+And finally, first and last return the first or last value within a group — but they are only meaningful when you have established an order upstream, otherwise the result is arbitrary. Standard deviation and variance round out the statistical set.

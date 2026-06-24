@@ -1,0 +1,11 @@
+Array functions.
+
+Array columns are first-class citizens in Spark, and the function library has both builders that create arrays and flatteners that break them apart.
+
+On the building side, the array function assembles an array from several columns or literals. Array-contains asks whether a value is present and returns a boolean. Size gives you the element count. And there is a full set of array set operations — distinct, union, intersect, and except — that work element-wise.
+
+On the flattening side, the most important function is explode. Explode turns one row with an array of n elements into n separate rows, one per element. It is how you go from a compact array representation to a long, one-row-per-item shape ready for grouping.
+
+There is a subtlety with nulls that the exam loves. Plain explode drops rows whose array is null entirely — they vanish from the output. If you need those rows to survive, use explode-outer, which keeps a null-array row as a single row with a null value. The related pos-explode also hands you the index alongside each element.
+
+And flatten collapses an array of arrays down by exactly one level — useful, but remember it is one level only, not a deep flatten.

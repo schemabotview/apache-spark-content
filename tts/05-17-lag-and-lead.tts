@@ -1,0 +1,9 @@
+Lag and lead.
+
+These two window functions let a row look at its neighbors. Within a partition, and following the order you defined, lag reaches backward a number of rows, and lead reaches forward. So lag of one gives you the previous row's value, and lead of one gives you the next row's value, lined up right beside the current row.
+
+Both take an optional default for the edges. At the very first row of a partition there is no previous row, and at the very last there is no next row. Without a default, those boundary cases come back as null; with one, you can fill them with whatever makes sense.
+
+What makes these so useful is delta calculations — anything that compares a row to the one before or after it. Days since the customer's previous transaction. The change in balance from one statement to the next. Time until the next event. All of these are a single lag or lead, followed by a subtraction, with no self-join anywhere in sight.
+
+That is the real payoff. The old way to compare consecutive rows was an expensive self-join. Lag and lead do it in one pass over the ordered partition, which is both faster and far easier to read.

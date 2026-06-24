@@ -1,0 +1,9 @@
+Window functions — the concept and the spec.
+
+This is one of the most powerful ideas in Spark, and the one that most repays understanding. A window function computes a value for each row using a frame of neighboring rows around it. The crucial contrast with group-by is that the original rows survive. Nothing collapses. You add a computed column — a rank, a running total, a previous value — while every row stays right where it is.
+
+A window specification has three parts. The first is partition-by, which groups the rows; the frame resets at every partition boundary, just like a group-by would split them. The second is order-by, which defines the order of rows within each partition — essential, because rank and running total only mean something in a defined order. The third is the frame itself, which says exactly which rows around the current one to include.
+
+That frame is defined one of two ways — by physical row offsets, or by the value range of the order-by column. And there are three boundary constants to anchor it — unbounded-preceding for the start of the partition, current-row for the current position, and unbounded-following for the end.
+
+The defaults differ by function, and this catches people. Ranking functions ignore the frame entirely. Aggregate functions, used over a window, default to a running frame from the start of the partition to the current row. Knowing that default explains a lot of "why is this a running total" surprise.

@@ -1,0 +1,9 @@
+Sampling.
+
+Sometimes you want a random subset of your data — for a quick exploration, for a test run, or to balance classes. Spark gives you two methods.
+
+The first is sample. You give it a fraction, and each row independently survives with that probability. The important word is approximate — a fraction of point one does not give you exactly ten percent of the rows, it gives you roughly ten percent, because each row is decided by its own coin flip. There is also a with-replacement variant that allows a fraction above one and lets rows repeat.
+
+The second is sample-by, which does stratified sampling. Instead of one rate for everything, you give a different rate per category. So you might keep five percent of approved transactions, fifty percent of declined ones, and all of the reversed ones. This preserves, or deliberately reshapes, the distribution across categories — invaluable when one class is rare and you do not want to lose it.
+
+Two habits. Always pass a seed if you want the same sample on every run; without it, each run draws fresh. And prefer sample over filtering on a random number. They are mathematically the same, but Spark recognizes sample and can push it down into the scan layer, so fewer rows are ever decoded.

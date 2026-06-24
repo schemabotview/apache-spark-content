@@ -1,0 +1,9 @@
+Conditional columns — when and otherwise.
+
+This is Spark's version of a case-when expression. You chain a when for each branch, giving a condition and a result, and you finish with an otherwise for the default. And you should always provide that otherwise — leave it off, and any unmatched row silently becomes null.
+
+Now here is the key insight, and it is one of the most misunderstood things in Spark. Every branch is evaluated, for every row. This is not like Python's if and else-if, where only the matching branch runs. Spark computes the result expression of every branch first, and then picks the one whose condition is true.
+
+That has a sharp consequence. Picture a guard that says, when the divisor is not zero, compute value divided by divisor, otherwise return zero. You might think that protects you from dividing by zero. It does not. The division is computed for every row, including the rows where the divisor is zero, before the condition is ever consulted. So warnings or nulls leak right through your guard.
+
+There are two clean fixes. One is to make the input itself null when the divisor is zero, so the division harmlessly propagates a null. The other is to pull the unsafe expression out of the chain entirely into its own column, computed with null-safe operators. Either way, the lesson stands — never assume a when-branch shields an expression from running.

@@ -1,0 +1,9 @@
+Group-by and aggregate.
+
+This is the heart of summarizing data. Group-by partitions the rows by one or more keys, and aggregate then applies one or more aggregate functions to each group, producing one summary row per group.
+
+You can group by a single key — say, spend per merchant category — or by several keys at once, like spend per category and status combined. Inside the aggregate call you stack as many measures as you need — a count of rows, a sum of amounts, an average, a maximum, a distinct count of customers — each given its own output name with an alias.
+
+Two things to keep in mind. First, both group-by and aggregate are lazy. Nothing actually computes until an action, like show or collect, forces it. You are just building up the plan. Second, a group-by is a wide transformation — it requires a shuffle to bring all the rows for each key together onto the same machine. That shuffle is usually the most expensive step in the query, which is why grouping keys and their cardinality matter so much for performance.
+
+The pattern to hold — group to define the buckets, aggregate to define the measures, and remember it all collapses into one row per group.

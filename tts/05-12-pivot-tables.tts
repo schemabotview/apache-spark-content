@@ -1,0 +1,9 @@
+Pivot tables.
+
+A pivot rotates the distinct values of a column into separate columns of their own. So a long table of transactions with a status column becomes a wide table with one column per status — approved, declined, reversed — each holding its count. It is the classic cross-tab, and it reads beautifully as a report.
+
+The mechanics are a group-by, then a pivot on the column you want to spread out, then an aggregate to fill the cells. Group by month, pivot on status, aggregate with a count, and you get a month-by-status grid.
+
+Here is the one piece of advice that matters most — always pass the list of pivot values explicitly. If you leave it out, Spark has to run a separate scan over the data first, just to discover which distinct values exist before it can build the columns. That extra scan is pure waste when you already know the values.
+
+Passing the list does two things. It skips that discovery scan, so it is faster. And it locks the column order in the output, so your report columns come out in a predictable, deterministic order every time. Both wins for one small habit.

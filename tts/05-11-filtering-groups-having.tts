@@ -1,0 +1,9 @@
+Filtering groups — Spark's having equivalent.
+
+In sequel, when you want to keep only the groups that satisfy some condition on an aggregate — say, customers with more than five approved transactions — you use the having clause. It filters after the grouping, on the aggregated values.
+
+The dataframe API has no having keyword. But you do not need one, because the equivalent is simply to chain a filter after the aggregate. You group, you aggregate to produce your measure with an alias, and then you filter on that aliased column. That filter, applied to the post-aggregation result, is your having.
+
+The reason this works cleanly is the order of operations. The filter sees the already-computed aggregate columns, so you can compare against the count, or the sum, or whatever you produced. It reads naturally top to bottom — group, aggregate, then filter the groups.
+
+So the mental translation to remember is direct. A where clause filters rows before grouping. A having clause filters groups after aggregating. In the dataframe API, the first is a filter before the group-by, and the second is a filter after the aggregate. Same two filters, placed on either side of the grouping.

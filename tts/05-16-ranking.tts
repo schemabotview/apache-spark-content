@@ -1,0 +1,11 @@
+Ranking functions.
+
+Spark has four ranking functions, and the only thing that distinguishes them is how they behave on ties. Get the tie behavior straight and you will never confuse them again.
+
+Picture three rows where the first two are tied for the top. Row-number assigns a unique sequential number to every row — one, two, three — breaking the tie arbitrarily. It never repeats a number, which is exactly what you want for "give me exactly one row per group," like the single top transaction per customer.
+
+Rank lets tied rows share the same number, then skips ahead. So the tie gives you one, one, and then three — the position two is skipped because two rows occupied the top. This matches how sports rankings work.
+
+Dense-rank also lets ties share a number, but it does not skip. One, one, then two. No gaps in the sequence. Use it when you want compact rank levels rather than positions.
+
+And n-tile divides the ordered rows into a number of roughly equal buckets — pass it four and it splits your rows into quartiles, labeling each row one through four. That is the tool for banding customers into spend quartiles or any kind of percentile grouping.

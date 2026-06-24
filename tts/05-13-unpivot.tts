@@ -1,0 +1,9 @@
+Unpivot — stack, unpivot, and melt.
+
+Unpivot is the inverse of a pivot. It rotates columns back into rows, taking a wide table with one column per category and turning it into a long table of category-value pairs. This is the shape most charting tools and storage layouts actually prefer.
+
+There are three ways to do it in Spark, and which one you use depends on your version. The most portable is stack, a sequel-style expression you invoke through select-expression. It works across all of the three-point-x versions, including older clusters, which makes it the safe choice when you are not sure what you are running on.
+
+The other two are newer, available from Spark three point four onward. There is a dataframe unpivot method, which takes the id columns to keep, the value columns to rotate, and names for the resulting variable and value columns. And there is melt, which is simply an alias for unpivot with the same signature — a friendly name if you are coming from pandas, where melt does exactly this.
+
+So the decision is just about reach. On a modern cluster, unpivot or melt read more cleanly. On anything older, stack is the one that always works.

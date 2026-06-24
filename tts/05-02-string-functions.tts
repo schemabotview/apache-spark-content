@@ -1,0 +1,11 @@
+String functions.
+
+Spark gives you a full set of vectorized string operations, all running natively on the java virtual machine, so they are fast even across billions of rows.
+
+The basics are what you would expect. Upper and lower change case. Trim, and its left and right variants, strip whitespace. Length gives you the character count. And substring extracts a slice by position, remembering that the position is one-based, not zero-based.
+
+For combining strings, there are two tools. Concatenate joins values end to end. Concatenate-with-separator does the same but inserts a separator between each piece — perfect for building a slug or a display label out of several columns.
+
+Then there is the regular-expression family, which is where the real power is. Split breaks a string into an array on a pattern. Regex-replace swaps matches for a replacement, so you can turn runs of whitespace into underscores. And regex-extract pulls out a specific capture group from a match, which lets you lift a structured piece out of messy text in a single expression.
+
+The instinct to build — reach for these before you ever consider a custom function, because a regex one-liner here beats a slow Python round trip every time.

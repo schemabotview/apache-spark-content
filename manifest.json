@@ -5,7 +5,8 @@
     { "id": "spark-execution",       "title": "Spark Execution Model",              "status": "built" },
     { "id": "spark-rdd-api",         "title": "RDD API — create / transform / act", "status": "built" },
     { "id": "apache-spark-api-stack","title": "RDD vs DataFrame vs SQL stack",      "status": "built" },
-    { "id": "spark-batch-api",       "title": "Apache Spark — Batch API",           "status": "built" }
+    { "id": "spark-batch-api",       "title": "Apache Spark — Batch API",           "status": "built" },
+    { "id": "spark-streaming",       "title": "Apache Spark — Streaming",           "status": "built" }
   ],
   "presentations": [
     {
@@ -94,6 +95,32 @@
       ]
     },
     {
+      "id": "05-data-transformations",
+      "title": "Data Transformations & Aggregations",
+      "notebook": "notebooks/05-data-transformations.ipynb",
+      "defaultScene": "spark-batch-api",
+      "sections": [
+        { "heading": "The function library — pyspark.sql.functions",                  "scene": "spark-batch-api", "spine": true,  "role": "hook", "focus": "b-df", "audio": "audio/05-01-function-library.wav" },
+        { "heading": "String functions",                                              "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-fn-str"], "focus": "b-df-fns", "audio": "audio/05-02-string-functions.wav" },
+        { "heading": "Date and timestamp functions",                                  "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-fn-date"], "focus": "b-df-fns", "audio": "audio/05-03-date-timestamp-functions.wav" },
+        { "heading": "Array functions",                                               "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-fn-array"], "focus": "b-df-fns", "audio": "audio/05-04-array-functions.wav" },
+        { "heading": "Conditional columns — when / otherwise",                        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-when"], "focus": "b-df-col", "audio": "audio/05-05-conditional-columns.wav" },
+        { "heading": "Combining DataFrames vertically — union vs unionByName",        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-set-union"], "focus": "b-df-joins", "audio": "audio/05-06-union-vs-unionbyname.wav" },
+        { "heading": "Set operations — intersect, except",                            "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-set-inter"], "focus": "b-df-joins", "audio": "audio/05-07-set-operations.wav" },
+        { "heading": "Joins — types, syntax, and the duplicate-column trap",          "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-j-inner", "b-df-j-left", "b-df-j-right", "b-df-j-outer", "b-df-j-semi"], "focus": "b-df-joins", "audio": "audio/05-08-joins.wav" },
+        { "heading": "groupBy + agg",                                                 "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-a-groupby", "b-df-a-agg"], "focus": "b-df-agg", "audio": "audio/05-09-groupby-agg.wav" },
+        { "heading": "Aggregate function reference",                                  "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-a-agg", "b-df-a-cntdist"], "focus": "b-df-agg", "audio": "audio/05-10-aggregate-function-reference.wav" },
+        { "heading": "Filtering groups — Spark's HAVING equivalent",                  "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-a-agg"], "focus": "b-df-agg", "audio": "audio/05-11-filtering-groups-having.wav" },
+        { "heading": "Pivot tables",                                                  "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-a-pivot"], "focus": "b-df-agg", "audio": "audio/05-12-pivot-tables.wav" },
+        { "heading": "Unpivot — stack, unpivot, melt",                                "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-a-stack"], "focus": "b-df-agg", "audio": "audio/05-13-unpivot.wav" },
+        { "heading": "Sampling — sample and sampleBy",                                "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-act-sample", "b-df-act-sampby"], "focus": "b-df-actions", "audio": "audio/05-14-sampling.wav" },
+        { "heading": "Window functions — concept and spec",                          "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-w-over"], "focus": "b-df-agg", "audio": "audio/05-15-window-functions.wav" },
+        { "heading": "Ranking — row_number, rank, dense_rank, ntile",                 "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-w-rank"], "focus": "b-df-agg", "audio": "audio/05-16-ranking.wav" },
+        { "heading": "lag and lead",                                                  "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-w-over"], "focus": "b-df-agg", "audio": "audio/05-17-lag-and-lead.wav" },
+        { "heading": "Running aggregates — rowsBetween vs rangeBetween",              "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-w-over"], "focus": "b-df-agg", "audio": "audio/05-18-running-aggregates.wav" }
+      ]
+    },
+    {
       "id": "06-sql-udfs",
       "title": "Spark SQL & UDFs",
       "notebook": "notebooks/06-sql-udfs.ipynb",
@@ -117,6 +144,30 @@
         { "heading": "Python UDFs — @udf and spark.udf.register",             "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-fn-udf"], "focus": "b-df-fns", "audio": "audio/06-16-python-udfs.wav" },
         { "heading": "Pandas UDFs — vectorized via Apache Arrow",             "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-fn-udf"], "focus": "b-df-fns", "audio": "audio/06-17-pandas-udfs.wav" },
         { "heading": "Performance tiers — when to use each",                  "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-fns"], "focus": "b-df-fns", "audio": "audio/06-18-performance-tiers.wav" }
+      ]
+    },
+    {
+      "id": "07-structured-streaming",
+      "title": "Structured Streaming",
+      "notebook": "notebooks/07-structured-streaming.ipynb",
+      "defaultScene": "spark-streaming",
+      "sections": [
+        { "heading": "Batch vs Structured Streaming — the mental model",      "scene": "spark-streaming", "spine": true,  "role": "hook" },
+        { "heading": "\"Micro\" means time, not data size",                   "scene": "spark-streaming", "spine": true,  "highlight": ["s-trigger"], "focus": "s-trigger" },
+        { "heading": "API parity — what actually changes",                   "scene": "spark-streaming", "spine": true,  "highlight": ["s-read", "s-df", "s-write"], "focus": ["s-read", "s-df", "s-write"] },
+        { "heading": "Setup",                                                "scene": "spark-streaming", "spine": false, "highlight": ["s-session"], "focus": "s-setup" },
+        { "heading": "Your first streaming query — rate source → memory sink", "scene": "spark-streaming", "spine": true, "highlight": ["s-src-rate", "s-sink-mem"], "focus": ["s-sources", "s-sinks"] },
+        { "heading": "Sources — rate, file, Kafka (reference)",              "scene": "spark-streaming", "spine": true,  "highlight": ["s-sources", "s-read"], "focus": ["s-sources", "s-read"] },
+        { "heading": "Sinks — memory, console, file, Delta, Kafka, foreachBatch", "scene": "spark-streaming", "spine": true, "highlight": ["s-sinks"], "focus": "s-sinks" },
+        { "heading": "Output modes — append, update, complete",              "scene": "spark-streaming", "spine": true,  "highlight": ["s-outmode"], "focus": "s-outmode" },
+        { "heading": "Triggers — controlling micro-batch cadence",           "scene": "spark-streaming", "spine": true,  "highlight": ["s-trigger"], "focus": "s-trigger" },
+        { "heading": "Checkpointing and fault tolerance",                    "scene": "spark-streaming", "spine": true,  "highlight": ["s-checkpoint"], "focus": "s-checkpoint" },
+        { "heading": "Monitoring streaming queries",                         "scene": "spark-streaming", "spine": false, "highlight": ["s-query"], "focus": "s-query" },
+        { "heading": "Time and windows — tumbling, sliding, session",        "scene": "spark-streaming", "spine": true,  "highlight": ["s-df-window"], "focus": "s-df-window" },
+        { "heading": "Watermarking — how it works",                          "scene": "spark-streaming", "spine": true,  "highlight": ["s-df-water"], "focus": "s-df-water" },
+        { "heading": "Joins — stream-static and stream-stream",              "scene": "spark-streaming", "spine": true,  "highlight": ["s-df-joins"], "focus": "s-df-joins" },
+        { "heading": "Stateful operations — deduplication, arbitrary state", "scene": "spark-streaming", "spine": true,  "highlight": ["s-df-state"], "focus": "s-df-state" },
+        { "heading": "State store backends + monitoring state",              "scene": "spark-streaming", "spine": false, "highlight": ["s-statestore"], "focus": "s-statestore" }
       ]
     }
   ]

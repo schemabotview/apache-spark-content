@@ -1,0 +1,7 @@
+Set operations — intersect and except.
+
+These are the sister operations to union, and they behave like the set operations you know from sequel. Intersect returns the rows present in both dataframes. Except, also spelled subtract, returns the rows in the first dataframe that are not in the second.
+
+There are two things to internalize about how they work. First, they compare whole rows, across every column, not just a key. Two rows match only if all their values match. Second, intersect and subtract deduplicate their results by default. When you need to preserve duplicate rows, reach for the all-variants — intersect-all and except-all — which keep the duplicates.
+
+And here is a practical steer. If what you really want is "rows in the first dataframe whose key appears in the second," do not use intersect — it compares whole rows, not keys. Use a left-semi join instead. It expresses the key-only intent directly, and it runs through the join engine, which is both faster and clearer than forcing a set operation to do a job it was not designed for.

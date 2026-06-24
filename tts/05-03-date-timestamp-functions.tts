@@ -1,0 +1,11 @@
+Date and timestamp functions.
+
+Spark has two temporal types. A date stores days since the epoch, and a timestamp stores microseconds. The good news is that most of these functions work on both.
+
+The first group extracts parts of a date — year, quarter, month, day of month, day of week, week of year, hour, minute. Each pulls out one component as a number, which is exactly what you need for grouping transactions by month or by hour.
+
+The second group handles formatting and parsing. Date-format turns a date into a string using a pattern. To-date and to-timestamp go the other way, parsing a string into a real temporal value.
+
+The third group is arithmetic. Date-diff gives the number of days between two dates. Months-between gives the months, including a fractional part. And date-add, date-subtract, and add-months shift a date forward or backward.
+
+Finally there are the convenience and truncation helpers. Current-date and current-timestamp give you now. And truncate, in both its date and timestamp forms, chops a value down to a unit like month or hour — the key move for bucketing time into reporting periods.

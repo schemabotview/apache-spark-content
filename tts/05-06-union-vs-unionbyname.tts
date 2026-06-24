@@ -1,0 +1,9 @@
+Combining dataframes vertically — union versus union-by-name.
+
+Both of these stack one dataframe on top of another, row-wise. The crucial difference is how they pair up the columns, and getting it wrong produces silently corrupted data.
+
+Plain union pairs columns by position. The first column of one lines up with the first column of the other, regardless of their names. So if your two dataframes have the same columns but in a different order, union will happily glue the wrong columns together — an amount column matched against an id column — and it raises no error at all. The types were compatible, so Spark just does it, and your data is now garbled.
+
+Union-by-name pairs columns by name instead. Id always meets id, amount always meets amount, no matter what order they sit in. If a column is missing on one side, it raises a clear error — unless you opt in with allow-missing-columns, which fills the absent side with nulls.
+
+The rule to carry, and the exam tests this constantly — prefer union-by-name unless you have a specific reason to want positional pairing. It costs nothing extra and it removes an entire category of invisible bug.

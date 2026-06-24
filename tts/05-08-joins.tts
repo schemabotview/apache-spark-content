@@ -1,0 +1,7 @@
+Joins — types, syntax, and the duplicate-column trap.
+
+Joins combine two dataframes side by side on a key. There are six join types worth knowing. Inner keeps only the rows that match on both sides. Left keeps every row from the left, filling nulls where the right has no match, and right is its mirror. Full outer keeps everything from both sides. Then the two filtering joins — left-semi keeps left rows that have a match but adds no right columns, and left-anti keeps left rows that have no match at all. And cross produces the Cartesian product, which you use with great caution.
+
+Now two traps the exam loves. The first is the duplicate-column trap. There are two ways to name the join key. When both sides share a column name, pass the key as a string — Spark then de-duplicates it, leaving one clean key column. But if you write it as a boolean expression, comparing the left key to the right key, Spark keeps both columns even when the names are identical. Later, any select of that name fails with an ambiguous-reference error. So use the string form whenever the names match.
+
+The second trap is null keys. Spark joins with null-unsafe equality by default, and in sequel logic null does not equal null. So any row with a null in its join key finds no match — even in a left join those rows survive but their right side is null-filled, never paired with other null-key rows. If you genuinely need nulls to match nulls, switch to the null-safe equality operator.

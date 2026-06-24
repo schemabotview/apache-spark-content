@@ -1,0 +1,9 @@
+The function library.
+
+Almost everything you do to transform data in Spark runs through one library — the sequel functions module. It holds Spark's column-level functions for strings, dates, arrays, conditionals, and aggregations, and it is where most of this module lives.
+
+A few habits to set early. Import the functions explicitly, naming the ones you use, or alias the whole module to a single capital letter. Either style is fine, as long as it is clear where a function came from.
+
+The reason to prefer these built-ins over writing your own Python is performance. Every function in this library runs inside the Spark java virtual machine and benefits from Tungsten code generation. A Python function, by contrast, pays a serialization round trip for every single row, which is orders of magnitude slower.
+
+One trap to watch for. Several function names collide with Python's own built-ins — sum, min, max, round, and filter all clash. So import them under an alias, like sum-as-underscore-sum, so that a stray call lands on Spark's version and not Python's. That one habit prevents a whole class of silent, confusing bugs.

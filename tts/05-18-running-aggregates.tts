@@ -1,0 +1,11 @@
+Running aggregates — rows-between versus range-between.
+
+When you run an aggregate over a window, the frame decides which rows are included, and Spark gives you two ways to define that frame. Understanding the difference is the last piece of the window puzzle.
+
+Rows-between counts physical row positions relative to the current row. Two rows back means literally the two rows immediately before this one in the ordering, regardless of their values. It counts positions.
+
+Range-between counts the value range of the order-by column instead. So if you are ordered by a date, range-between can mean "every row within seven days of the current row's date" — and if three rows share the same date, they are all in the frame together. It counts values, not positions. That is the tool when the gap between rows matters, not just their count.
+
+There are three frames worth memorizing outright. A cumulative frame runs from unbounded-preceding to the current row — that is your running total. A trailing frame runs from a fixed number of rows back to the current row — that is your moving average over the last n rows. And a centered frame runs from n rows back to n rows forward, sitting symmetrically around the current row.
+
+Master those three patterns and almost every running-total, moving-average, and rolling-window calculation you will ever need is just one of them, dropped into a window specification.
