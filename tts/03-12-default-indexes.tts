@@ -1,0 +1,9 @@
+Default indexes — the most-tested gotcha.
+
+Here is the gotcha that gets tested more than any other in this area. A pandas dataframe has a built-in row index. A Spark dataframe does not — its rows have no inherent order at all. So when you put the pandas interface on top of Spark, it has to fabricate an index out of nothing, and the strategy it picks has real performance and correctness consequences.
+
+There are three strategies, set through the default index type option. The first is sequence. A single executor counts zero, one, two, and so on. That gives you a perfectly sequential index that matches pandas exactly, but the counting is a non-distributed step, so it is slow on large data.
+
+The second is distributed sequence, and this is the current default. It computes the same sequential numbers, but in parallel, using each partition's offset. There is a slight overhead, but you get the same numbers pandas would give you. The third is distributed. It uses monotonically increasing ids, it is the cheapest because it is fully parallel — but it is not sequential. It leaves gaps.
+
+That last one is the trap. Distributed hands you values like zero, one, then suddenly a number in the billions. Any pandas code that depends on the exact index values — position-based lookups, joins on the index — will break, and break silently. So: sequence is safe but slow, distributed is fast but unsafe, and distributed sequence is the modern default and the right answer for almost every case.

@@ -1,0 +1,7 @@
+Operations look like pandas.
+
+The whole appeal of the pandas interface on Spark is that your familiar pandas idioms just work. Filtering, projecting, grouping — they all read the way they do in ordinary pandas.
+
+You filter with boolean indexing, writing a condition inside the brackets to keep the rows that match. You select a column and call value counts to get a tally of how often each value appears. And you group by a column and aggregate, using named aggregations to spell out the result columns you want.
+
+The important thing to picture is what happens underneath. None of this is really running pandas. Each of these operations translates down into Spark dataframe operations, and they execute lazily — the same lazy model as the rest of Spark. You write pandas; the cluster runs Spark.

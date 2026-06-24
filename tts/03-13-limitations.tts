@@ -1,0 +1,9 @@
+Limitations and gotchas.
+
+The pandas interface on Spark is close to real pandas, but it is not identical, and the differences are exactly what trips people up.
+
+Start with row order. In pandas the order is stable and follows insertion. On Spark it is not guaranteed at all unless you explicitly sort, by index or by values. Next, execution model: pandas is eager, every operation runs immediately, while the Spark version is lazy — like the rest of Spark, only an action triggers the work. And the in-place flag, which mutates a frame in pandas, is often simply ignored here, because Spark dataframes are immutable.
+
+A couple more matter for performance. Iterating row by row is cheap in pandas, but on Spark it pulls every row down to the driver, so avoid it. Apply across rows runs distributed, but each row has to cross the boundary between Python and the java virtual machine, which makes it slow on large data.
+
+There are correctness edges too. A position lookup on a label that does not exist raises an error in pandas, but here it may silently hand you back an empty result, because the index is not fully enforced. And a handful of pandas methods are simply not implemented and raise a pandas not implemented error. The general rule pulls it all together: if a pandas-on-Spark operation maps to a single Spark operation — a filter, a group by, a join, a with column — it is fast. If it forces a per-row Python callback, or has to materialize the whole frame on the driver, it is slow, and at that scale you may as well drop down to the native Spark dataframe interface.

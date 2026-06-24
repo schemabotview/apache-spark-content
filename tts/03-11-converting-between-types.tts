@@ -1,0 +1,9 @@
+Converting between the three types.
+
+Converting between these three dataframe types is the central skill, and it is the thing exams love to test. Each direction has its own method, and just as importantly, its own cost.
+
+Going from a Spark dataframe to pandas-on-Spark is cheap — the pandas api wrapper just wraps the existing distributed dataframe, no data moves. Going the other way, from pandas-on-Spark back to a Spark dataframe with to spark, is just as cheap — it unwraps the wrapper.
+
+But going all the way to a plain pandas dataframe is expensive in both directions. To pandas from a Spark dataframe, and to pandas from a pandas-on-Spark dataframe, both pull every row down onto the driver. Coming up from pandas is the distribute step — from pandas, or create dataframe, reads the pandas dataframe and spreads it across the cluster.
+
+Here is the rule of thumb that ties it together. The methods with the word pandas in their name — the lowercase, singular pandas, not the pandas api wrapper — are the ones that move data to the driver. Treat them exactly like collect: only ever call them on small or already-aggregated results.
