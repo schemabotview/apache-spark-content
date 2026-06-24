@@ -1,0 +1,9 @@
+Writing the four formats.
+
+Writing mirrors reading exactly. You take a dataframe, choose a mode, name a format, and save to a path. The same four formats are available on the way out as on the way in — csv, json, parquet, and orc.
+
+The one detail to notice is that Spark does not write a single file. It writes a directory full of part files, one part per partition of the dataframe. So when you write a csv, you get a folder named like a file, with several part files inside it, plus a small success marker. That surprises people coming from pandas, where a write produces one neat file.
+
+The format you pick on write should match how the data will be read. If it feeds analytics, write parquet — columnar, compressed, and fast to scan. If a human or an external tool needs to open it, csv or json is friendlier even though it is larger and slower.
+
+To keep examples repeatable, it is common to write with overwrite mode, so re-running the same code does not pile up duplicate output.

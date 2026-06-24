@@ -1,0 +1,11 @@
+Save-as-table versus save — catalog versus filesystem.
+
+These two look similar but they leave you in very different places.
+
+Save to a path just writes files. You end up with a directory of part files and nothing else. The catalog has no idea those files exist, so to read them back later you have to remember the path and load from it explicitly.
+
+Save-as-table does both. It writes the files and it registers the table in Spark's catalog. Once it is registered, you can call it up by name, or query it directly in sequel with a plain select statement. No path required — the catalog remembers where the data lives.
+
+So how do you choose? Use save-as-table when you want discoverability — anything that you, or a teammate, or a sequel user might want to query by name later. Use plain save for file-only outputs — intermediate staging data, or an export feeding some downstream tool that reads files directly and never touches the catalog.
+
+The short version — save-as-table gives you a named, queryable table, plain save gives you files on disk and nothing more.

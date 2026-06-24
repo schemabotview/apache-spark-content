@@ -1,0 +1,13 @@
+Write modes.
+
+Every write accepts a mode, and the mode decides what happens when the destination path already exists. The crucial thing to understand — and it trips people up constantly — is that these modes operate at the directory level. Spark checks whether the path exists. It does not open the old files or look at what is inside them.
+
+There are four modes. Overwrite deletes every existing file at the path and then writes the new ones. Total replacement, and Spark never reads the old data first.
+
+Append writes new files into the same directory and leaves the existing files untouched. Because Spark never reads them, it cannot detect duplicates. So if you append the same dataframe twice, both copies sit on disk, and a later read returns everything.
+
+Ignore does nothing, silently, if the path already exists. No write, no error.
+
+And error, the default, raises an exception saying the path already exists. Same existence-only check as ignore, it just complains instead of staying quiet.
+
+Here is the limit worth remembering. None of the plain formats — csv, json, parquet, orc — understand row-level updates. If you need true update-only-what-changed semantics, you need a transactional layer like Delta Lake or Apache Iceberg.

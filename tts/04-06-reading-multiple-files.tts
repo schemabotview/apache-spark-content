@@ -1,0 +1,9 @@
+Reading multiple files — globs and directories.
+
+So far every read has quietly handled more than one file. When you point Spark at a directory, it reads every file underneath it as a single dataframe. That is why pointing at a customers folder full of part files just works — Spark stitches them together.
+
+When you want finer control, you have three tools. The first is glob patterns. You can use the standard wildcards — a star to match anything, a question mark to match one character — so you can ask for just the csv files, or just the part files that match a pattern.
+
+The second is multiple explicit paths. You hand Spark a list of paths and it reads them all into one dataframe, as long as their schemas line up.
+
+The third is recursive file lookup. Normally Spark treats subdirectories as partition folders. Turn recursive file lookup on, and instead it descends into every subdirectory and reads the files it finds, ignoring the partition interpretation. That is the option you reach for when your files are nested in folders that are not Hive-style partitions.

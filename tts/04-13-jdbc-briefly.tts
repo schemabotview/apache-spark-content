@@ -1,0 +1,9 @@
+Jay-dee-bee-see, briefly.
+
+Everything so far has been files. But Spark also reads from relational databases — Postgres, My-sequel, sequel server, Oracle — through the jay-dee-bee-see connector. The pattern is the same shape as always. You name the jay-dee-bee-see format, give it a connection url, name a table or a query, supply a user and password and a driver, and load.
+
+Here is the part that actually matters for performance. By default, a jay-dee-bee-see read is single-threaded. One connection pulls the entire table down to one executor, and on a large table that is painfully slow.
+
+To read in parallel, you set four options together. You pick a partition column — a numeric or date column, ideally indexed. You give it a lower bound and an upper bound, the range that column covers. And you set the number of partitions, which is how many concurrent connections Spark opens. Spark then slices that range into chunks and reads them at the same time. Always set these on any table bigger than a few hundred megabytes.
+
+One last thing worth knowing. Cloud storage paths — on S-three, on Azure, on Google storage — follow the exact same read and load pattern. Only the url scheme changes. The format options stay identical. Learn the one pattern and it carries everywhere.

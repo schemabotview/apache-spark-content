@@ -1,0 +1,9 @@
+Bucket by — bucketing for join-friendly layouts.
+
+Bucketing is the lesser-known cousin of partitioning, and it solves a different problem. Bucket by hashes rows into a fixed number of files based on a column's value, locking in which file each value lands in.
+
+There are two reasons to do this. The first is joins. If two tables are bucketed the same way — same number of buckets, same key — then a join on that key can skip the shuffle entirely, because matching rows are already co-located in the same bucket. Avoiding a shuffle on a large join is a serious win.
+
+The second is aggregations. Grouping on the bucket column can run inside each bucket without a network step, because every row for a given key is already together.
+
+Now the catch, and this is the part people miss. Bucketing only works with save-as-table. It cannot work with a plain save to a path, because Spark needs the metastore to record the bucketing metadata. A plain save throws that information away. So bucket by always travels with save-as-table.

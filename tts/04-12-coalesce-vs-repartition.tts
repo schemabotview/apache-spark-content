@@ -1,0 +1,9 @@
+Coalesce versus repartition before writing.
+
+Both of these control how many output files you produce, and since Spark writes one file per partition, that is really a question of how many partitions the dataframe has when you write it. But they get there in very different ways.
+
+Coalesce reduces the number of partitions without a shuffle. It just merges existing partitions together locally. That makes it fast and cheap. The trade-off is that the result can be uneven — if the upstream partitions were lopsided, the merged ones stay lopsided.
+
+Repartition does a full shuffle to rebalance the data into roughly equal partitions. That costs you a network step, so it is slower, but the output sizes come out even, and you can use it to increase the partition count, which coalesce cannot do.
+
+The classic case is coalesce to one, to collapse the output down to a single file. It is cheap, but be careful — if the upstream data was large and skewed, that one final partition has to hold all of it on a single machine. So coalesce when you are reducing partitions and do not need rebalancing. Reach for repartition when you need to grow the count, or when the data is skewed and you want it evened out.

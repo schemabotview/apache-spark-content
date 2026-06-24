@@ -1,0 +1,9 @@
+Partition by — the partition-pruning win.
+
+This is the single biggest write-time decision for downstream read speed. Partition by writes one subdirectory per distinct value of a column. So if you partition transactions by status, you get a folder for approved, a folder for declined, a folder for reversed, each holding only the rows with that status.
+
+The payoff comes at read time. When a later query filters on that same column — give me the approved rows — Spark reads only the approved subdirectory and never opens the rest. That is called partition pruning, and it is stronger than the per-block skipping we saw earlier, because Spark skips whole directories before it even touches a file.
+
+There is one rule you must respect — pick a column with low cardinality. A few dozen distinct values at most. Status is perfect. Partitioning by something like customer identifier would be a disaster, because you would create millions of tiny directories, and Spark handles a sea of tiny files very badly.
+
+So the instinct to carry — partition on the column people filter by, as long as it has few distinct values.
