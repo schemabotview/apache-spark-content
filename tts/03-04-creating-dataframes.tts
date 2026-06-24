@@ -1,0 +1,9 @@
+Creating dataframes.
+
+There are five common ways to make a dataframe. The first few are workhorses for tests, and the last couple are everyday tools.
+
+The first, and the preferred one, is to call create dataframe with a Python list of rows together with an explicit schema. You get full control over the types. The second is the same call but without the schema — you hand it just the data and let Spark infer the types. Convenient, but remember it is slow on large data.
+
+The third is spark dot range, which hands you a fast integer-sequence dataframe — a single column counting up. It is perfect when you just need some rows for a quick test.
+
+The fourth round-trips from pandas: hand create dataframe an existing pandas dataframe and Spark distributes it across the cluster. The fifth, and the one you will use most in real work, is spark dot read — pointing at actual files on disk. We cover that one in detail in the reading and writing notebook.

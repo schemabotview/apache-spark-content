@@ -1,0 +1,9 @@
+What a dataframe really is.
+
+Picture a distributed table. There is one schema — the column names and their types — and that single schema applies across the entire dataset. The rows themselves are split into partitions and spread across executor memory on many machines.
+
+A useful mental shortcut is this: a dataframe is just an RDD carrying metadata, where the column names are human-friendly aliases for what are really row positions, and Catalyst is the translation layer sitting between the two.
+
+The key thing to picture about partitioning is that each partition holds a subset of the rows, but every column for those rows. Partitioning is always horizontal — it splits by row, never by column. No partition ever holds just a few columns of the whole table.
+
+Four properties define how a dataframe behaves. It is immutable, so every transformation hands you back a brand-new dataframe. It is lazy, so transformations only build up a plan and nothing executes until an action. It is schema-enforced, so every row matches the same column types. And it is partitioned, so the rows are split for parallel processing across the cluster.

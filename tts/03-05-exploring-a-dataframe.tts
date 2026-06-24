@@ -1,0 +1,9 @@
+Exploring a dataframe.
+
+This is your cheatsheet for the question, what does this dataframe actually contain? Spark gives you a small toolkit for inspecting one.
+
+Count returns the number of rows — but notice that it is an action, so it triggers a real job on the cluster. Columns hands you the column names as a plain Python list. Dtypes gives you a list of name and type pairs. Schema returns the full struct type object, and print schema pretty-prints that same thing in a readable tree.
+
+For the data itself, describe gives you count, mean, standard deviation, minimum, and maximum across the numeric columns. Summary does everything describe does and adds the quartiles on top.
+
+And then there is show, which prints the actual rows. One tip worth remembering: pass truncate equals false, and Spark stops cutting off long values so you see the full content of each cell.

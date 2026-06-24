@@ -1,0 +1,9 @@
+The Spark ay-pee-eye hierarchy.
+
+Spark gives you three structured-data interfaces, and it helps to line them up in order of how much they hide from you. At the bottom is the RDD — the original, functional, row-by-row interface. Above it sits the dataframe, a distributed table with a schema, and this is the everyday tool you reach for. At the top sits the dataset, a typed dataframe with compile-time type safety, available only in Scala and Java.
+
+In PySpark you only ever get dataframes. There is a nice detail under the hood here — a dataframe is really just an alias for a dataset of rows. Same engine, just without a static type parameter attached.
+
+Here is the practical fact worth carrying with you. Sequel, the dataframe interface, and the Scala dataset all compile through the same optimizer, Catalyst, and they produce identical execution plans. So it does not matter which of those three you write — the engine ends up in the same place.
+
+The RDD is the exception. It bypasses Catalyst entirely. There is no query optimization and no code generation underneath it, and that is precisely why it runs slower for structured data. When you have a schema, let Catalyst do its job.

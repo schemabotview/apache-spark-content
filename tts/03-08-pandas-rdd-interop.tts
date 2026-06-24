@@ -1,0 +1,9 @@
+Dataframe to pandas and to RDD.
+
+There are three escape hatches you should know for stepping outside the dataframe interface.
+
+The first is to pandas. It pulls every single row into one pandas dataframe sitting on the driver. That is genuinely convenient for plotting and final-mile analysis. But it is dangerous on large data — it can run the driver out of memory. So always sample or aggregate first. The same trap exists on the Spark side with collect, which we cover in the performance notebook.
+
+The second hatch is the reverse direction: create dataframe handed a pandas dataframe distributes it back across the cluster. That one is useful for tiny test fixtures.
+
+The third is dot rdd, which drops you down to an RDD of row objects. You reach for this when you genuinely need an RDD-only operation, like map partitions. And the round-trip back is to-D-F, which lifts the RDD up into a dataframe again with a schema.

@@ -1,0 +1,11 @@
+Three dataframe types — keep them straight.
+
+Once you bring the pandas interface into the picture, there are three different things all called a dataframe, and confusing them is a common mistake. Let us keep them separate.
+
+The first is a plain pandas dataframe. Its data lives entirely in driver memory, on one machine. You use it for final-mile analysis, plotting, and small fixtures.
+
+The second is a pandas-on-Spark dataframe. This one looks like pandas on the surface, but its data is distributed across the executors. You reach for it when you want pandas syntax but Spark scale.
+
+The third is the native Spark dataframe. Also distributed across the executors, and it gives you the best performance and the most features.
+
+So the first lives entirely on the driver, while the other two are distributed — same engine underneath, just a different surface. The thing that makes pandas-on-Spark special is that it lays a pandas-style index on top of a Spark dataframe.

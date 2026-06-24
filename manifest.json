@@ -5,7 +5,8 @@
     { "id": "spark-execution",       "title": "Spark Execution Model",              "status": "built" },
     { "id": "spark-rdd-api",         "title": "RDD API — create / transform / act", "status": "built" },
     { "id": "apache-spark-api-stack","title": "RDD vs DataFrame vs SQL stack",      "status": "built" },
-    { "id": "spark-batch-api",       "title": "Apache Spark — Batch API",           "status": "built" }
+    { "id": "spark-batch-api",       "title": "Apache Spark — Batch API",           "status": "built" },
+    { "id": "spark-dataframe-api",   "title": "DataFrame — schema, columns, operations", "status": "todo" }
   ],
   "presentations": [
     {
@@ -49,6 +50,27 @@
         { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-mappart", "b-rdd-repart", "b-rdd-coalesce"], "focus": ["b-rdd-narrow"], "audio": "audio/02-10-partition-level-operations.wav" },
         { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-bcast", "b-rdd-acc"], "focus": ["b-rdd-actions"], "audio": "audio/02-11-shared-variables.wav" },
         { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd", "b-df"], "focus": ["b-rdd", "b-df"], "audio": "audio/02-12-rdd-vs-dataframe.wav" }
+      ]
+    },
+    {
+      "id": "03-dataframes",
+      "title": "DataFrames",
+      "notebook": "notebooks/03-dataframes.ipynb",
+      "defaultScene": "spark-dataframe-api",
+      "sections": [
+        { "heading": "The Spark API hierarchy",                    "scene": "spark-dataframe-api", "spine": true,  "role": "hook", "audio": "audio/03-01-spark-api-hierarchy.wav" },
+        { "heading": "What a DataFrame really is",                 "scene": "spark-dataframe-api", "spine": true,  "audio": "audio/03-02-what-a-dataframe-is.wav" },
+        { "heading": "Schemas — StructType vs DDL string",         "scene": "spark-dataframe-api", "spine": true,  "audio": "audio/03-03-schemas.wav" },
+        { "heading": "Creating DataFrames",                        "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-04-creating-dataframes.wav" },
+        { "heading": "Exploring a DataFrame",                      "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-05-exploring-a-dataframe.wav" },
+        { "heading": "Column references — the four ways",          "scene": "spark-dataframe-api", "spine": true,  "audio": "audio/03-06-column-references.wav" },
+        { "heading": "Common DataFrame operations",                "scene": "spark-dataframe-api", "spine": true,  "audio": "audio/03-07-common-operations.wav" },
+        { "heading": "DataFrame ↔ pandas / RDD interop",           "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-08-pandas-rdd-interop.wav" },
+        { "heading": "Three DataFrame types — keep them straight", "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-09-three-dataframe-types.wav" },
+        { "heading": "Operations look like pandas",                "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-10-operations-look-like-pandas.wav" },
+        { "heading": "Converting between the three types",         "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-11-converting-between-types.wav" },
+        { "heading": "Default indexes — the most-tested gotcha",   "scene": "spark-dataframe-api", "spine": true,  "audio": "audio/03-12-default-indexes.wav" },
+        { "heading": "Limitations and gotchas",                    "scene": "spark-dataframe-api", "spine": false, "audio": "audio/03-13-limitations.wav" }
       ]
     }
   ]

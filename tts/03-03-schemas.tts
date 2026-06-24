@@ -1,0 +1,9 @@
+Schemas — struct type versus a data definition string.
+
+There are two ways to spell out a schema, and they produce the exact same result, so you pick whichever reads better in your code.
+
+The first is the programmatic form, where you build a struct type out of a list of struct fields. It is verbose and explicit — every column name, type, and nullability written out by hand. It is easy to construct when you are generating a schema from code.
+
+The second is the data definition string — a compact, sequel-flavored line that just lists each column and its type. It is shorter, and it is easy to paste in. Both forms describe the same columns; only the style differs.
+
+Now the rule that actually matters in production: always prefer an explicit schema. Spark can infer the schema for you, but inference triggers a full scan of the data just to decide the types, which is slow on large datasets. Worse, it can guess wrong. Picture a sparse flag column that is mostly empty — inference may decide it is a string when you really wanted a boolean. Spell the schema out and you remove both problems.

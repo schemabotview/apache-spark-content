@@ -1,0 +1,11 @@
+Column references — the four ways.
+
+PySpark accepts four different styles for naming a column. They are mostly interchangeable, but each one has a place where it shines.
+
+The first is a plain string — just the column name in quotes. It works for the simple cases: select, group by, sort. It breaks the moment you want to build an expression, because a bare string cannot have a function applied to it.
+
+The second is the col function, where you wrap the name in col. This is the safe default. It is what you use when building expressions, or passing a column into something like when, coalesce, or a sum. It does not really break anywhere.
+
+The third is bracket indexing — the dataframe name followed by the column name in brackets. Its real job is disambiguation: when you join two dataframes that both have a column of the same name, this form says exactly which one you mean. It is just verbose for ordinary use.
+
+The fourth is the expr function, which parses a sequel-style snippet of text. It shines when you want to paste in an expression like amount times point-zero-two. The catch is that it is just a string parsed at runtime, so a typo slips through until it runs. Rule of thumb: use a string when the interface only needs a name, col when you are building an expression, bracket indexing when you are joining, and expr sparingly.

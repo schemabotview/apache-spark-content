@@ -1,0 +1,11 @@
+Common dataframe operations.
+
+This is the day-to-day toolkit, and it falls into five families. Let us walk through them.
+
+The first is select and project — pulling out the columns you want with select, or with select expr when you want a sequel-style expression inside the projection.
+
+The second is add, rename, and drop. With column adds a new column or replaces an existing one. With column renamed changes a name. And drop removes a column. You chain these together to reshape a dataframe.
+
+The third is filtering. Filter and where are the same operation under two names. When you combine conditions you use the bitwise operators — and, or, not — and here is the trap: you must wrap each individual condition in parentheses. Python's operator precedence will mislead you otherwise and the filter quietly does the wrong thing.
+
+The fourth family is nulls — is null, is not null, drop na to remove rows, fill na to replace missing values, and coalesce to pick the first non-null. The fifth is cast, sort, and dedupe — casting a column to another type, ordering by a column descending, and removing duplicates, where distinct looks at every column but drop duplicates lets you dedupe on just a key.
