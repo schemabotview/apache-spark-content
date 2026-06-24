@@ -1,0 +1,7 @@
+Higher-order array functions.
+
+This is one of the most underused features in Spark, and it can replace a whole category of slow user-defined functions. A higher-order function takes a lambda — a small inline function — and applies it to the elements of an array column. The crucial part is where that lambda runs. It runs on the java virtual machine, natively, with no serialization out to a Python worker. So you get the expressiveness of a custom function with the speed of a built-in.
+
+The core set mirrors what you would do in any functional language. Transform maps a function over every element, producing a new array. Filter keeps only the elements where the lambda is true. Aggregate folds an array down to a single scalar, like summing it. Exists returns true if any element matches a condition, and for-all returns true only if every element matches. And zip-with walks two arrays in lockstep, combining them element by element.
+
+The key insight is the one to carry away. Many things people write as user-defined functions over arrays — lowercasing every tag, summing a list, checking for a flag — are one-liners with these. And because the lambda stays on the java virtual machine, you avoid the heavy cost of crossing into Python, which we will quantify next.

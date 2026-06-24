@@ -1,0 +1,9 @@
+Python user-defined functions.
+
+When no built-in can express your logic, you fall back to a Python user-defined function. There are two ways to register one. The decorator form wraps a Python function so you can use it as a regular column in the dataframe API. And the register form gives the same function a name, so you can call it from inside a sequel string.
+
+But the cost is real, and you must respect it. Every single row crosses the boundary between the java virtual machine and Python twice — once to ship the value out to a Python worker, and once to bring the result back. That round trip makes a Python user-defined function ten to a hundred times slower than the equivalent built-in on large data.
+
+Here is the deeper problem. To Catalyst, a Python user-defined function is a black box. The optimizer cannot see inside it, and that has consequences. It cannot push a filter that wraps the function down into the file scan, so the whole column must be read and the function run on every row before filtering. It cannot prune columns the function might touch. It does not give you null safety — a built-in returns null on null input, but your Python code gets called with a none and may crash. And it cannot type-check the return value until the job is already running.
+
+So the rule is firm. Exhaust built-ins, higher-order functions, and pandas user-defined functions first. Only when all of those genuinely cannot express the logic do you reach for a plain Python function.

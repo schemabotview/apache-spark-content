@@ -1,0 +1,9 @@
+Setup — registering the bank tables as views.
+
+Before we can write sequel against our data, Spark needs names to refer to. A dataframe by itself has no sequel-visible name. So the setup step here registers every bank table as a session-scoped temporary view.
+
+The idea is simple. You read each table once — customers, loan repayments, card accounts, card transactions, and the rest — and then you register each dataframe as a named view. From that point on, any sequel query can say "from customers" or "from card transactions" and it just works, with no reloading.
+
+Notice the small detail in how the tables are read. The csv files get explicit schemas, because text formats need you to declare the types. But the parquet, orc, and schema-carrying json files cover themselves — their types are embedded, so no schema is needed.
+
+This one-time registration is what makes the rest of the module flow. Every example from here on assumes these seven names are available to query.

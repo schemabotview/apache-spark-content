@@ -1,0 +1,11 @@
+Monotonically increasing id — monotonic, not sequential.
+
+People reach for the monotonically-increasing-id function looking for a row number, and it is not one. Read the name literally and it tells you exactly what you get.
+
+Monotonic means that within a single run, every id is strictly greater than the previous id generated in the same partition. So the numbers always go up. That part people get right.
+
+But it is not sequential. The function packs the partition index into the upper bits and a per-partition counter into the lower bits. So across partition boundaries you get enormous jumps — you might go from two, straight to eight and a half billion. The numbers climb, but with giant gaps.
+
+And it is not deterministic across runs. Re-execute the job and the same row can get a different id, because partition assignment can shift between runs.
+
+So here is the decision. When you need dense, sequential, deterministic numbering, use row-number over a window — that is precisely what it is for, at the cost of a global shuffle. When you just need a cheap unique id and do not care about gaps, monotonically-increasing-id is fine. And when you need a stable key that survives across runs, neither works — generate a u-u-i-d, or hash your business-key columns instead.

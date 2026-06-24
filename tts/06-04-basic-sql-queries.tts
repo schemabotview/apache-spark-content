@@ -1,0 +1,7 @@
+Basic sequel queries.
+
+This is the familiar ground — select, where, group by, having, order by, and limit. Spark speaks standard ansi sequel, so if you know sequel from any relational database, these read exactly as you would expect.
+
+There is one detail worth calling out, because it surprises dataframe users. Spark sequel supports having, the clause that filters groups after aggregation. But there is no having method on the dataframe API. So when you want to keep only the groups that pass some aggregate condition — say, merchant categories with more than a hundred approved transactions — the sequel form has a clean having clause for it, while the dataframe form makes you filter after the group-by in a slightly more roundabout way.
+
+That asymmetry is a small but real reason to reach for sequel on grouped, filtered reports. The clause exists, it reads naturally, and it lands you in the same optimized plan as the dataframe equivalent.

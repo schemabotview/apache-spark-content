@@ -1,0 +1,9 @@
+Null semantics — why column equals null always returns null.
+
+This is one of the most common bugs in all of Spark, and it comes straight from sequel's three-valued logic. The rule is this — comparing anything to null does not return true or false. It returns null. And a filter only keeps rows where the predicate is true, so a null predicate keeps nothing.
+
+Picture the trap. You write a filter that says category equals none, expecting the rows where category is missing. You get zero rows back. Why? Because for every single row, category equals null evaluates to null, never to true, so every row is filtered out. The missing rows you wanted are filtered out right along with the rest.
+
+The fix is to stop using equality for null tests. In the dataframe API you call is-null or is-not-null. In sequel you write where column is null. Those are the correct tools, and they actually match.
+
+There is one more option for when you genuinely want null to match null — the null-safe equality operator, written as the spaceship. It returns true when both sides are null, instead of returning null. Reach for it when you are joining or comparing columns that can both be null and you want those to count as equal.

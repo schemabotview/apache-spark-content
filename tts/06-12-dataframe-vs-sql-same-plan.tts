@@ -1,0 +1,9 @@
+Dataframe API versus sequel — the same plan.
+
+This section is the proof of the promise we opened with. Take one query — say, total approved spend per merchant category, sorted descending. Write it twice, once as a dataframe chain of filter, group-by, and aggregate, and once as a sequel string. They look completely different on the page.
+
+Now call explain on each one and compare the physical plans. They are identical. Catalyst takes both forms and rewrites them into the exact same sequence of operations. Same scan, same filter, same aggregation, same sort.
+
+The lesson is one you can rely on for your whole Spark career. There is no performance difference between sequel and the dataframe API. None. The choice is purely about which form is clearer for the problem and the team.
+
+So write whichever reads best. A complex report with many joins often reads better as sequel. A dynamic transformation built up in code often reads better as a dataframe chain. The optimizer collapses the distinction, so you are free to optimize only for human clarity.

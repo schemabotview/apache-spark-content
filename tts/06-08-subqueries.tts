@@ -1,0 +1,11 @@
+Subqueries.
+
+A subquery is a query nested inside another query, and Spark supports them in the where clause, the from clause, and the select clause. There are three flavors worth knowing.
+
+The first is a scalar subquery. It returns a single value, which you then use in a comparison. For example, select the transactions whose amount is above the overall average, where that average is itself computed by an inner query. One value, plugged into the outer condition.
+
+The second is an in-subquery. The inner query returns a set of values, and the outer row passes if its value is in that set. For example, find the transactions belonging to customers who appear in the set of customers with an active loan.
+
+The third is an exists subquery, and this one is correlated, meaning the inner query references the outer row. The outer row passes if the inner query finds at least one matching row. For example, keep the customers for whom there exists at least one declined transaction. The inner query reaches back out to the current customer's identifier.
+
+The distinction to hold onto — scalar returns one value, in checks membership in a set, and exists is a correlated yes-or-no test against the current row.

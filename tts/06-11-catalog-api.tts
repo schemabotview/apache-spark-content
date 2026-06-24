@@ -1,0 +1,9 @@
+The catalog API.
+
+The catalog is Spark's programmatic window into its own metadata. Where sequel lets you query data, the catalog API lets you query the structure — what databases exist, what tables and views are registered, and what columns a table has.
+
+The everyday calls are list-databases, list-tables, and list-columns. List-tables, for instance, returns both the persisted tables and the temporary views in the current database, and each entry tells you whether it is temporary. There is also table-exists, which returns a simple boolean — handy as a guard before you create or drop something.
+
+And the catalog is not just for inspection, it is for cleanup. There are drop-temp-view and drop-global-temp-view calls to remove views you no longer need, which keeps a long-running session from accumulating stale names.
+
+The reason this matters is automation. When you are writing code that discovers tables dynamically, or that needs to tidy up after itself, the catalog API gives you that control without resorting to fragile string parsing of sequel output.

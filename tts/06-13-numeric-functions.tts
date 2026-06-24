@@ -1,0 +1,9 @@
+Numeric functions.
+
+Beyond the obvious arithmetic, the function library carries a handful of numeric helpers that earn their place in financial work.
+
+The rounding family is the interesting one. There is ceiling, which rounds up to the next integer, and floor, which rounds down. There is round, which rounds half up to a number of decimal places. And there is b-round, which is banker's rounding — it rounds a half to the nearest even number instead of always up.
+
+That banker's rounding detail matters more than it sounds. When you sum millions of rounded amounts, always rounding halves upward introduces a steady upward bias. Rounding halves to even cancels that bias out over many values, which is exactly why accounting systems prefer it.
+
+Two more worth knowing are greatest and least. They work row-wise across several columns — greatest returns the largest value among the columns for each row, least the smallest. These are perfect for caps and floors. You can floor a principal amount at fifty thousand with greatest, and cap it at two million with least, all without a single conditional expression.

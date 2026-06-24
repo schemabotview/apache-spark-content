@@ -1,0 +1,13 @@
+Performance tiers — when to use each.
+
+Let's tie the whole module together into one decision you can carry to every problem. The question is always the same — what is the fastest tool that can express this logic? Work down the tiers from fast to slow, and stop at the first one that fits.
+
+Tier one, and your default, is the built-in function library. String work, date work, array work, conditionals, numeric helpers — all of it compiles through Tungsten with no serialization. This is as fast as Spark gets.
+
+Tier two, for element-wise work inside arrays and maps, is the higher-order functions. Their lambdas run on the java virtual machine, so they stay fast.
+
+Tier three, when you genuinely need numpy, pandas, or scikit-learn, is the pandas user-defined function — series to series for row-wise work, the iterator variant when you have expensive one-time setup, and apply-in-pandas for custom group-level logic that needs a full pandas dataframe.
+
+And the bottom tier is the plain Python user-defined function. It is acceptable for simple custom logic on small data when nothing else fits. But on billions of rows it is ten to a hundred times slower and it pressures the garbage collector, so rewrite it as built-ins or a pandas function before it reaches a hot path.
+
+The instinct to internalize — never start at the bottom. Start at the top and only descend when you must.

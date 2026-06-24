@@ -92,6 +92,32 @@
         { "heading": "coalesce vs repartition before writing",                       "scene": "spark-batch-api", "spine": false, "highlight": ["b-output"], "focus": "b-write", "audio": "audio/04-12-coalesce-vs-repartition.wav" },
         { "heading": "JDBC briefly",                                                 "scene": "spark-batch-api", "spine": false, "highlight": ["b-read-jdbc", "b-w-jdbc"], "focus": "b-read-jdbc", "audio": "audio/04-13-jdbc-briefly.wav" }
       ]
+    },
+    {
+      "id": "06-sql-udfs",
+      "title": "Spark SQL & UDFs",
+      "notebook": "notebooks/06-sql-udfs.ipynb",
+      "defaultScene": "spark-batch-api",
+      "sections": [
+        { "heading": "SQL is a first-class citizen",                          "scene": "spark-batch-api", "spine": true,  "role": "hook", "focus": ["b-sql", "b-df"], "audio": "audio/06-01-sql-first-class-citizen.wav" },
+        { "heading": "Setup — register the seven bank tables as views",       "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-temp", "b-sql-gtemp"], "focus": "b-sql-views", "audio": "audio/06-02-setup-register-views.wav" },
+        { "heading": "Temporary views — session, global, and managed tables", "scene": "spark-batch-api", "spine": true,  "highlight": ["b-sql-temp", "b-sql-gtemp", "b-sql-savetbl"], "focus": "b-sql-views", "audio": "audio/06-03-temporary-views.wav" },
+        { "heading": "Basic SQL queries",                                     "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-queries"], "focus": "b-sql-queries", "audio": "audio/06-04-basic-sql-queries.wav" },
+        { "heading": "Null semantics — col == null always returns null",      "scene": "spark-batch-api", "spine": true,  "highlight": ["b-sql-null"], "focus": "b-sql-null", "audio": "audio/06-05-null-semantics.wav" },
+        { "heading": "CTEs — WITH clause",                                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-cte"], "focus": "b-sql-joins", "audio": "audio/06-06-ctes.wav" },
+        { "heading": "SQL JOINs",                                             "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-j-inner", "b-sql-j-left", "b-sql-j-full", "b-sql-j-semi"], "focus": "b-sql-joins", "audio": "audio/06-07-sql-joins.wav" },
+        { "heading": "Subqueries",                                            "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-sub"], "focus": "b-sql-joins", "audio": "audio/06-08-subqueries.wav" },
+        { "heading": "Window functions in SQL",                               "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-rownum", "b-sql-rank", "b-sql-lag", "b-sql-cume"], "focus": "b-sql-agg", "audio": "audio/06-09-window-functions-in-sql.wav" },
+        { "heading": "monotonically_increasing_id — monotonic, not sequential", "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-rownum"], "focus": "b-sql-agg", "audio": "audio/06-10-monotonically-increasing-id.wav" },
+        { "heading": "The catalog API",                                       "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-listtbl", "b-sql-listcol"], "focus": "b-sql-views", "audio": "audio/06-11-catalog-api.wav" },
+        { "heading": "DataFrame API vs SQL — same plan",                      "scene": "spark-batch-api", "spine": true,  "highlight": ["b-sql", "b-df"], "focus": ["b-sql", "b-df"], "audio": "audio/06-12-dataframe-vs-sql-same-plan.wav" },
+        { "heading": "Numeric functions",                                     "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-fn-acf", "b-sql-fn-rsl"], "focus": "b-sql-fns", "audio": "audio/06-13-numeric-functions.wav" },
+        { "heading": "Advanced date functions",                               "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-fn-dt1", "b-sql-fn-dt2"], "focus": "b-sql-fns", "audio": "audio/06-14-advanced-date-functions.wav" },
+        { "heading": "Higher-order array functions",                          "scene": "spark-batch-api", "spine": false, "highlight": ["b-sql-fn-a1", "b-sql-fn-a2"], "focus": "b-sql-fns", "audio": "audio/06-15-higher-order-array-functions.wav" },
+        { "heading": "Python UDFs — @udf and spark.udf.register",             "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-fn-udf"], "focus": "b-df-fns", "audio": "audio/06-16-python-udfs.wav" },
+        { "heading": "Pandas UDFs — vectorized via Apache Arrow",             "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-fn-udf"], "focus": "b-df-fns", "audio": "audio/06-17-pandas-udfs.wav" },
+        { "heading": "Performance tiers — when to use each",                  "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df-fns"], "focus": "b-df-fns", "audio": "audio/06-18-performance-tiers.wav" }
+      ]
     }
   ]
 }

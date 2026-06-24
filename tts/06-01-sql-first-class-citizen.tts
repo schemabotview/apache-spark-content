@@ -1,0 +1,9 @@
+Sequel is a first-class citizen.
+
+Here is something that surprises people coming from other engines. In Spark, sequel is not a second-class bolt-on. When you hand Spark a sequel string, it routes that query through the exact same Catalyst optimizer as the dataframe API. The two paths produce identical execution plans.
+
+What that means in practice is freedom. You choose whichever form reads better for the problem in front of you, and you can mix them in the same application without any performance penalty. A gnarly join might be clearer as sequel; a programmatic transformation might be clearer as dataframe code. Use both.
+
+One option worth knowing about is ansi sequel mode. Since Spark three point zero, you can turn on stricter semantics — integer overflow throws instead of silently wrapping around, divide by zero raises an error, and casts get stricter. It is off by default for backward compatibility, but it is the right default for any new pipeline, because silent wrong answers are the worst kind of bug.
+
+So the mental model to carry — sequel and dataframes are two front doors into the same optimizer. Pick the one that makes the code clearest.

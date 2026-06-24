@@ -1,0 +1,11 @@
+Advanced date functions.
+
+Building on the date basics, these functions handle the calendar tricks that reporting actually demands.
+
+Date-truncate is the workhorse. Give it a unit — hour, day, or month — and it chops a timestamp down to that boundary. Truncating to the hour turns every timestamp in a given hour into the same value, which is exactly what you need to bucket transactions into hourly counts.
+
+Last-day returns the final day of the month containing your date — useful for month-end reporting. Next-day jumps forward to the next named weekday, like the next Monday on or after a date. Quarter pulls out the calendar quarter, one through four. And week-of-year gives you the i-s-o week number.
+
+The one with a subtlety is months-between. It returns the number of months between two dates, including a fractional part for partial months. So the elapsed tenure of a loan might come back as fourteen point five months, not just fourteen. When you need whole months, remember to floor or round the result yourself.
+
+Together these turn fiddly calendar math into single function calls, which keeps reporting queries readable.

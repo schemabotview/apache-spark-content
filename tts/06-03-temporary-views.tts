@@ -1,0 +1,11 @@
+Temporary views — session, global, and managed tables.
+
+There are three ways to make a dataframe queryable by name, and they differ in how long the name survives and who can see it.
+
+The first is a session temporary view. It lives only inside the current Spark session, and you address it by its plain name. When the session ends, it is gone. This is the everyday choice.
+
+The second is a global temporary view. This one is visible to every session running in the same java virtual machine, not just the one that created it. The catch is the address — you must prefix it with global underscore temp. Forget that prefix and Spark will tell you the table does not exist.
+
+The third is a managed table written with save-as-table. Unlike the two views, this one is persisted in the metastore. It survives across sessions and even across restarts, because the data and its registration are stored on disk.
+
+There is a lovely pattern these enable — the sequel to dataframe round-trip. You register a dataframe as a view, query it with sequel, take the result back as a dataframe, and keep chaining. Every hop goes through the same optimizer, so the plans stay merged into one.

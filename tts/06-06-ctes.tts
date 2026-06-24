@@ -1,0 +1,9 @@
+Common table expressions — the with clause.
+
+A common table expression, written with the with keyword, lets you name an intermediate result and then refer to it by that name later in the query. Spark supports the full ansi form, including chains where one named expression builds on another.
+
+The reason to use them is pure readability. Without them, a complex query nests inner queries inside outer queries, and you end up reading it inside-out, from the deepest parenthesis outward. That is hard to follow and harder to maintain.
+
+With common table expressions, the same logic reads top to bottom, like a short story. You define approved spend first, then join it to customers to get customer-with-spend, then rank within each city, and finally pick the top one. Each step has a name, and each step reads in the order you think about it.
+
+The key insight is that this is not a performance feature — Catalyst flattens it all into the same plan either way. It is a clarity feature. You write the query the way a human reasons about it, and the optimizer does not care.

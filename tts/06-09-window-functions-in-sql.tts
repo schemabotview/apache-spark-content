@@ -1,0 +1,9 @@
+Window functions in sequel.
+
+Window functions are the same powerful tool you saw in the dataframe API, now in sequel syntax. The shape is the over clause — over, partition by, order by, and optionally a rows-between frame.
+
+The mental model is this. Unlike a group-by, which collapses many rows into one, a window function keeps every row and computes an extra value for each one, looking across a window of related rows. So you can rank rows within a group while still seeing all the rows.
+
+The same family is available. Row-number gives a dense sequential rank. Rank and dense-rank handle ties differently. N-tile splits rows into buckets. Lag and lead reach backward and forward to neighboring rows. And you can run a moving aggregate, like a cumulative sum, over a frame.
+
+The frame clause is the part people underuse. Rows-between unbounded-preceding and current-row, for instance, gives you a running total — every row sees itself plus everything before it in the ordering. That is how you compute a cumulative spend per customer over time, all in one pass, without any self-join.

@@ -1,0 +1,9 @@
+Sequel joins.
+
+Spark supports all six join types in sequel, and they carry exactly the same meaning as the dataframe how-argument from the transformations module. Only the syntax changes.
+
+Let's walk them. An inner join returns only the rows that match in both tables. A left join keeps every row from the left table, filling nulls where the right side has no match. A right join is the mirror — every right row, nulls on the left. A full outer join keeps everything from both sides, with nulls wherever there is no match.
+
+Then there are two special ones that people forget. A left semi join returns the left rows that have a match on the right, but it brings back no columns from the right table. Think of it as a filter — keep the left rows that have a partner. And a left anti join is the opposite — it returns the left rows that have no match on the right at all. That one is perfect for "find the customers who have never transacted."
+
+The semi and anti joins are worth memorizing, because they express "exists" and "does not exist" intent directly, and they avoid pulling in right-side columns you do not want.
