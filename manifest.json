@@ -169,6 +169,23 @@
         { "heading": "Stateful operations — deduplication, arbitrary state", "scene": "spark-streaming", "spine": true,  "highlight": ["s-df-state"], "focus": "s-df-state" },
         { "heading": "State store backends + monitoring state",              "scene": "spark-streaming", "spine": false, "highlight": ["s-statestore"], "focus": "s-statestore" }
       ]
+    },
+    {
+      "id": "09-pandas-api",
+      "title": "Pandas API on Spark",
+      "notebook": "notebooks/09-pandas-api.ipynb",
+      "defaultScene": "spark-batch-api",
+      "sections": [
+        { "heading": "Why this API exists",                                         "scene": "spark-batch-api", "spine": true,  "role": "hook", "focus": "b-ps" },
+        { "heading": "Setup",                                                       "scene": "spark-batch-api", "spine": false, "highlight": ["b-session"], "focus": "b-session" },
+        { "heading": "Three DataFrame types — keep them straight",                  "scene": "spark-batch-api", "spine": true,  "highlight": ["b-df", "b-ps"], "focus": "b-apis" },
+        { "heading": "Creating a `ps.DataFrame`",                                   "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps-create"], "focus": "b-ps-create" },
+        { "heading": "Transformations — lazy, return another `ps.DataFrame`",       "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps-trans"], "focus": "b-ps-trans" },
+        { "heading": "Actions — eager, trigger a Spark job",                        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps-actions"], "focus": "b-ps-actions" },
+        { "heading": "The Spark bridge — `to_spark()` and `pandas_api()`",          "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps", "b-df"], "focus": ["b-ps", "b-df"] },
+        { "heading": "Default index types — the most-tested gotcha",                "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps-index"], "focus": "b-ps-index" },
+        { "heading": "Gotchas — where the pandas API ends",                         "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps"], "focus": "b-ps" }
+      ]
     }
   ]
 }
