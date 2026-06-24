@@ -1,0 +1,11 @@
+Predicate and projection pushdown — what actually reads less data.
+
+This is where columnar formats earn their keep. Parquet and orc give Spark two scan-layer tricks that the row-oriented text formats simply cannot offer.
+
+The first is projection pushdown. When you select only two columns, a columnar format reads only those two columns off disk. Every other column stays untouched and never gets decoded. A csv file cannot do this — it has to read whole rows even when you want one field, because there is no per-column layout to skip.
+
+The second is predicate pushdown. When you filter on a column, Spark can skip entire blocks of the file using the minimum and maximum statistics stored in the footer. If a block's status values are all declined, and you asked for approved, Spark skips that whole block without decoding a single row.
+
+Now, not everything pushes down. Simple comparisons push — equals, greater than, is null. But a user-defined function inside the filter cannot push, because Spark cannot translate your Python into a file predicate. And a filter that computes on the column, like column plus one equals five, will not push either — rewrite it as a plain comparison to a literal and it will.
+
+To check whether a filter pushed, read the physical plan and look for the pushed filters line in the scan node. If your filter is listed there, Spark is reading less data.

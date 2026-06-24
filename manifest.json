@@ -71,6 +71,27 @@
         { "heading": "Default indexes — the most-tested gotcha",   "scene": "spark-batch-api", "spine": true,  "highlight": ["b-ps-index"], "focus": "b-ps-index", "audio": "audio/03-12-default-indexes.wav" },
         { "heading": "Limitations and gotchas",                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-df-actions"], "focus": "b-df", "audio": "audio/03-13-limitations.wav" }
       ]
+    },
+    {
+      "id": "04-reading-writing",
+      "title": "Reading & Writing",
+      "notebook": "notebooks/04-reading-writing.ipynb",
+      "defaultScene": "spark-batch-api",
+      "sections": [
+        { "heading": "The unified read/write API",                                  "scene": "spark-batch-api", "spine": true,  "role": "hook", "focus": ["b-read", "b-write"], "audio": "audio/04-01-unified-read-write-api.wav" },
+        { "heading": "Reading the four formats",                                     "scene": "spark-batch-api", "spine": true,  "highlight": ["b-sources"], "focus": "b-sources", "audio": "audio/04-02-reading-the-four-formats.wav" },
+        { "heading": "Schema inference vs explicit",                                 "scene": "spark-batch-api", "spine": true,  "highlight": ["b-read-fmt"], "focus": "b-read", "audio": "audio/04-03-schema-inference-vs-explicit.wav" },
+        { "heading": "Predicate and projection pushdown — what actually reads less data", "scene": "spark-batch-api", "spine": true, "highlight": ["b-src-parquet", "b-src-orc"], "focus": "b-sources", "audio": "audio/04-04-predicate-projection-pushdown.wav" },
+        { "heading": "Bad-record handling — the mode option",                        "scene": "spark-batch-api", "spine": false, "highlight": ["b-read-mode"], "focus": "b-read-mode", "audio": "audio/04-05-bad-record-handling.wav" },
+        { "heading": "Reading multiple files — globs and directories",              "scene": "spark-batch-api", "spine": false, "highlight": ["b-read-multi"], "focus": "b-read-multi", "audio": "audio/04-06-reading-multiple-files.wav" },
+        { "heading": "Write modes",                                                  "scene": "spark-batch-api", "spine": true,  "highlight": ["b-w-mode"], "focus": "b-w-mode", "audio": "audio/04-07-write-modes.wav" },
+        { "heading": "Writing the four formats",                                     "scene": "spark-batch-api", "spine": false, "highlight": ["b-w-fmt"], "focus": "b-w-fmt", "audio": "audio/04-08-writing-the-four-formats.wav" },
+        { "heading": "partitionBy — the partition-pruning win",                      "scene": "spark-batch-api", "spine": true,  "highlight": ["b-w-partby"], "focus": "b-w-layout", "audio": "audio/04-09-partitionby.wav" },
+        { "heading": "bucketBy — bucketing for join-friendly layouts",              "scene": "spark-batch-api", "spine": false, "highlight": ["b-w-bucket", "b-w-sortby"], "focus": "b-w-layout", "audio": "audio/04-10-bucketby.wav" },
+        { "heading": "saveAsTable vs save — catalog vs filesystem",                  "scene": "spark-batch-api", "spine": true,  "highlight": ["b-w-save", "b-w-saveTbl"], "focus": "b-w-sinks", "audio": "audio/04-11-saveastable-vs-save.wav" },
+        { "heading": "coalesce vs repartition before writing",                       "scene": "spark-batch-api", "spine": false, "highlight": ["b-output"], "focus": "b-write", "audio": "audio/04-12-coalesce-vs-repartition.wav" },
+        { "heading": "JDBC briefly",                                                 "scene": "spark-batch-api", "spine": false, "highlight": ["b-read-jdbc", "b-w-jdbc"], "focus": "b-read-jdbc", "audio": "audio/04-13-jdbc-briefly.wav" }
+      ]
     }
   ]
 }

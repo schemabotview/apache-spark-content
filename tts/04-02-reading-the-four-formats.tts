@@ -1,0 +1,11 @@
+Reading the four formats.
+
+Let's read one real table per format, because the differences are small but they matter.
+
+For csv, the first thing you decide is whether the first row holds column names. Set the header option to true and Spark treats that first line as the names rather than as data. And here is the rule worth carrying with you — always pass an explicit schema in production. Inference is slow and it can guess wrong.
+
+For json, the default assumption is that each line is one complete json object. That is line-delimited json. If a single record instead spans many lines, you flip the multi-line option on so Spark reads the whole object as one record.
+
+Parquet and orc are the easy ones. Both are columnar, and both embed their schema right inside the file footer, so Spark reads the types automatically — you do not have to declare anything. Passing an explicit schema is still useful when you want to enforce types or read just a subset of columns.
+
+So two text formats where you supply the structure, and two columnar formats that carry their own structure with them.

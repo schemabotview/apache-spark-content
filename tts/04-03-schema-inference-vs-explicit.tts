@@ -1,0 +1,9 @@
+Schema inference versus an explicit schema.
+
+You have two choices when reading text formats like csv and json. You can let Spark infer the schema, or you can declare it yourself. They feel interchangeable on a small file, but on real data they are not.
+
+Inference is the convenient one, and it is fine for exploratory work. The catch is that inference triggers a separate scan over the data before your real query even starts. On a hundred-gigabyte csv that is a non-trivial pre-job, paid every single time you read.
+
+There is a subtler danger too. Inference is a best-effort guess, and the guess can drift. Picture a credit-limit column that read as a decimal yesterday. Today one row contains the text N-A, and now Spark infers the whole column as a string. Downstream, every sum over that column quietly fails. Nothing told you the type changed.
+
+An explicit schema removes both problems. No pre-scan, so it is fast, and the types are guaranteed because you declared them. To put it plainly — inference for exploring, explicit schemas for production. Always.

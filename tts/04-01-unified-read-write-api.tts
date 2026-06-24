@@ -1,0 +1,9 @@
+The unified read and write interface.
+
+Spark reads and writes every data source through one fluent interface, and once you see the shape of it, every format looks the same. To read, you start from the spark read object, name a format, set a few options, and load a path. To write, you start from a dataframe's write object, name a format, choose a save mode, and save to a path. Read on the left, write on the right, the dataframe in the middle.
+
+There are shorthand methods for the common formats — a csv method, a json method, a parquet method, an orc method. These are just aliases for the longer form. Same plumbing underneath, a little less typing on top.
+
+Four formats matter for everyday work. Csv is human-readable text, slow but easy to eyeball. Json is for semi-structured data like API dumps. Parquet is columnar and the default for analytics. And orc is the other columnar format, common in older Hadoop pipelines.
+
+The key insight is that the read and write APIs are mirror images of each other. Learn the pattern once and it carries across all four formats and every storage system you will ever connect to.
