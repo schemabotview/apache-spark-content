@@ -38,17 +38,17 @@
       "defaultScene": "spark-batch-api",
       "sections": [
         { "heading": "What an RDD actually is",                                          "scene": "spark-batch-api", "spine": true,  "role": "hook", "audio": "audio/02-01-what-an-rdd-is.wav" },
-        { "heading": "Partitions — the unit of parallelism",                             "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-numslices"], "audio": "audio/02-02-partitions.wav" },
-        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-narrow", "b-rdd-wide"], "audio": "audio/02-03-lineage.wav" },
-        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-batch-api", "spine": false, "highlight": ["b-session"], "audio": "audio/02-04-sparkcontext.wav" },
-        { "heading": "Creating RDDs",                                                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-create"], "audio": "audio/02-05-creating-rdds.wav" },
-        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-narrow", "b-rdd-wide", "b-rdd-pair", "b-rdd-actions"], "audio": "audio/02-06-transformations-and-actions.wav" },
-        { "heading": "Narrow vs wide transformations",                                   "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-narrow", "b-rdd-wide"], "audio": "audio/02-07-narrow-vs-wide.wav" },
-        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-pair"], "audio": "audio/02-08-pair-rdds.wav" },
-        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-batch-api", "spine": false, "highlight": ["b-perf-cache"], "audio": "audio/02-09-persistence.wav" },
-        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-mappart", "b-rdd-repart", "b-rdd-coalesce", "b-perf-part"], "audio": "audio/02-10-partition-level-operations.wav" },
-        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-bcast", "b-rdd-acc"], "audio": "audio/02-11-shared-variables.wav" },
-        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd", "b-df"], "audio": "audio/02-12-rdd-vs-dataframe.wav" }
+        { "heading": "Partitions — the unit of parallelism",                             "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-numslices"], "focus": ["b-rdd-create"], "audio": "audio/02-02-partitions.wav" },
+        { "heading": "Lineage — how Spark recovers from failure",                        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-narrow", "b-rdd-wide"], "focus": ["b-rdd-narrow", "b-rdd-wide"], "audio": "audio/02-03-lineage.wav" },
+        { "heading": "SparkContext — the entry point for RDDs",                          "scene": "spark-batch-api", "spine": false, "highlight": ["b-session"], "focus": ["b-session"], "audio": "audio/02-04-sparkcontext.wav" },
+        { "heading": "Creating RDDs",                                                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-create"], "focus": ["b-rdd-create"], "audio": "audio/02-05-creating-rdds.wav" },
+        { "heading": "Transformations and actions — RDD edition",                        "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-narrow", "b-rdd-wide", "b-rdd-pair", "b-rdd-actions"], "focus": ["b-rdd"], "audio": "audio/02-06-transformations-and-actions.wav" },
+        { "heading": "Narrow vs wide transformations",                                   "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-narrow", "b-rdd-wide"], "focus": ["b-rdd-narrow", "b-rdd-wide"], "audio": "audio/02-07-narrow-vs-wide.wav" },
+        { "heading": "Pair RDDs — the (key, value) view",                                "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd-pair"], "focus": ["b-rdd-pair"], "audio": "audio/02-08-pair-rdds.wav" },
+        { "heading": "Persistence — cache(), persist(), StorageLevel",                   "scene": "spark-batch-api", "spine": false, "highlight": ["b-perf-cache"], "focus": ["b-perf-cache"], "audio": "audio/02-09-persistence.wav" },
+        { "heading": "Partition-level operations — mapPartitions, repartition, coalesce","scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-mappart", "b-rdd-repart", "b-rdd-coalesce"], "focus": ["b-rdd-narrow"], "audio": "audio/02-10-partition-level-operations.wav" },
+        { "heading": "Shared variables — broadcast and accumulators",                    "scene": "spark-batch-api", "spine": false, "highlight": ["b-rdd-bcast", "b-rdd-acc"], "focus": ["b-rdd-actions"], "audio": "audio/02-11-shared-variables.wav" },
+        { "heading": "RDD vs DataFrame — when to actually reach for each",               "scene": "spark-batch-api", "spine": true,  "highlight": ["b-rdd", "b-df"], "focus": ["b-rdd", "b-df"], "audio": "audio/02-12-rdd-vs-dataframe.wav" }
       ]
     }
   ]
