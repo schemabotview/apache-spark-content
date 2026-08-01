@@ -1,0 +1,17 @@
+name: validate content
+
+# Fail the build if any beat references a scene id (or edge) that doesn't exist. The valid
+# id sets come from the app's published scene-ids.json, so renaming a scene node in the app
+# and forgetting to update content is caught here — not silently at play time.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate beats against the app's scene ids
+        run: python3 scripts/validate_content.py
