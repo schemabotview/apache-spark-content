@@ -12,8 +12,11 @@ export const evolution: Course = {
   title: 'The road to Spark',
   sections: [
     {
-      // ── overview: the whole ghosted timeline, framed whole (empty delta → nothing
-      //    solidifies → all ghosted; empty focus → whole-scene fit). ──
+      // ── overview (SOLID TOUR): the whole timeline drawn solid up front, framed whole
+      //    (delta solidifies every scene node → all edges auto-solidify since both
+      //    endpoints are revealed; empty focus → hasFocus=false → nothing dimmed, so the
+      //    opener is a full-brightness overview). Every later section rides the same scene,
+      //    so nothing re-ghosts; each era just lights its own band and dims the rest. ──
       id: 'the-road',
       heading: 'The road to Spark',
       scene: 'evolution',
@@ -40,7 +43,24 @@ export const evolution: Course = {
         ].join('\n'),
       },
       beats: [
-        { line: 'Before we build anything, here’s the whole road at a glance. It starts with one problem — by the mid-2000s, data had outgrown any single machine, so the only affordable path was to scale out across a cluster. Then come four leaps, each fixing the limit of the one before. Hadoop 1 learned to store and compute at scale, with HDFS, MapReduce, and a single JobTracker. Hadoop 2 freed the scheduler — YARN split resource management out with a ResourceManager, per-job ApplicationMasters, and room for many engines. Spark 1 brought it all in-memory — a Driver building RDDs on a DAG scheduler, ten to a hundred times faster. And Spark 2 unified the API — DataFrames, the Catalyst optimizer, and Tungsten, one engine for batch, SQL, ML, and streaming. We’ll walk it top to bottom, one era at a time.', delta: [] },
+        {
+          line: 'Before we build anything, here’s the whole road at a glance. It starts with one problem — by the mid-2000s, data had outgrown any single machine, so the only affordable path was to scale out across a cluster. Then come four leaps, each fixing the limit of the one before. Hadoop 1 learned to store and compute at scale, with HDFS, MapReduce, and a single JobTracker. Hadoop 2 freed the scheduler — YARN split resource management out with a ResourceManager, per-job ApplicationMasters, and room for many engines. Spark 1 brought it all in-memory — a Driver building RDDs on a DAG scheduler, ten to a hundred times faster. And Spark 2 unified the API — DataFrames, the Catalyst optimizer, and Tungsten, one engine for batch, SQL, ML, and streaming. We’ll walk it top to bottom, one era at a time.',
+          // Solidify every scene node so the whole timeline is drawn for this overview.
+          // Edges need no explicit draw — each goes solid once both endpoints are revealed.
+          delta: [
+            {
+              kind: 'solidify',
+              ids: [
+                'spine-problem', 'spine-h1', 'spine-h2', 'spine-s1', 'spine-s2',
+                'prob', 'p-bigdata', 'p-scaleout',
+                'h1', 'h1-hdfs', 'h1-namenode', 'h1-datanodes', 'h1-mapreduce', 'h1-jobtracker', 'h1-tasktrackers', 'h1-limit',
+                'h2', 'h2-rm', 'h2-am', 'h2-nm', 'h2-decouple', 'h2-engines',
+                's1', 's1-driver', 's1-rdd', 's1-dag', 's1-onyarn', 's1-fast',
+                's2', 's2-session', 's2-df', 's2-catalyst', 's2-tungsten', 's2-streaming', 's2-unified',
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -181,7 +201,7 @@ export const evolution: Course = {
           line: 'Spark was the engine that walked through YARN’s open door, and its key insight was about disk. MapReduce wrote everything to disk between every step, which was murder for iterative jobs that pass over the same data again and again — so Spark’s answer was to keep the working data in memory instead. A Driver builds the job as a graph of RDDs — distributed datasets held in memory across steps — and a DAG scheduler pipelines those stages together rather than round-tripping to disk between each one. Running on YARN like any other application, and needing no cluster of its own, it came out ten to a hundred times faster for the iterative and interactive work MapReduce struggled with. The one rough edge: every workload still meant hand-writing low-level RDD code — and that is exactly what Spark 2 would smooth over.',
           delta: [
             { kind: 'solidify', ids: ['spine-s1', 's1', 's1-driver', 's1-rdd', 's1-dag', 's1-onyarn', 's1-fast'] },
-            { kind: 'draw', edges: [['s1-driver', 's1-rdd'], ['s1-rdd', 's1-dag'], ['s1-onyarn', 'h2-rm']] },
+            { kind: 'draw', edges: [['s1-driver', 's1-rdd'], ['s1-rdd', 's1-dag']] },
           ],
         },
       ],
