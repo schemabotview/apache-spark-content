@@ -114,10 +114,10 @@ export const evolution: SceneSpec = {
     // band ③: RM negotiates AM, launches containers on NodeManagers
     { from: 'h2-rm', to: 'h2-am' },
     { from: 'h2-rm', to: 'h2-nm' },
-    // band ④: driver → RDD → DAG, and Spark runs ON YARN (edge back up to band ③)
+    // band ④: driver → RDD → DAG. (Spark runs ON YARN — the s1-onyarn → h2-rm link — is
+    // made in narration only; the drawn cross-band edge was removed as visually noisy.)
     { from: 's1-driver', to: 's1-rdd' },
     { from: 's1-rdd', to: 's1-dag' },
-    { from: 's1-onyarn', to: 'h2-rm' },
     // band ⑤: session → DataFrame → Catalyst → Tungsten
     { from: 's2-session', to: 's2-df' },
     { from: 's2-df', to: 's2-catalyst' },
