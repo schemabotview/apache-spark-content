@@ -6,7 +6,8 @@
   "description": "Apache Spark concept app for GraphL — its own scenes + course, mounting the flow-engine RevealPlayer.",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "gen:courses": "node --experimental-strip-types scripts/gen-courses-json.ts",
+    "build": "npm run gen:courses && tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
