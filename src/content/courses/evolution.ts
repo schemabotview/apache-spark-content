@@ -46,10 +46,10 @@ export const evolution: Course = {
     {
       // ── band ①: the problem ──
       id: 'the-problem',
-      heading: 'The problem: data outgrew the machine',
+      heading: 'The problem statement',
       scene: 'evolution',
       slide: {
-        title: 'The problem: data outgrew the machine',
+        title: 'The problem statement',
         body: [
           'By the mid-2000s, data had outgrown the single machine.',
           '',
