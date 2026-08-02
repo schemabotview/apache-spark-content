@@ -46,10 +46,10 @@ export const evolution: Course = {
     {
       // ── band ①: the problem ──
       id: 'the-problem',
-      heading: 'Why Spark exists',
+      heading: 'The problem: data outgrew the machine',
       scene: 'evolution',
       slide: {
-        title: 'Why Spark exists',
+        title: 'The problem: data outgrew the machine',
         body: [
           'By the mid-2000s, data had outgrown the single machine.',
           '',
