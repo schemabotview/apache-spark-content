@@ -1,6 +1,4 @@
 import type { Course } from 'flow-engine'
-import { clusterBasics } from './cluster-basics.ts'
-import { executorInternals } from './executor-internals.ts'
 import { evolution } from './evolution.ts'
 
 // This concept's course catalog. A concept can hold several courses; each is routed by id
@@ -8,6 +6,6 @@ import { evolution } from './evolution.ts'
 // registry (scenes/index.ts).
 export const CONCEPT = 'Apache Spark'
 
-export const courses: Course[] = [evolution, clusterBasics, executorInternals]
+export const courses: Course[] = [evolution]
 
 export const courseById = (id: string): Course | undefined => courses.find((c) => c.id === id)

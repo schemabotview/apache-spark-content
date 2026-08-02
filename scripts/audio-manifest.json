@@ -1,0 +1,48 @@
+{
+  "concept": "apache-spark",
+  "count": 6,
+  "entries": [
+    {
+      "course": "evolution",
+      "section": "the-road",
+      "beat": 0,
+      "file": "evolution/the-road-0.wav",
+      "line": "Before we build anything, here’s the whole road at a glance. It starts with one problem — by the mid-2000s, data had outgrown any single machine, so the only affordable path was to scale out across a cluster. Then come four leaps, each fixing the limit of the one before. Hadoop 1 learned to store and compute at scale, with HDFS, MapReduce, and a single JobTracker. Hadoop 2 freed the scheduler — YARN split resource management out with a ResourceManager, per-job ApplicationMasters, and room for many engines. Spark 1 brought it all in-memory — a Driver building RDDs on a DAG scheduler, ten to a hundred times faster. And Spark 2 unified the API — DataFrames, the Catalyst optimizer, and Tungsten, one engine for batch, SQL, ML, and streaming. We’ll walk it top to bottom, one era at a time."
+    },
+    {
+      "course": "evolution",
+      "section": "the-problem",
+      "beat": 0,
+      "file": "evolution/the-problem-0.wav",
+      "line": "To understand Spark, start with the problem it was built for. By the mid-2000s, datasets had simply outgrown what any single machine could hold or process. Buying a bigger box — scaling up — hit a hard ceiling of both cost and physics, so the only affordable path was to scale out, spreading the work across a cluster of cheap, commodity machines. But a cluster brings its own problems: at that scale machines fail all the time, so the system has to expect failure; the data has to be spread and replicated across many disks; and the computation has to be split up, shipped to wherever the data lives, and then recombined. Solving that cleanly needs two things working together — a distributed storage layer that acts like one filesystem over many disks, and a distributed programming model where the compute moves to the data. That pairing is exactly what Hadoop set out to build."
+    },
+    {
+      "course": "evolution",
+      "section": "hadoop-1",
+      "beat": 0,
+      "file": "evolution/hadoop-1-0.wav",
+      "line": "Hadoop 1 was the first real answer, and it split the problem in two: store the data, then compute over it. On the storage side, HDFS chopped each file into large blocks and spread them, replicated, across the cluster — a NameNode kept the index of where every block lived, while the DataNodes held the blocks themselves on local disk. On the compute side, MapReduce ran the work as a batch model: map over the data in parallel, then reduce the results, with a single JobTracker scheduling every job and handing tasks to TaskTrackers on each node. It genuinely worked at scale — but that one JobTracker did both scheduling and resource management, making it a bottleneck and a single point of failure, and it only ever ran MapReduce, writing to disk between every step. That crack is exactly what Hadoop 2 set out to fix."
+    },
+    {
+      "course": "evolution",
+      "section": "hadoop-2",
+      "beat": 0,
+      "file": "evolution/hadoop-2-0.wav",
+      "line": "Hadoop 2 broke that bottleneck apart with a new layer called YARN. The whole problem with Hadoop 1 was that its single JobTracker was overloaded — it handled both scheduling and resource management — and it locked the cluster to MapReduce alone. YARN split that job up: a cluster-wide ResourceManager now owns the machines, a per-application ApplicationMaster owns each job’s lifecycle and requests the containers it needs, and NodeManagers launch and watch those containers on each node. Because resource management is finally decoupled from the compute, the cluster is no longer married to MapReduce — any engine can ask for resources and run on it. And that open door is exactly what let a new engine, Spark, move in."
+    },
+    {
+      "course": "evolution",
+      "section": "spark-1",
+      "beat": 0,
+      "file": "evolution/spark-1-0.wav",
+      "line": "Spark was the engine that walked through YARN’s open door, and its key insight was about disk. MapReduce wrote everything to disk between every step, which was murder for iterative jobs that pass over the same data again and again — so Spark’s answer was to keep the working data in memory instead. A Driver builds the job as a graph of RDDs — distributed datasets held in memory across steps — and a DAG scheduler pipelines those stages together rather than round-tripping to disk between each one. Running on YARN like any other application, and needing no cluster of its own, it came out ten to a hundred times faster for the iterative and interactive work MapReduce struggled with. The one rough edge: every workload still meant hand-writing low-level RDD code — and that is exactly what Spark 2 would smooth over."
+    },
+    {
+      "course": "evolution",
+      "section": "spark-2",
+      "beat": 0,
+      "file": "evolution/spark-2-0.wav",
+      "line": "Spark 2 turned that engine into a unified platform, and it started from the frustration with Spark 1: writing raw RDD code was low-level and had to be hand-optimized. So Spark 2 flipped the model — you declare what you want, and the engine works out how. A single SparkSession is now the one entry point, fronting DataFrames and Datasets: structured, typed APIs over your data. Behind them, the Catalyst optimizer plans your query for you, and Tungsten compiles that plan down to tight, off-heap code for raw speed. Structured Streaming then brought the very same API to streaming data. The result is one engine that covers batch, SQL, machine learning, and streaming — and that is the Spark we use today."
+    }
+  ]
+}

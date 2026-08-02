@@ -14,11 +14,14 @@ machinery comes from the shared engine — [`flow-engine`](https://github.com/sc
 apache-spark/
   package.json      depends on github:schemabotview/flow-engine (+ react, @xyflow/react, lucide-react)
   src/
-    scenes/         this concept's SceneSpecs (demo, executor) — the diagram STRUCTURE
+    scenes/         this concept's SceneSpecs (evolution) — the diagram STRUCTURE
       index.ts      the scene registry: getScene(id)
     content/course.ts   the typed Course: sections → slide + beats (references scene node ids)
     main.tsx        mounts <RevealPlayer course getScene audioBase="" />
-  public/audio/     per-beat narration clips: <section-id>-<beatIndex>.wav
+  public/audio/     per-beat narration clips: <courseId>/<section-id>-<beatIndex>.wav
+  scripts/
+    gen-audio-manifest.ts   `npm run gen:audio` → scripts/audio-manifest.json (one entry per beat)
+    colab_generate_audio.ipynb   Colab/Chatterbox TTS: reads the manifest, generates + pushes each wav
   .github/workflows/build.yml   CI = npm ci + npm run build (tsc + vite)
 ```
 
@@ -114,17 +117,23 @@ Once approved, the real release path is: commit `../flow-engine/dist` + push, th
 
 ## Audio generation
 
-Clips are currently macOS `say` placeholders. Regenerate with **Chatterbox** (one clip per beat
-`line`) into `public/audio/<section-id>-<beatIndex>.wav` — no app change needed.
+One wav per beat `line`, at `public/audio/<courseId>/<section-id>-<beatIndex>.wav`. Because the
+narration lives in the typed course files (not per-section `.tts`), the pipeline is:
+
+1. `npm run gen:audio` → `scripts/audio-manifest.json` (a flat `{ course, section, beat, file, line }`
+   list of every beat; run + **commit** it whenever beats change — the notebook only sees committed lines).
+2. `scripts/colab_generate_audio.ipynb` on Colab (Chatterbox, CUDA) reads that manifest and generates
+   each wav to its contract path, committing + pushing one at a time. `audioBase=""` → served
+   same-origin (no live fetch at capture).
 
 ## Status
 
-- **`evolution`** — the first real course + scene: "The road to Spark", a top-to-bottom timeline
-  (Hadoop 1 → Hadoop 2/YARN → Spark 1 → Spark 2) on the `evolution` scene. Opens with a whole-scene
-  ghosted **overview** (a section with `focus: []`), then the camera Ken-Burns down era by era; each
-  era is a **1-beat Map section** lighting its whole band. Markdown slides list each era's features.
-  Audio is not yet generated (page with ← → to preview).
-- **`cluster-basics`** / **`executor-internals`** — the original toy demos on the `demo`/`executor`
-  scenes, kept as pipeline proofs.
+- **`evolution`** — the first (and currently only) real course + scene: "The road to Spark", a
+  top-to-bottom timeline (Hadoop 1 → Hadoop 2/YARN → Spark 1 → Spark 2) on the `evolution` scene.
+  Opens with a whole-scene ghosted **overview** (a section with `focus: []`), then the camera
+  Ken-Burns down era by era; each era is a **1-beat Map section** lighting its whole band. Markdown
+  slides list each era's features. 6 beats; audio generated via the pipeline above.
+- The original toy demos (`cluster-basics` / `executor-internals` on the `demo` / `executor` scenes)
+  were **removed** — they only existed as pipeline proofs and would generate throwaway wavs.
 
 Next: TTS for `evolution`, then the **spark-architecture** course (driver / cluster-manager / workers).

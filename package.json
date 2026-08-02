@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "gen:courses": "node --experimental-strip-types scripts/gen-courses-json.ts",
+    "gen:audio": "node --experimental-strip-types scripts/gen-audio-manifest.ts",
     "build": "npm run gen:courses && tsc && vite build",
     "preview": "vite preview"
   },
