@@ -1,5 +1,10 @@
 import { type SceneSpec, BLUE, GREEN, ORANGE, PURPLE, TEAL, RED, GRAY } from 'flow-engine'
 
+// Apache Spark's brand orange (from the logo on spark.apache.org — `spark-logo-rev.svg`
+// fill="#E25A1C"). Used for the Spark-era band containers so those bands wear the product's
+// own identity color, distinct from the role palette the child nodes use.
+const SPARK = '#E25A1C'
+
 // The `evolution` scene — a TALL, top-to-bottom timeline. A left spine of five era steps
 // (Big data → Hadoop 1 → Hadoop 2/YARN → Spark 1 → Spark 2); each spine step sits beside a
 // right-hand DETAIL band that expands that era's architecture. The course's per-section
@@ -18,10 +23,10 @@ export const evolution: SceneSpec = {
   nodes: [
     // ── the left spine: five timeline steps, wired top→bottom into a single line ──
     { id: 'spine-problem', label: 'Big data', kind: 'symbol', color: GRAY, icon: 'database', cell: [0, 0] },
-    { id: 'spine-h1', label: 'Hadoop 1', sub: '2006', kind: 'symbol', color: GRAY, icon: 'server', cell: [0, 1] },
-    { id: 'spine-h2', label: 'Hadoop 2 / YARN', sub: '2013', kind: 'symbol', color: GRAY, icon: 'workflow', cell: [0, 2] },
-    { id: 'spine-s1', label: 'Spark 1', sub: '2014', kind: 'symbol', color: GRAY, icon: 'engine', cell: [0, 3] },
-    { id: 'spine-s2', label: 'Spark 2', sub: '2016', kind: 'symbol', color: GRAY, icon: 'layers', cell: [0, 4] },
+    { id: 'spine-h1', label: 'Hadoop 1', sub: '2006', kind: 'symbol', color: BLUE, icon: 'server', cell: [0, 1] },
+    { id: 'spine-h2', label: 'Hadoop 2 / YARN', sub: '2013', kind: 'symbol', color: BLUE, icon: 'workflow', cell: [0, 2] },
+    { id: 'spine-s1', label: 'Spark 1', sub: '2014', kind: 'symbol', color: SPARK, icon: 'engine', cell: [0, 3] },
+    { id: 'spine-s2', label: 'Spark 2', sub: '2016', kind: 'symbol', color: SPARK, icon: 'layers', cell: [0, 4] },
 
     // ── band ①: the problem ──
     {
@@ -68,7 +73,7 @@ export const evolution: SceneSpec = {
 
     // ── band ④: Spark 1 — in-memory RDDs on a DAG scheduler, running on YARN ──
     {
-      id: 's1', label: 'Spark 1', kind: 'container', color: GREEN, cell: [1, 3],
+      id: 's1', label: 'Spark 1', kind: 'container', color: SPARK, cell: [1, 3],
       layout: { cols: [1, 1, 1], rows: [1, 0.8], gap: 0.3, padding: 0.5 },
       children: [
         { id: 's1-driver', label: 'Driver', kind: 'symbol', color: BLUE, icon: 'brain', cell: [0, 0] },
@@ -81,7 +86,7 @@ export const evolution: SceneSpec = {
 
     // ── band ⑤: Spark 2 — the unified, optimized engine ──
     {
-      id: 's2', label: 'Spark 2', kind: 'container', color: PURPLE, cell: [1, 4],
+      id: 's2', label: 'Spark 2', kind: 'container', color: SPARK, cell: [1, 4],
       layout: { cols: [1, 1, 1], rows: [1, 1], gap: 0.3, padding: 0.5 },
       children: [
         { id: 's2-session', label: 'SparkSession', kind: 'symbol', color: BLUE, cell: [0, 0] },
