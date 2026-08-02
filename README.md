@@ -11,11 +11,15 @@ what's specific to Apache Spark: its scenes, its course, and its audio.
 
 ```
 src/
-  scenes/          this concept's SceneSpecs (authored with flow-engine helpers)
-  content/course.ts the typed course: sections → slide + beats (references scene node ids)
-  main.tsx         mounts <RevealPlayer course=… getScene=… audioBase="" />
-public/audio/      per-beat narration clips  <section-id>-<beatIndex>.wav
+  scenes/               this concept's SceneSpecs (authored with flow-engine helpers)
+  content/courses/*.ts  the typed courses: sections → slide (Markdown body) + focus + beats
+  main.tsx              mounts <RevealPlayer course=… getScene=… audioBase="" />
+public/audio/           per-beat narration clips  <courseId>/<section-id>-<beatIndex>.wav
 ```
+
+The first real course is **`evolution`** ("The road to Spark") on the `evolution` scene — a
+top-to-bottom timeline whose per-section camera travels era by era. Each section's `slide.body` is
+Markdown, and `focus` picks the band the camera frames (`focus: []` = the whole-scene overview).
 
 ## Develop
 

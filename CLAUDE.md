@@ -26,12 +26,19 @@ apache-spark/
 
 - **Scenes** (`src/scenes`) = structure. Authored with the engine's helpers:
   `import { type SceneSpec, container, wgrid, BLUE, … } from 'flow-engine'`. Register in `scenes/index.ts`.
-- **Course** (`src/content/course.ts`) = the script. A list of sections; each has a `slide`
-  (title + bullets) and ordered `beats`. A **beat** = `{ line, delta }`:
-  - `line` — the narration (tts) text, spoken not shown.
-  - `delta` — reveal verbs referencing **raw scene node ids**: `{ kind: 'solidify', ids: […] }`,
-    `{ kind: 'draw', edges: [[from,to]] }`, plus `pulse` / `annotate` / `pan` (folded, not yet drawn).
-  - Map section = 1 beat; Trace section = N beats (assemble a process step-by-step).
+- **Courses** (`src/content/courses/*.ts`, registered in `courses/index.ts`) = the script. Each is a
+  list of sections; each section has a `slide`, an optional `focus`, and ordered `beats`:
+  - `slide` = `{ title, body }` — `body` is a **Markdown** string (headings, lists, tables, bold),
+    rendered by the engine's `SlidePane`. Fill the pane with that section's content; don't echo the
+    narration verbatim (eye vs ear).
+  - `focus` (optional) — node ids the per-section camera frames; **default = the nodes the section
+    solidifies**. `focus: []` frames the whole scene (the ghosted "overview" opener).
+  - A **beat** = `{ line, delta }`. `line` = the narration (tts) text; `delta` = reveal verbs on
+    **raw scene node ids**: `{ kind: 'solidify', ids: […] }`, `{ kind: 'draw', edges: [[from,to]] }`,
+    plus `pulse` / `annotate` / `pan` (folded, not yet drawn).
+  - Map section = 1 beat; Trace section = N beats. A timeline of eras is **Map-per-era**: one beat
+    lights each whole band while the camera travels (see `evolution`). Revealed nodes read as **lit**
+    (in the focus band) or **dimmed** (a past band); unrevealed stay **ghost**.
 - **Audio** (`public/audio`) = one wav per beat, named `<section-id>-<beatIndex>.wav` (0-based),
   matching the beat's `line`. `audioBase=""` → served same-origin (robust for capture: no live fetch).
 
@@ -63,5 +70,12 @@ Clips are currently macOS `say` placeholders. Regenerate with **Chatterbox** (on
 
 ## Status
 
-Currently a 3-section demo across two toy scenes (`demo`, `executor`) proving the pipeline. Real
-Spark modules (spark-architecture etc.) replace this content next.
+- **`evolution`** — the first real course + scene: "The road to Spark", a top-to-bottom timeline
+  (Hadoop 1 → Hadoop 2/YARN → Spark 1 → Spark 2) on the `evolution` scene. Opens with a whole-scene
+  ghosted **overview** (a section with `focus: []`), then the camera Ken-Burns down era by era; each
+  era is a **1-beat Map section** lighting its whole band. Markdown slides list each era's features.
+  Audio is not yet generated (page with ← → to preview).
+- **`cluster-basics`** / **`executor-internals`** — the original toy demos on the `demo`/`executor`
+  scenes, kept as pipeline proofs.
+
+Next: TTS for `evolution`, then the **spark-architecture** course (driver / cluster-manager / workers).

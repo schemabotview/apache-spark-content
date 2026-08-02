@@ -12,11 +12,11 @@ export const clusterBasics: Course = {
       scene: 'demo',
       slide: {
         title: 'The cluster',
-        bullets: [
-          'The driver owns the SparkSession and builds the plan',
-          'The cluster manager allocates machines to the app',
-          'Work is submitted to the manager for scheduling',
-        ],
+        body: [
+          '- The **driver** owns the SparkSession and builds the plan',
+          '- The **cluster manager** allocates machines to the app',
+          '- Work is **submitted** to the manager for scheduling',
+        ].join('\n'),
       },
       beats: [
         { line: 'Here is the cluster we are about to assemble.', delta: [{ kind: 'solidify', ids: ['master'] }] },
@@ -36,11 +36,11 @@ export const clusterBasics: Course = {
       scene: 'demo',
       slide: {
         title: 'The worker nodes',
-        bullets: [
-          'The cluster manager launches executors on the workers',
-          'Each executor holds partitions in memory',
-          'Cores run tasks across the cluster in parallel',
-        ],
+        body: [
+          '- The cluster manager **launches executors** on the workers',
+          '- Each executor **holds partitions** in memory',
+          '- Cores **run tasks** across the cluster in parallel',
+        ].join('\n'),
       },
       beats: [
         {

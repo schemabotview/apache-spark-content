@@ -11,11 +11,11 @@ export const executorInternals: Course = {
       scene: 'executor',
       slide: {
         title: 'Inside an executor',
-        bullets: [
-          'The heap splits into execution and storage memory',
-          'Each core runs one task per partition',
-          'Data spills to local disk when memory is tight',
-        ],
+        body: [
+          '- The heap splits into **execution** and **storage** memory',
+          '- Each **core** runs one task per partition',
+          '- Data **spills to local disk** when memory is tight',
+        ].join('\n'),
       },
       beats: [
         { line: 'Now zoom into a single executor.', delta: [{ kind: 'solidify', ids: ['executor'] }] },
