@@ -61,7 +61,12 @@ npm run dev     # http://localhost:5173 — SPACE plays, ← → page beats
 npm run build   # tsc + vite build
 ```
 
-To pick up a **published** engine change: `npm install github:schemabotview/flow-engine`.
+To pick up a **published** engine change: `npm install github:schemabotview/flow-engine`, then
+**commit the updated `package-lock.json`**. CI builds with `npm ci`, which installs the engine
+commit *pinned in the lockfile* — if you push engine changes but not a re-resolved lockfile, the
+deployed **scene/player** keeps the old engine CSS (the app's own landing CSS updates regardless,
+so the symptom is "landing themed, scenes stale"). Always bump + commit the lockfile after an
+engine change.
 
 ## Theme & fonts (implements the canonical theme in `../CLAUDE.md`)
 
