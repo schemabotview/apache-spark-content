@@ -33,6 +33,14 @@ Because scenes and beats live in the same TypeScript project, a beat that refere
 scene node id which doesn't exist is caught at build (types) and at dev-load
 (`validateCourse`, logged to the console).
 
+## Look & feel
+
+The Zed-slate theme (see the repo root's `CLAUDE.md` for the canonical tokens) is applied here via
+self-hosted fonts — `@fontsource/ibm-plex-sans` + `@fontsource/ibm-plex-mono`, imported in
+`src/main.tsx` (no CDN, so they render in headless capture) — plus `src/index.css` for the course
+landing. To preview **unpublished** `flow-engine` edits locally you must rebuild + sync its `dist/`
+into `node_modules`; the exact loop is in `CLAUDE.md` ("Local engine-preview loop").
+
 ## Audio
 
 Clips are `public/audio/<section-id>-<beatIndex>.wav`, one per beat `line`. Currently macOS

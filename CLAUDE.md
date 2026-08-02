@@ -61,7 +61,33 @@ npm run dev     # http://localhost:5173 — SPACE plays, ← → page beats
 npm run build   # tsc + vite build
 ```
 
-To pick up an engine change: `npm install github:schemabotview/flow-engine`.
+To pick up a **published** engine change: `npm install github:schemabotview/flow-engine`.
+
+## Theme & fonts (implements the canonical theme in `../CLAUDE.md`)
+
+- **Fonts self-hosted** (safe for headless capture — no CDN): `@fontsource/ibm-plex-sans` +
+  `@fontsource/ibm-plex-mono`, imported by weight in `src/main.tsx`; `src/index.css` sets `body`
+  font-family to Plex Sans (Plex Mono for kickers/meta). Engine CSS inherits these.
+- `src/index.css` also themes the **course-index landing** with the Zed-slate tokens.
+- Palette/typography values are the canonical ones in `../CLAUDE.md`; engine-side details (label
+  sizing, behind-nodes edge labels) in `../flow-engine/CLAUDE.md`.
+
+## Local engine-preview loop (previewing UNPUBLISHED engine edits)
+
+`npm i github:…flow-engine` installs a **copy** of the engine's committed `dist/` into
+`node_modules/flow-engine` (not a symlink) — so local edits to `../flow-engine/src` aren't seen until
+its `dist/` is rebuilt **and** synced. To preview an engine change before committing/pushing it:
+
+```bash
+(cd ../flow-engine && npm run build)                 # rebuild dist/ from src
+rm -rf node_modules/flow-engine/dist \
+  && cp -R ../flow-engine/dist node_modules/flow-engine/dist   # sync into this app
+rm -rf node_modules/.vite                             # Vite pre-bundles deps → force re-optimize
+npm run dev                                            # restart; hard-refresh the browser
+```
+
+Once approved, the real release path is: commit `../flow-engine/dist` + push, then
+`npm i github:schemabotview/flow-engine` here.
 
 ## Audio generation
 

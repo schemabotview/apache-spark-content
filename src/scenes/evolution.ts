@@ -94,24 +94,28 @@ export const evolution: SceneSpec = {
     },
   ],
   edges: [
+    // Edge labels are intentionally omitted for this scene: the h1/h2 bands pack their
+    // nodes too tightly for a wire label to read (it tucks behind a node — see the engine's
+    // behind-nodes label layering). The slides carry the relationships instead. Later, more
+    // spacious scenes can reintroduce `label:` (the engine still renders it).
     // the spine timeline, top→bottom
     { from: 'spine-problem', to: 'spine-h1' },
     { from: 'spine-h1', to: 'spine-h2' },
     { from: 'spine-h2', to: 'spine-s1' },
     { from: 'spine-s1', to: 'spine-s2' },
     // band ②: HDFS blocks + JobTracker assigns TaskTrackers
-    { from: 'h1-namenode', to: 'h1-datanodes', label: 'blocks' },
-    { from: 'h1-jobtracker', to: 'h1-tasktrackers', label: 'assign' },
+    { from: 'h1-namenode', to: 'h1-datanodes' },
+    { from: 'h1-jobtracker', to: 'h1-tasktrackers' },
     // band ③: RM negotiates AM, launches containers on NodeManagers
-    { from: 'h2-rm', to: 'h2-am', label: 'negotiate' },
-    { from: 'h2-rm', to: 'h2-nm', label: 'containers' },
+    { from: 'h2-rm', to: 'h2-am' },
+    { from: 'h2-rm', to: 'h2-nm' },
     // band ④: driver → RDD → DAG, and Spark runs ON YARN (edge back up to band ③)
     { from: 's1-driver', to: 's1-rdd' },
     { from: 's1-rdd', to: 's1-dag' },
-    { from: 's1-onyarn', to: 'h2-rm', label: 'submit' },
+    { from: 's1-onyarn', to: 'h2-rm' },
     // band ⑤: session → DataFrame → Catalyst → Tungsten
     { from: 's2-session', to: 's2-df' },
-    { from: 's2-df', to: 's2-catalyst', label: 'optimize' },
+    { from: 's2-df', to: 's2-catalyst' },
     { from: 's2-catalyst', to: 's2-tungsten' },
   ],
 }
