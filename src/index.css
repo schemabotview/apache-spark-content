@@ -1,0 +1,8 @@
+/* The engine ships its own styles (flow-engine/styles.css); the app only needs the
+   root to fill the viewport. No Tailwind — the player is self-contained. */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
