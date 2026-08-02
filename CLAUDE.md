@@ -42,6 +42,24 @@ apache-spark/
 - **Audio** (`public/audio`) = one wav per beat, named `<section-id>-<beatIndex>.wav` (0-based),
   matching the beat's `line`. `audioBase=""` → served same-origin (robust for capture: no live fetch).
 
+## Slide & narration density (the benchmark — locked)
+
+The `evolution` course's band ① section (`the-problem` in `content/courses/evolution.ts`) is the
+**reference density** — every slide should fill the pane at *about* this level, no thinner, no denser:
+
+- **Shape** — one **head** sentence · **2–3** `###` sub-sections of **2–3 bullets** each · one **tail**
+  sentence (~**8–9 bullets** total). The tail is a one-line take-away that hands off to the next section.
+- **Bullets** — a **bold** term/name + a short gloss (`— …` or `·`-joined pieces). Nest **at most one**
+  sub-line under a bullet. Keep each bullet to one line at capture width.
+- **Fill the pane, don't pad it.** Match this density even for "simple" sections — a sparse slide reads
+  as empty on a 4K capture. If a section genuinely has less to say, deepen the *why*, not filler.
+
+**Narration covers the whole slide, in a natural spoken tone.** The beat `line`(s) must touch **every**
+point on the slide — but as connected speech (eye vs ear), never the bullet text read aloud. Slide =
+scannable skeleton; narration = the same content spoken as flowing prose. For a 1-beat Map section that
+means one paragraph walking head → each sub-section → tail; for an N-beat Trace, the beats collectively
+cover the slide.
+
 ## Authoring by AI + the safety net
 
 Manifest/scenes/slides/tts are **authored by an AI model** from source material. Because scenes and
