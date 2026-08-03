@@ -23,7 +23,7 @@ body {
 .idx__inner {
   max-width: 900px;
   margin: 0 auto;
-  padding: 88px 24px 96px;
+  padding: 40px 24px 96px;
   text-align: left;
 }
 .idx__brand {
@@ -48,8 +48,8 @@ body {
   color: #5b8cff;
 }
 /* Concept heading — matches the catalog's .concept__name (mono kicker + divider),
-   so the two index pages read as one system. The ~80px top gap mirrors the catalog's
-   hero→catalog→concept rhythm (8 + 24 + 48). */
+   so the two index pages read as one system. The 32px top gap mirrors the catalog's
+   brand→concept rhythm. */
 .idx__title {
   font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
@@ -57,7 +57,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: #8b909c;
-  margin: 80px 0 16px;
+  margin: 32px 0 16px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }

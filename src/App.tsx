@@ -23,16 +23,18 @@ export function App() {
   const course = id ? courseById(id) : undefined
 
   // Esc walks one level up: while a course plays it returns to this concept's index;
-  // on the index (no course) a second Esc goes to the catalog home (graphl.in).
+  // on the index (no course) a second Esc goes to the catalog home (graphl.in). Bound
+  // once and reads the LIVE hash each press — a `course`-dependent handler would re-bind
+  // async after the hash change, so a quick second Esc could hit the stale (course) closure.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return
-      if (course) location.hash = ''
-      else location.href = '/'
+      if (location.hash.replace(/^#\/?/, '')) location.hash = '' // in a course → index
+      else location.href = '/' // on the index → catalog home
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [course])
+  }, [])
 
   if (!course) return <CourseIndex concept={CONCEPT} courses={courses} />
 
