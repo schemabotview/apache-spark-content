@@ -28,6 +28,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
+  width: fit-content;
 }
 .idx__logo {
   display: block;

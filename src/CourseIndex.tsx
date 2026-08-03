@@ -7,18 +7,16 @@ export function CourseIndex({ concept, courses }: { concept: string; courses: Co
   return (
     <div className="idx">
       <div className="idx__inner">
-        <div className="idx__brand">
+        <a className="idx__brand" href="/" title="Back to GraphL">
           <img className="idx__logo" src={`${import.meta.env.BASE_URL}icon.svg`} alt="" width="30" height="30" />
           <span className="idx__kicker">GraphL</span>
-        </div>
+        </a>
         <h1 className="idx__title">{concept}</h1>
         <div className="idx__grid">
           {courses.map((c) => (
             <a key={c.id} className="idx__card" href={`#/${c.id}`}>
               <span className="idx__course">{c.title}</span>
-              <span className="idx__meta">
-                {c.sections.length} section{c.sections.length === 1 ? '' : 's'}
-              </span>
+              {/* Meta line intentionally omitted for now — reserved for a future "time to read" cue. */}
             </a>
           ))}
         </div>
