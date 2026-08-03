@@ -22,11 +22,13 @@ export function App() {
   const id = useCourseId()
   const course = id ? courseById(id) : undefined
 
-  // While a course plays, Esc returns to the index.
+  // Esc walks one level up: while a course plays it returns to this concept's index;
+  // on the index (no course) a second Esc goes to the catalog home (graphl.in).
   useEffect(() => {
-    if (!course) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') location.hash = ''
+      if (e.key !== 'Escape') return
+      if (course) location.hash = ''
+      else location.href = '/'
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
