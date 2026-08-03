@@ -15,6 +15,12 @@ body {
 }
 
 /* --- course index (mirrors the catalog index at graphl.in) --- */
+/* Border-box so max-width includes the side padding, matching the catalog (which sets it
+   globally). Scoped to the landing — the engine/player manages its own box model. */
+.idx,
+.idx * {
+  box-sizing: border-box;
+}
 /* Top-aligned, not vertically centered: the brand sits ~88px from the top and the
    content flows down, matching the catalog's .hero/.catalog (max-width 900px, centered). */
 .idx {
