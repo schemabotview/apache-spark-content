@@ -26,6 +26,19 @@ import type { Course } from 'flow-engine'
 //
 // STATUS: COMPLETE — all 10 sections authored across two scenes. Next for this course: regen
 // `audio-manifest.json` (npm run gen:audio) + generate wavs on Colab.
+// The whole `streaming-model` pipeline band (the container + every child). Several sections
+// FRAME this — camera holds the full Sources → Input → Query → Result → Sinks dataflow (context
+// kept) while the slide/narration walks one part of it. Per the owner's "zoom to the band, don't
+// crop to a node": because `focus` drives both the camera AND the lit set, framing the band lights
+// the whole band (no single-node spotlight) — the slide carries which part each section is about.
+const PIPELINE_BAND = [
+  'pipeline',
+  'src', 'src-kafka', 'src-files', 'src-socket', 'src-rate',
+  'input', 'query', 'result',
+  'sink', 'sink-kafka', 'sink-files', 'sink-console', 'sink-foreach',
+  'state', 'outmode', 'om-append', 'om-update', 'om-complete',
+]
+
 export const sparkStreaming: Course = {
   id: 'spark-streaming',
   title: 'The stream is a table',
@@ -84,11 +97,13 @@ export const sparkStreaming: Course = {
       ],
     },
     {
-      // ── the HEART: the unbounded-table model. Focus defaults to the solidified input·query·
-      //    result → the camera frames the centre three columns; the bands around them dim. ──
+      // ── the HEART: the unbounded-table model. Frames the whole `pipeline` band (PIPELINE_BAND)
+      //    so the entire dataflow stays in view; the input→query→result story is narrated over it.
+      //    Only the trigger strip above and durability strip below dim. ──
       id: 'unbounded-table',
       heading: 'The unbounded table',
       scene: 'streaming-model',
+      focus: PIPELINE_BAND,
       slide: {
         title: 'The unbounded table',
         body: [
@@ -118,11 +133,13 @@ export const sparkStreaming: Course = {
       ],
     },
     {
-      // ── band ② left: SOURCES — what appends rows to the input table. Focus defaults to the
-      //    solidified `src` band → the camera slides left and lights it; the rest dims. ──
+      // ── SOURCES — what appends rows to the input table. Frames the whole `pipeline` band
+      //    (PIPELINE_BAND) so the dataflow stays in view; the slide/narration is about the sources
+      //    on the left. (Owner's call: band framing over cropping to the `src` node.) ──
       id: 'sources',
       heading: 'Sources: where the rows come from',
       scene: 'streaming-model',
+      focus: PIPELINE_BAND,
       slide: {
         title: 'Sources: where the rows come from',
         body: [
@@ -182,11 +199,12 @@ export const sparkStreaming: Course = {
       ],
     },
     {
-      // ── band ② right: the RESULT TABLE + OUTPUT MODES. Focus defaults to the solidified result
-      //    + outmode region → the camera frames the right-of-centre; the rest dims. ──
+      // ── the RESULT TABLE + OUTPUT MODES. Frames the whole `pipeline` band (PIPELINE_BAND) so the
+      //    dataflow stays in view; the slide/narration is about the result table + output modes. ──
       id: 'result-and-modes',
       heading: 'The result table & output modes',
       scene: 'streaming-model',
+      focus: PIPELINE_BAND,
       slide: {
         title: 'The result table & output modes',
         body: [
@@ -215,11 +233,12 @@ export const sparkStreaming: Course = {
       ],
     },
     {
-      // ── band ② far right: the SINKS. Focus defaults to the solidified `sink` band → the camera
-      //    slides to the far right; the rest dims. Teases exactly-once, which §9 pays off. ──
+      // ── the SINKS. Frames the whole `pipeline` band (PIPELINE_BAND) so the dataflow stays in
+      //    view; the slide/narration is about the sinks on the right. Teases exactly-once (§9). ──
       id: 'sinks',
       heading: 'Sinks: where results land',
       scene: 'streaming-model',
+      focus: PIPELINE_BAND,
       slide: {
         title: 'Sinks: where results land',
         body: [

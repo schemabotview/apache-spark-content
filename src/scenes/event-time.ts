@@ -24,7 +24,9 @@ export const eventTime: SceneSpec = {
   id: 'event-time',
   title: 'Event time & watermarks',
   canvas: { width: 1340, height: 1300 },
-  grid: { cols: [1], rows: [0.6, 2.0, 0.65], gap: 0.3, padding: 0.32 },
+  // Single-column band stack: keep scene padding SMALL — with one `[1]` track, padding is in
+  // weight-1 units, so 0.32 would spend ~40% of width on side margins. 0.07 → bands ~88% wide.
+  grid: { cols: [1], rows: [0.6, 2.0, 0.65], gap: 0.18, padding: 0.07 },
   nodes: [
     // ── band ①: the EVENTS — labelled by their EVENT TIME, arriving in a jumbled order (so the
     //    arrival order ≠ event time). One arrives late, one arrives too late to count. ──
@@ -45,13 +47,15 @@ export const eventTime: SceneSpec = {
     //    coloured bars inside are the windows over a shared 10:00–10:20 event-time axis. ──
     {
       id: 'windows', label: 'Windows — bucket by event time (three kinds)', kind: 'container', color: TEAL, cell: [0, 1],
-      layout: { cols: [1], rows: [1, 1.25, 1], gap: 0.32, padding: 0.4 },
+      // Single `[1]` column again → keep padding small so the three timelines fill the band width
+      // (0.4 would centre them at ~55%). gap spaces the three kinds apart vertically.
+      layout: { cols: [1], rows: [1, 1.25, 1], gap: 0.18, padding: 0.1 },
       children: [
         // Tumbling — fixed 5-min buckets, contiguous and non-overlapping. Alternating colours
         // (like the canonical diagram) so adjacent windows read apart at a glance.
         {
           id: 'wt', label: 'Tumbling · fixed 5-min · non-overlapping', kind: 'container', color: GRAY, cell: [0, 0],
-          layout: { cols: [1, 1, 1, 1], rows: 1, gap: 0.14, padding: 0.32 },
+          layout: { cols: [1, 1, 1, 1], rows: 1, gap: 0.14, padding: 0.16 },
           children: [
             { id: 'wt-1', label: 'W1', sub: '10:00–05', kind: 'symbol', color: BLUE, cell: [0, 0] },
             { id: 'wt-2', label: 'W2', sub: '10:05–10', kind: 'symbol', color: ORANGE, cell: [1, 0] },
@@ -63,7 +67,7 @@ export const eventTime: SceneSpec = {
         // it visibly OVERLAPS the two on the top row (that overlap is the whole point).
         {
           id: 'ws', label: 'Sliding · 10-min, slide 5-min · overlapping', kind: 'container', color: GRAY, cell: [0, 1],
-          layout: { cols: [1, 1, 1, 1, 1, 1, 1, 1], rows: [1, 1], gap: 0.14, padding: 0.32 },
+          layout: { cols: [1, 1, 1, 1, 1, 1, 1, 1], rows: [1, 1], gap: 0.14, padding: 0.16 },
           children: [
             { id: 'ws-1', label: 'W1', sub: '10:00–10', kind: 'symbol', color: BLUE, cell: [0, 0, 4, 1] },
             { id: 'ws-3', label: 'W3', sub: '10:10–20', kind: 'symbol', color: ORANGE, cell: [4, 0, 4, 1] },
@@ -74,7 +78,7 @@ export const eventTime: SceneSpec = {
         // between them (empty columns).
         {
           id: 'wg', label: 'Session · gap-based · variable width', kind: 'container', color: GRAY, cell: [0, 2],
-          layout: { cols: [1, 1, 1, 1, 1, 1, 1, 1], rows: 1, gap: 0.14, padding: 0.32 },
+          layout: { cols: [1, 1, 1, 1, 1, 1, 1, 1], rows: 1, gap: 0.14, padding: 0.16 },
           children: [
             { id: 'wg-1', label: 'S1', sub: '10:00–07', kind: 'symbol', color: BLUE, cell: [0, 0, 3, 1] },
             { id: 'wg-2', label: 'S2', sub: '10:10–15', kind: 'symbol', color: ORANGE, cell: [4, 0, 2, 1] },
