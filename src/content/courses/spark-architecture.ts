@@ -45,7 +45,6 @@ export const sparkArchitecture: Course = {
           '- How tasks are scheduled onto executor **slots**, across a **shuffle**',
           '- Where the driver runs (**deploy modes**) and how executors **cache** data',
           '',
-          'That’s the whole machine — we’ll walk it top to bottom, then watch a real job flow through it.',
         ].join('\n'),
       },
       beats: [
@@ -132,7 +131,6 @@ export const sparkArchitecture: Course = {
           '- One flag: `spark-submit --deploy-mode client|cluster`',
           '- Interactive sessions default to **client**; schedulers almost always use **cluster**',
           '',
-          'Same application code either way — deploy mode only decides where the driver *lives*, not what it does.',
         ].join('\n'),
       },
       beats: [
@@ -169,7 +167,6 @@ export const sparkArchitecture: Course = {
           '- Spark doesn’t care which one — the **same app** runs on any of them',
           '- You pick it at submit: `--master yarn | k8s://… | spark://…`',
           '',
-          'Once resources are granted, the manager launches the executors — where the real work happens.',
         ].join('\n'),
       },
       beats: [
