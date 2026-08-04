@@ -1,8 +1,21 @@
 import type { Course } from 'flow-engine'
 
-// The concept's landing page: a centered GraphL brand + concept title + a grid of course
-// cards, each linking to #/<courseId>. Layout mirrors the catalog index (graphl.in) so the
-// two pages read as one system. Plain CSS (index.css) — the concept app carries no Tailwind.
+// A one-line blurb per course (concept-specific copy — the engine's Course type carries only
+// id + title, so the descriptive text lives here in the concept app). Keyed by course id.
+const BLURBS: Record<string, string> = {
+  evolution: 'From Hadoop to the unified engine',
+  'spark-architecture': 'Driver, executors, stages & the shuffle',
+  'spark-api': 'RDD → DataFrame → SQL, and Catalyst beneath',
+  'spark-streaming': 'Structured Streaming, the unbounded table',
+  capstone: 'A Lambda pipeline that uses every concept',
+}
+
+// The concept's landing page: a centered GraphL brand + concept title + an ORDERED LIST of
+// courses, each linking to #/<courseId>. A numbered list (not a card grid) because the courses
+// are a *sequence* meant to be taken in order — it reads as a syllabus, and each row carries a
+// blurb + section count. (The top-level catalog at graphl.in stays a card gallery, since concepts
+// there are peers you pick among; courses within a concept are an ordered track.) Plain CSS
+// (index.css); the concept app carries no Tailwind.
 export function CourseIndex({ concept, courses }: { concept: string; courses: Course[] }) {
   return (
     <div className="idx">
@@ -12,14 +25,20 @@ export function CourseIndex({ concept, courses }: { concept: string; courses: Co
           <span className="idx__kicker">GraphL</span>
         </a>
         <h1 className="idx__title">{concept}</h1>
-        <div className="idx__grid">
-          {courses.map((c) => (
-            <a key={c.id} className="idx__card" href={`#/${c.id}`}>
-              <span className="idx__course">{c.title}</span>
-              {/* Meta line intentionally omitted for now — reserved for a future "time to read" cue. */}
-            </a>
+        <ol className="idx__list">
+          {courses.map((c, i) => (
+            <li key={c.id} className="idx__item">
+              <a className="idx__row" href={`#/${c.id}`}>
+                <span className="idx__num">{i + 1}</span>
+                <span className="idx__text">
+                  <span className="idx__course">{c.title}</span>
+                  {BLURBS[c.id] && <span className="idx__blurb">{BLURBS[c.id]}</span>}
+                </span>
+                <span className="idx__meta">{c.sections.length} sections</span>
+              </a>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </div>
   )

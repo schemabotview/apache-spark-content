@@ -30,18 +30,18 @@ import type { Course } from 'flow-engine'
 // STATUS: batch-first order. §1 + the speed §6 (ingest) authored; batch §2–§5 and §7–§13 next.
 export const capstone: Course = {
   id: 'capstone',
-  title: 'Everything, end to end',
+  title: 'Capstone: an end-to-end pipeline',
   sections: [
     {
       // ── the PLAN (SOLID TOUR): the whole Lambda architecture drawn solid up front, framed whole
       //    (`focus: []` → nothing dimmed). Later sections switch to the per-layer scenes; §10 and
       //    §13 return here. ──
       id: 'the-plan',
-      heading: 'Everything, end to end',
+      heading: 'Capstone: an end-to-end pipeline',
       scene: 'lambda-arch',
       focus: [],
       slide: {
-        title: 'Everything, end to end',
+        title: 'Capstone: an end-to-end pipeline',
         body: [
           'One project that puts every piece together — a **Lambda pipeline** over a live e-commerce clickstream, built two ways at once.',
           '',

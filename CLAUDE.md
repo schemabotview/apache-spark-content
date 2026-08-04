@@ -162,7 +162,7 @@ engine change (a deferred idea: decouple camera-frame from highlight-set).
   `event-time` (events → windows → watermark) for two sections, then returns to `streaming-model` for
   state/checkpoints + a whole-scene closer that also closes the four-course arc. Thesis: a stream is an
   unbounded table you run the same batch query over. Solid-tour model, ~15–20 min target.
-- **`capstone`** — "Everything, end to end": the CAPSTONE — a **Lambda-architecture** analytics
+- **`capstone`** — "Capstone: an end-to-end pipeline": the CAPSTONE — a **Lambda-architecture** analytics
   pipeline over an e-commerce clickstream, **13 sections/beats** on the **one** `lambda-arch` scene
   (⓪ sources · BATCH layer LEFT · SPEED layer RIGHT · serving · deploy). Hybrid delivery: the whole
   course stays on the map and each build section HIGHLIGHTS its stage node (`focus: [<band>,
