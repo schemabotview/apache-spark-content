@@ -1,14 +1,5 @@
 import type { Course } from 'flow-engine'
-
-// A one-line blurb per course (concept-specific copy — the engine's Course type carries only
-// id + title, so the descriptive text lives here in the concept app). Keyed by course id.
-const BLURBS: Record<string, string> = {
-  evolution: 'From Hadoop to the unified engine',
-  'spark-architecture': 'Driver, executors, stages & the shuffle',
-  'spark-api': 'RDD → DataFrame → SQL, and Catalyst beneath',
-  'spark-streaming': 'Structured Streaming, the unbounded table',
-  capstone: 'A Lambda pipeline that uses every concept',
-}
+import { BLURBS } from './content/courses/index.ts'
 
 // The concept's landing page: a centered GraphL brand + concept title + an ORDERED LIST of
 // courses, each linking to #/<courseId>. A numbered list (not a card grid) because the courses
