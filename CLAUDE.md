@@ -177,5 +177,5 @@ engine change (a deferred idea: decouple camera-frame from highlight-set).
 
 Next: TTS for all five courses (regen `audio-manifest.json` — done: 47 beats — then Colab). Course
 roadmap after that: the remaining library courses (`mllib`, `graphx`) the `spark-api` closer tees
-up. (Deferred capstone follow-ups: repartition/coalesce + bucketing in the partitioning story, and
-Delta/lakehouse alongside Parquet — the essentials of both ship, these sub-topics don't yet.)
+up. (The capstone now covers all six practical gaps — perf/AQE, joins, partitioning incl.
+repartition/coalesce/bucketing, data sources + Delta/lakehouse, DataFrame ops, deploy/ops.)
