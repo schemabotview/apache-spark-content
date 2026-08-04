@@ -1,6 +1,6 @@
 {
   "concept": "apache-spark",
-  "count": 6,
+  "count": 16,
   "entries": [
     {
       "course": "evolution",
@@ -43,6 +43,76 @@
       "beat": 0,
       "file": "evolution/spark-2-0.wav",
       "line": "Spark 2 turned that engine into a unified platform, and it started from the frustration with Spark 1: writing raw RDD code was low-level and had to be hand-optimized. So Spark 2 flipped the model — you declare what you want, and the engine works out how. A single SparkSession is now the one entry point, fronting DataFrames and Datasets: structured, typed APIs over your data. Behind them, the Catalyst optimizer plans your query for you, and Tungsten compiles that plan down to tight, off-heap code for raw speed. Structured Streaming then brought the very same API to streaming data. The result is one engine that covers batch, SQL, machine learning, and streaming — and that is the Spark we use today."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "overview",
+      "beat": 0,
+      "file": "spark-architecture/overview-0.wav",
+      "line": "Before we take anything apart, here’s the whole machine at a glance. Every Spark job runs as a conversation between three kinds of process. At the top is the driver — that’s your program; it takes the code you wrote and turns it into a plan, then coordinates the entire job. The driver can’t run anything on its own, so it turns to the cluster manager, which owns the pool of machines and hands out the ones the driver asks for. On each machine it grants, the manager launches an executor — and those executors are the real workers: they run your tasks and hold your data in memory. The flow is top to bottom — the driver requests resources, the manager launches executors, and from then on the driver drives those executors directly. Over the course we’ll follow how the driver compiles your code into jobs, stages, and tasks; how those tasks get scheduled onto the executors’ slots across a shuffle; and the details around it — where the driver itself runs, and how executors cache data. That’s the whole machine, drawn in full — we’ll walk it top to bottom, the driver first, then the cluster manager, then the executors, and finish by watching a real job flow through it."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "the-driver",
+      "beat": 0,
+      "file": "spark-architecture/the-driver-0.wav",
+      "line": "Everything starts with the driver — the process that runs your program. When you write a Spark application, the very first thing you create is a SparkSession: a single object that acts as your handle to the whole cluster. Underneath it sits the older, lower-level SparkContext — the original core — but SparkSession is the entry point you actually touch. From your code, the driver builds a plan in two steps. The DAG scheduler turns your chain of transformations into a graph of stages, and then the task scheduler breaks each stage into individual tasks and hands them out to be run. Once work is in flight, the driver stays firmly in charge: it tracks every executor through heartbeats, watches their progress, and collects their results. It is the single coordinator for the whole application, which also means it’s a single point of failure — if the driver dies, the application dies with it. But notice what the driver does not have: any machines of its own to run those tasks on. For that, it has to ask the cluster manager — and that’s where we go next."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "deploy-modes",
+      "beat": 0,
+      "file": "spark-architecture/deploy-modes-0.wav",
+      "line": "Before we follow the driver’s request down to the cluster, there’s one choice that decides where the driver process physically lives — the deploy mode — and it matters more than it sounds. In client mode, the driver runs on the same machine that submitted the job: your laptop, or an edge node. That’s ideal for interactive work like shells and notebooks, because the driver is right there and results stream straight back to you — but it comes with a catch: if that submitting machine disconnects, the driver goes with it and the whole job dies. In cluster mode, the driver instead runs inside the cluster itself, as just another container that the cluster manager launches and supervises. Now the job survives your laptop closing, which is exactly what you want for production and scheduled pipelines — the trade-off is that you lose the live console and read progress through the cluster manager’s logs instead. You pick between them with a single flag on spark-submit — deploy-mode client or cluster; interactive sessions default to client, while schedulers almost always choose cluster. And either way it’s the very same application code — the deploy mode only decides where the driver lives, not what it does."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "cluster-manager",
+      "beat": 0,
+      "file": "spark-architecture/cluster-manager-0.wav",
+      "line": "The driver has a plan but no machines of its own, so it turns to the cluster manager — the component that actually owns the cluster’s pool of CPU and memory. When the driver asks for resources, the manager grants it containers — chunks of a node reserved for Spark — and launches an executor inside each one, on the worker nodes it hands over. What makes this powerful is that Spark treats this whole layer as pluggable: it doesn’t really care which manager sits here. You’ll meet four of them. Standalone is Spark’s own built-in manager, the simplest way to get a cluster running. YARN is Hadoop’s resource manager, and for years it was the classic on-premises choice — the very same YARN we watched appear back in the evolution course. Kubernetes runs executors as containers and has become the modern, cloud-native default. And Mesos was the general-purpose option, though it’s largely legacy now. Because the layer is pluggable, the same application runs on any of them — you simply point Spark at the one you want when you submit the job, using the master setting. And once the manager has granted those resources, it launches the executors — which are where the real work finally happens."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "executors",
+      "beat": 0,
+      "file": "spark-architecture/executors-0.wav",
+      "line": "Now we reach the executors — the processes where your work actually runs. When the cluster manager grants resources, it launches an executor on each worker node, and an executor is simply a JVM process. Crucially, it’s long-lived: it starts up and stays alive for the entire application, reused across every job you run, rather than being spun up and torn down each time. Usually there’s just one executor, or a few, per worker node — so your real parallelism comes from having many nodes. Inside each executor, the cores it was given become slots, and those slots are its task capacity: each slot runs exactly one task at a time, where a task is the unit of work over a single partition of your data. Add up the slots across every executor and that’s how many tasks Spark can run at once — that number is your parallelism. As they work, the executors heartbeat back to the driver and return their results. So the picture so far is this: your data is split into partitions, and tasks run those partitions in the executors’ slots. The other half of an executor — the memory it uses to cache data — is what we’ll look at a little later."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "job-decomposes",
+      "beat": 0,
+      "file": "spark-architecture/job-decomposes-0.wav",
+      "line": "Here’s something that surprises people: the code you write doesn’t run line by line as you type it. Transformations like filter and groupBy are lazy — calling them just adds to a plan, and nothing actually executes. It’s only when you call an action — something that needs a real answer, like count, collect, or write — that Spark takes that whole plan and submits it as a single job. From there, the driver’s DAG scheduler cuts the job into stages, and the rule is about data movement: as long as each record can be processed where it already sits — a filter, a map — the work stays inside one stage; but the moment the computation needs to bring related records together across the network, like this groupBy, Spark has to shuffle the data, and a shuffle is exactly where one stage ends and the next begins. Our little job has a single shuffle, so it splits into two stages — Stage 0 does the narrow map-and-filter work, the shuffle redistributes, and Stage 1 finishes the aggregation. Finally, each stage fans out into tasks, and this is the level that actually runs: a task is the work for one partition of the data, so Stage 0’s four partitions become four tasks, and after the shuffle Stage 1’s two partitions become two tasks. Every one of these tasks is the same code pointed at a different slice of data — the exact unit the driver ships out to the executor slots we saw earlier. So the full hierarchy is action, to job, to stages, to tasks — and it’s the tasks, running in those slots, where your data is really processed."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "shuffle-boundary",
+      "beat": 0,
+      "file": "spark-architecture/shuffle-boundary-0.wav",
+      "line": "Let’s look closer at that shuffle, because it’s the single most important boundary in Spark. The distinction underneath it is narrow versus wide dependencies. A narrow dependency means each output partition is built from just one input partition — a map or a filter, where every record is handled right where it already lives; that work never has to leave its partition, so it all stays in one stage. A wide dependency is the opposite: an output partition needs data from many input partitions at once. A groupBy, a join, a sort — to bring all the matching records together, Spark has to redistribute the data across the whole cluster over the network. That redistribution is the shuffle, and it’s precisely why a new stage has to start: the next stage literally cannot begin until every task of the previous one has finished feeding the shuffle. It’s also the most expensive operation Spark does — data gets written to disk, sent across the network, and read back again. So a huge part of tuning Spark comes down to one idea: every stage boundary is a shuffle, and every shuffle is worth avoiding."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "tasks-to-slots",
+      "beat": 0,
+      "file": "spark-architecture/tasks-to-slots-0.wav",
+      "line": "We’ve seen the plan — jobs, stages, and tasks — and we’ve seen the machines — the driver, the cluster manager, and the executors. This is where the two finally meet. Once the driver’s task scheduler has the tasks for the current stage, it starts handing them out: each task is sent to a free slot on one of the executors, the executor runs it, returns the result to the driver, and that slot immediately frees up to take the next task. But the scheduler doesn’t pick slots at random — wherever it can, it sends a task to a slot on the executor that already holds that task’s partition in memory. That’s data locality, and it’s a core Spark idea: it is far cheaper to ship a little bit of code to where the data already lives than to drag the data across the network to the code. If there are more tasks than there are slots — which is completely normal — the extra tasks simply queue and run in waves as slots free up, and the scheduler’s whole job is to keep every slot busy until the stage is finished. Then, when all the tasks in a stage are done, the driver launches the next stage, and repeats that all the way to the end of the job. That loop — schedule tasks onto slots, run them where the data lives, move to the next stage — is a Spark application actually running."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "memory-caching",
+      "beat": 0,
+      "file": "spark-architecture/memory-caching-0.wav",
+      "line": "There’s one part of the executor we’ve been holding back on — its memory, and what it does beyond just running tasks. An executor’s memory actually serves two purposes. There’s execution memory — the scratch space a running task uses for shuffles, sorts, and joins — and there’s storage memory, which holds cached data for reuse. Modern Spark keeps these in a single unified pool, letting one side borrow from the other when it’s free. Here’s why storage memory matters: by default, Spark recomputes a DataFrame from scratch every time you run an action on it, replaying its whole lineage. If you’re going to reuse the same DataFrame again and again — an iterative machine-learning loop, or repeated interactive queries — that’s hugely wasteful. So you call cache, or persist, to tell Spark to keep that DataFrame’s partitions in the executors’ memory after the first time it’s computed; every action after that reads straight from memory instead of recomputing. Persist also lets you choose the level — pure memory, memory that spills to disk, or a serialized form that trades a little CPU for a lot of space. The rule of thumb is simple: cache what you genuinely reuse, because caching something you only touch once just wastes memory the running tasks could be using. And if memory does fill up, Spark doesn’t fall over — it spills to disk, or drops cached partitions and recomputes them from lineage when they’re next needed. It only ever gets slower, never wrong."
+    },
+    {
+      "course": "spark-architecture",
+      "section": "lifecycle",
+      "beat": 0,
+      "file": "spark-architecture/lifecycle-0.wav",
+      "line": "Let’s put the whole machine together and follow a single job from start to finish. It begins when you submit your application: the driver process starts up, and its first act is to ask the cluster manager for resources — the manager grants machines and launches an executor on each one. Now the driver has workers. Your code, meanwhile, does nothing until you call an action; the moment you do, the driver compiles your plan into a job. Its DAG scheduler cuts that job into stages, breaking at every shuffle where data has to move across the network, and each stage becomes a set of tasks — one task per partition of the data. The task scheduler then ships those tasks down to free slots on the executors, preferring the executor that already holds each partition, so the work runs right next to its data. The executors run their tasks, cache any data you’ve asked to reuse, and report results back to the driver. When every task in a stage is finished, the driver launches the next stage, and it repeats — stage after stage — until the job is complete and the result comes home to the driver. That entire loop — the driver planning, the manager granting machines, the executors running tasks close to their data, stage after stage — running across a cluster, is Apache Spark. And with the runtime clear, the next course opens up the layers you actually write against: RDDs, DataFrames, Datasets, and the optimizer beneath them."
     }
   ]
 }

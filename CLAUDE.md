@@ -126,14 +126,31 @@ narration lives in the typed course files (not per-section `.tts`), the pipeline
    each wav to its contract path, committing + pushing one at a time. `audioBase=""` → served
    same-origin (no live fetch at capture).
 
+## Reveal model for Spark courses (locked)
+
+Spark courses do **not** ghost-build. Every section is **one beat = one slide**, and the diagram is
+**solidified on scene entry**: the first section on a scene solidifies that whole scene (this applies
+to the course overview *and* to any mid-course scene switch, since switching scenes resets the reveal).
+Later sections on the same scene never re-ghost — each just sets `focus` to its band, so that band is
+**lit** and the rest **dimmed**. The camera + focus do the storytelling on an always-solid diagram
+(the `evolution` model, extended to every course). `focus: []` frames the whole scene with nothing
+dimmed (full-brightness overview/closer). Note: `focus` drives **both** the camera framing and the
+lit/dimmed set — you can't keep the whole scene framed while dimming all-but-one-node without an
+engine change (a deferred idea: decouple camera-frame from highlight-set).
+
 ## Status
 
-- **`evolution`** — the first (and currently only) real course + scene: "The road to Spark", a
-  top-to-bottom timeline (Hadoop 1 → Hadoop 2/YARN → Spark 1 → Spark 2) on the `evolution` scene.
-  Opens with a whole-scene ghosted **overview** (a section with `focus: []`), then the camera
-  Ken-Burns down era by era; each era is a **1-beat Map section** lighting its whole band. Markdown
-  slides list each era's features. 6 beats; audio generated via the pipeline above.
+- **`evolution`** — "The road to Spark": a top-to-bottom timeline (Hadoop 1 → Hadoop 2/YARN → Spark 1
+  → Spark 2) on the `evolution` scene. Whole-scene **overview** (`focus: []`), then the camera
+  Ken-Burns down era by era; each era is a **1-beat section** lighting its whole band. 6 sections/beats.
+- **`spark-architecture`** — "How a Spark job runs": the runtime anatomy, **10 sections/beats** across
+  **two scenes**. `cluster-topology` (driver → deploy modes → cluster manager → executors & slots) is
+  the spine; the course detours to `execution` (job → stages → tasks, then the shuffle boundary),
+  returns to `cluster-topology` to trace **tasks landing on slots** and **memory & caching**, and
+  closes on the **full lifecycle** framed whole. Topology-first, concept-complete (~15–20 min target).
 - The original toy demos (`cluster-basics` / `executor-internals` on the `demo` / `executor` scenes)
   were **removed** — they only existed as pipeline proofs and would generate throwaway wavs.
 
-Next: TTS for `evolution`, then the **spark-architecture** course (driver / cluster-manager / workers).
+Next: TTS for both courses (regen `audio-manifest.json`, then Colab), then the **spark-api** course
+(RDD → DataFrame → Dataset → Spark SQL, with the Catalyst/Tungsten story). Course roadmap after that:
+`streaming-architecture`, then optional `shuffle-and-performance` / `spark-on-the-cluster`.

@@ -17,9 +17,19 @@ src/
 public/audio/           per-beat narration clips  <courseId>/<section-id>-<beatIndex>.wav
 ```
 
-The first real course is **`evolution`** ("The road to Spark") on the `evolution` scene — a
-top-to-bottom timeline whose per-section camera travels era by era. Each section's `slide.body` is
-Markdown, and `focus` picks the band the camera frames (`focus: []` = the whole-scene overview).
+Two courses ship today:
+
+- **`evolution`** ("The road to Spark") on the `evolution` scene — a top-to-bottom timeline whose
+  per-section camera travels era by era (6 sections).
+- **`spark-architecture`** ("How a Spark job runs") — the runtime anatomy across **two** scenes:
+  `cluster-topology` (driver → cluster manager → executors) and `execution` (job → stages → tasks).
+  The camera travels band by band down the machine, detours to the execution scene for the
+  job-decomposition, then returns to trace tasks landing on slots and close on the full lifecycle
+  (10 sections).
+
+Each section's `slide.body` is Markdown, and `focus` picks the band the camera frames
+(`focus: []` = the whole-scene overview). Every section is **one beat**: the diagram is solidified
+on scene entry and the camera/focus does the storytelling (lit band + dimmed rest) — no ghost build.
 
 ## Develop
 
