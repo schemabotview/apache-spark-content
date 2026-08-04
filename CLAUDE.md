@@ -148,9 +148,23 @@ engine change (a deferred idea: decouple camera-frame from highlight-set).
   the spine; the course detours to `execution` (job → stages → tasks, then the shuffle boundary),
   returns to `cluster-topology` to trace **tasks landing on slots** and **memory & caching**, and
   closes on the **full lifecycle** framed whole. Topology-first, concept-complete (~15–20 min target).
+- **`spark-api`** — "The layers you write against": Spark's API as a **stack of altitudes**, **8
+  sections/beats** across **two scenes**. `api-stack` (⓪ libraries · ① structured APIs · ② engine ·
+  ③ RDD core) is the spine — overview, then RDD core → structured APIs → the engine band; the course
+  detours to `catalyst` (the compile-down pipeline: logical planning → physical planning + Tungsten
+  codegen → RDDs) for two sections, then returns to `api-stack` for a whole-scene closer that hands
+  off to the streaming course via the top libraries band. Thesis: every altitude compiles down to the
+  same RDD core. Solid-tour model, ~15–20 min target.
+- **`spark-streaming`** — "The stream is a table": Structured Streaming, **10 sections/beats** across
+  **two scenes**. `streaming-model` (① trigger · ② the Sources → Input Table → Query → Result Table →
+  Sinks pipeline, with state store + output modes · ③ durability) is the spine — overview, the
+  unbounded-table heart, then sources → trigger → result/modes → sinks; the course detours to
+  `event-time` (events → windows → watermark) for two sections, then returns to `streaming-model` for
+  state/checkpoints + a whole-scene closer that also closes the four-course arc. Thesis: a stream is an
+  unbounded table you run the same batch query over. Solid-tour model, ~15–20 min target.
 - The original toy demos (`cluster-basics` / `executor-internals` on the `demo` / `executor` scenes)
   were **removed** — they only existed as pipeline proofs and would generate throwaway wavs.
 
-Next: TTS for both courses (regen `audio-manifest.json`, then Colab), then the **spark-api** course
-(RDD → DataFrame → Dataset → Spark SQL, with the Catalyst/Tungsten story). Course roadmap after that:
-`streaming-architecture`, then optional `shuffle-and-performance` / `spark-on-the-cluster`.
+Next: TTS for all four courses (regen `audio-manifest.json` — done: 34 beats — then Colab). Course
+roadmap after that: optional `shuffle-and-performance` / `spark-on-the-cluster`, or the remaining
+library courses (`mllib`, `graphx`) the `spark-api` closer tees up.
