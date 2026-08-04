@@ -23,7 +23,9 @@ export const execution: SceneSpec = {
   grid: { cols: [1], rows: [0.34, 1.3], gap: 0.28, padding: 0.35 },
   nodes: [
     // ── the code line: transformations are lazy; an ACTION is what submits the job ──
-    { id: 'code', label: 'df.filter(…).groupBy(…).count()', sub: 'an action → one job', kind: 'symbol', color: BLUE, icon: 'terminal', cell: [0, 0] },
+    // Rendered as an IDE-editor card (window chrome + line-number gutter + syntax highlight);
+    // `sub` becomes a trailing `# comment` line. See flow-engine SceneNode `CodeCard`.
+    { id: 'code', label: 'df.filter(…).groupBy(…).count()', sub: 'an action → one job', kind: 'code', color: BLUE, filename: 'query.py', cell: [0, 0] },
 
     // ── the JOB: split into two stages by a shuffle boundary ──
     {
