@@ -162,9 +162,20 @@ engine change (a deferred idea: decouple camera-frame from highlight-set).
   `event-time` (events → windows → watermark) for two sections, then returns to `streaming-model` for
   state/checkpoints + a whole-scene closer that also closes the four-course arc. Thesis: a stream is an
   unbounded table you run the same batch query over. Solid-tour model, ~15–20 min target.
+- **`capstone`** — "Everything, end to end": the CAPSTONE — a **Lambda-architecture** analytics
+  pipeline over an e-commerce clickstream, **13 sections/beats** on the **one** `lambda-arch` scene
+  (⓪ sources · BATCH layer LEFT · SPEED layer RIGHT · serving · deploy). Hybrid delivery: the whole
+  course stays on the map and each build section HIGHLIGHTS its stage node (`focus: [<band>,
+  <stage>]` → camera frames the band, only that node lights, the rest dims) while the RIGHT slide
+  carries the stage's real code block + an `Exercises:` tag linking back to a course. Order is
+  batch-first (read→clean→join/agg→partitioned-write), then speed (readStream→enrich→window→write),
+  then serving-merge, deploy (`spark-submit`), tune (AQE/skew/cache/Spark UI), closer. Teaches the
+  practical gaps INLINE — joins (sort-merge in batch §4 vs broadcast in speed §7), partitioning,
+  data sources/pushdown, deploy/ops, AQE. Solid-tour model.
 - The original toy demos (`cluster-basics` / `executor-internals` on the `demo` / `executor` scenes)
   were **removed** — they only existed as pipeline proofs and would generate throwaway wavs.
 
-Next: TTS for all four courses (regen `audio-manifest.json` — done: 34 beats — then Colab). Course
-roadmap after that: optional `shuffle-and-performance` / `spark-on-the-cluster`, or the remaining
-library courses (`mllib`, `graphx`) the `spark-api` closer tees up.
+Next: TTS for all five courses (regen `audio-manifest.json` — done: 47 beats — then Colab). Course
+roadmap after that: the remaining library courses (`mllib`, `graphx`) the `spark-api` closer tees
+up. (Deferred capstone follow-ups: repartition/coalesce + bucketing in the partitioning story, and
+Delta/lakehouse alongside Parquet — the essentials of both ship, these sub-topics don't yet.)
